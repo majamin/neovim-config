@@ -1,7 +1,10 @@
+-- Use `q` to close windows
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "help", "startuptime", "qf", "lspinfo", "fugitive", "null-ls-info" },
   command = [[nnoremap <buffer><silent> q :close<CR>]],
 })
+
+-- Use `q` to quit man-style pages
 vim.api.nvim_create_autocmd("FileType", { pattern = "man", command = [[nnoremap <buffer><silent> q :quit<CR>]] })
 
 -- go to last loc when opening a buffer

@@ -26,7 +26,7 @@ saga.init_lsp_saga({
   code_action_num_shortcut = true,
   -- same as nvim-lightbulb but async
   code_action_lightbulb = {
-    enable = true,
+    enable = false, -- Disable for now. Do we need this?
     sign = true,
     enable_in_insert = true,
     sign_priority = 20,
@@ -34,9 +34,9 @@ saga.init_lsp_saga({
   },
   -- finder icons
   finder_icons = {
-    def = "  ",
-    ref = "諭 ",
-    link = "  ",
+    def = "",
+    ref = "",
+    link = "",
   },
   -- finder do lsp request timeout
   -- if your project big enough or your server very slow
@@ -47,12 +47,12 @@ saga.init_lsp_saga({
     vsplit = "s",
     split = "i",
     tabe = "t",
-    quit = "q",
+    quit = "<ESC>",
     scroll_down = "<C-f>",
     scroll_up = "<C-b>", -- quit can be a table
   },
   code_action_keys = {
-    quit = "q",
+    quit = "<ESC>",
     exec = "<CR>",
   },
   rename_action_quit = "<C-c>",
