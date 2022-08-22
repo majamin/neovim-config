@@ -9,9 +9,6 @@ null_ls.setup({
   sources = {
     null_ls.builtins.formatting.stylua.with({ extra_args = { "--indent-type", "Spaces", "--indent-width", "2" } }),
     null_ls.builtins.diagnostics.eslint,
-    null_ls.builtins.formatting.prettier.with({
-      extra_args = { "--single-quote", "false" },
-    }),
     null_ls.builtins.formatting.terraform_fmt,
     null_ls.builtins.formatting.black,
     null_ls.builtins.formatting.goimports,

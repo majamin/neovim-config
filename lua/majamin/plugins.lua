@@ -15,7 +15,6 @@ packer.startup(function(use)
   use("hrsh7th/nvim-cmp") -- Completion
   use("neovim/nvim-lspconfig") -- Conveniently config LSPs
   use("jose-elias-alvarez/null-ls.nvim") -- Use Neovim as a language server
-  use("MunifTanjim/prettier.nvim") -- Prettier plugin
   use("williamboman/mason.nvim")
   use("williamboman/mason-lspconfig.nvim")
 
