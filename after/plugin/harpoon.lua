@@ -43,8 +43,16 @@ for i = 1, numSlots do
   end, opts)
 end
 
-for i = 1, numSlots do
-  vim.cmd(
-    "autocmd FileType harpoon nnoremap <silent><buffer> " .. i .. ':lua require("harpoon.ui").nav_file(' .. i .. ")<CR>"
-  )
-end
+vim.cmd([[
+augroup harpoonkeys
+  autocmd! harpoonkeys
+  autocmd Filetype harpoon nnoremap <buffer> <silent> <nowait> 1 :lua require('harpoon.ui').nav_file(1)<CR>
+  autocmd Filetype harpoon nnoremap <buffer> <silent> <nowait> 2 :lua require('harpoon.ui').nav_file(2)<CR>
+  autocmd Filetype harpoon nnoremap <buffer> <silent> <nowait> 3 :lua require('harpoon.ui').nav_file(3)<CR>
+  autocmd Filetype harpoon nnoremap <buffer> <silent> <nowait> 4 :lua require('harpoon.ui').nav_file(4)<CR>
+  autocmd Filetype harpoon nnoremap <buffer> <silent> <nowait> 5 :lua require('harpoon.ui').nav_file(5)<CR>
+  autocmd Filetype harpoon nnoremap <buffer> <silent> <nowait> 6 :lua require('harpoon.ui').nav_file(6)<CR>
+  autocmd Filetype harpoon nnoremap <buffer> <silent> <nowait> 7 :lua require('harpoon.ui').nav_file(7)<CR>
+  autocmd Filetype harpoon nnoremap <buffer> <silent> <nowait> 8 :lua require('harpoon.ui').nav_file(8)<CR>
+augroup end
+]])
