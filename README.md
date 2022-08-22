@@ -30,9 +30,9 @@ Edit `user-conf.lua` to your liking and you should be good to go!
 - `<Ctrl-b>` closes buffer
 - `<Ctrl-q>` closes window
 - `<Tab>`, `<Shift-Tab>` to switch between buffers
-- `qq` opens Harpoon (pressing 1, 2, etc. opens that file)
-- `qa` adds the buffer filepath to the Harpoon list
-- `q1`, `q2` opens the first, or second file, etc.
+- `tt` opens Harpoon (pressing 1, 2, etc. opens that file)
+- `ta` adds the buffer filepath to the Harpoon list
+- `t1`, `t2` opens the first, or second file, etc.
 - `<S-l>` and `<S-h>` initiates [leap](https://github.com/ggandor/leap.nvim) (I insist on using `s` and `S` as per the original Vim bindings)
 
 # A little bit more in-depth
