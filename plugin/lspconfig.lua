@@ -5,7 +5,7 @@ if not status then
   return
 end
 
-protocol = require("vim.lsp.protocol")
+local protocol = require("vim.lsp.protocol")
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -73,6 +73,9 @@ for _, lsp in ipairs(servers) do
     on_attach = on_attach,
     capabilities = capabilities,
     settings = {
+      volar = {
+        filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json" },
+      },
       tsserver = {
         filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
         cmd = { "typescript-language-server", "--stdio" },
