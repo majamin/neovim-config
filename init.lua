@@ -1,5 +1,6 @@
 require("majamin.packer_init")
 require("majamin.base")
+require("majamin.vimwiki")
 require("majamin.autocmd")
 require("majamin.highlights")
 require("majamin.maps")
