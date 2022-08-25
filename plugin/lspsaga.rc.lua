@@ -96,29 +96,17 @@ local opts = { noremap = true, silent = true }
 -- Lsp finder find the symbol definition implement reference
 -- when you use action in finder like open vsplit then your can
 -- use <C-t> to jump back
+vim.keymap.set("n", "gd", "<cmd>Lspsaga preview_definition<CR>", opts)
 vim.keymap.set("n", "gh", "<cmd>Lspsaga lsp_finder<CR>", opts)
+vim.keymap.set("n", "gr", "<cmd>Lspsaga rename<CR>", opts)
+-- vim.keymap.set("n", "gs", "<Cmd>Lspsaga signature_help<CR>", opts) -- NOT WORKING??
 vim.keymap.set("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts)
 vim.keymap.set("v", "<leader>ca", "<cmd><C-U>Lspsaga range_code_action<CR>", opts)
-vim.keymap.set("n", "gr", "<cmd>Lspsaga rename<CR>", opts)
-vim.keymap.set("n", "gd", "<cmd>Lspsaga preview_definition<CR>", opts)
 vim.keymap.set("n", "<leader>cd", "<cmd>Lspsaga show_line_diagnostics<CR>", opts)
 vim.keymap.set("n", "<leader>cd", "<cmd>Lspsaga show_cursor_diagnostics<CR>", opts)
-vim.keymap.set("n", "[e", "<cmd>Lspsaga diagnostic_jump_next<CR>", opts)
-vim.keymap.set("n", "]e", "<cmd>Lspsaga diagnostic_jump_prev<CR>", opts)
-vim.keymap.set("n", "[E", function()
-  require("lspsaga.diagnostic").goto_prev({ severity = vim.diagnostic.severity.ERROR })
-end, opts)
-vim.keymap.set("n", "]E", function()
+vim.keymap.set("n", "<C-y>", "<cmd>Lspsaga diagnostic_jump_next<CR>", opts)
+vim.keymap.set("n", "<C-e>", function()
   require("lspsaga.diagnostic").goto_next({ severity = vim.diagnostic.severity.ERROR })
 end, opts)
 vim.keymap.set("n", "<leader>o", "<cmd>LSoutlineToggle<CR>", opts)
 vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", opts)
-vim.keymap.set("n", "gs", "<Cmd>Lspsaga signature_help<CR>", opts)
-
--- OLD
-vim.keymap.set("n", "]g", "<Cmd>Lspsaga diagnostic_jump_next<CR>", opts)
-vim.keymap.set("n", "K", "<Cmd>Lspsaga hover_doc<CR>", opts)
-vim.keymap.set("n", "gd", "<Cmd>Lspsaga lsp_finder<CR>", opts)
-vim.keymap.set("i", "[g", "<Cmd>Lspsaga signature_help<CR>", opts)
-vim.keymap.set("n", "gp", "<Cmd>Lspsaga preview_definition<CR>", opts)
-vim.keymap.set("n", "gr", "<Cmd>Lspsaga rename<CR>", opts)

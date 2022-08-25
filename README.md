@@ -26,6 +26,7 @@ Edit `user-conf.lua` to your liking and you should be good to go!
 - `;h` for help topics
 - `;f` to find files
 - `;w` to browse files
+- `;e` opens LSP diagnostics for whole project (via Telescope)
 - `<F3>` and `<F4>` toggles spelling for English and _basic_ English (enables a kind of "check if my document is way too complicated")
 - `<Ctrl-b>` closes buffer
 - `<Ctrl-q>` closes window
@@ -34,6 +35,7 @@ Edit `user-conf.lua` to your liking and you should be good to go!
 - `ta` adds the buffer filepath to the Harpoon list
 - `t1`, `t2` opens the first, or second file, etc.
 - `<S-l>` and `<S-h>` initiates [leap](https://github.com/ggandor/leap.nvim) (I insist on using `s` and `S` as per the original Vim bindings)
+- `<C-e>` goes to next ERROR
 
 # A little bit more in-depth
 
