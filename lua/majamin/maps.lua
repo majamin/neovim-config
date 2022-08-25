@@ -29,3 +29,5 @@ vim.keymap.set("n", "<F4>", ":setlocal spell! spelllang=en-basic<CR>")
 
 vim.keymap.set("n", "<C-b>", ":bp|bd #<CR>")
 vim.keymap.set("n", "<C-q>", "<C-w>q")
+
+vim.keymap.set("t", "<ESC><ESC>", "<C-\\><C-n>")
