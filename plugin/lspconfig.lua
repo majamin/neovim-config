@@ -62,7 +62,7 @@ protocol.CompletionItemKind = {
 -- Set up completion using nvim_cmp with LSP source
 local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-local servers = require("majamin.user-conf").servers
+local servers = require("user.user-conf").servers
 
 -- Server configuration
 -- Most servers have good defaults, so defining settings below is

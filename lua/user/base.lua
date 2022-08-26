@@ -1,6 +1,8 @@
 local o = vim.opt
 local fn = vim.fn
 
+vim.cmd("colorscheme slate") -- best native fallback
+
 o.backup = false -- creates a backup file
 o.clipboard = "unnamedplus" -- allows neovim to access the system clipboard
 o.cmdheight = 1 -- space for displaying messages/commands
