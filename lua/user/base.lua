@@ -1,7 +1,7 @@
 local o = vim.opt
 local fn = vim.fn
 
-vim.cmd("colorscheme slate") -- best native fallback
+-- vim.cmd("colorscheme slate") -- best native fallback
 
 o.backup = false -- creates a backup file
 o.clipboard = "unnamedplus" -- allows neovim to access the system clipboard
@@ -19,6 +19,7 @@ o.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50" -- block in normal 
 o.history = 500 -- Use the 'history' option to set the number of lines from command mode that are remembered.
 o.hlsearch = true -- highlight all matches on previous search pattern
 o.ignorecase = true -- ignore case in search patterns
+o.laststatus = 3
 o.lazyredraw = true -- do not redraw screen while running macros
 o.list = true
 o.listchars = "eol:¬,tab:>·,trail:~,extends:>,precedes:<"

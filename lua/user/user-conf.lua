@@ -1,9 +1,5 @@
 local M = {}
 
--- Highlights
--- EOL, TAB, etc.
-vim.cmd("hi NonText guifg=#444466")
-
 -- M.lang = "en_us" -- US English
 M.lang = "en_ca" -- Canadian English
 

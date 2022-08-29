@@ -1,3 +1,10 @@
+--- Remove all trailing whitespace on save
+local TrimWhiteSpaceGrp = vim.api.nvim_create_augroup("TrimWhiteSpaceGrp", { clear = true })
+vim.api.nvim_create_autocmd("BufWritePre", {
+  command = [[:%s/\s\+$//e]],
+  group = TrimWhiteSpaceGrp,
+})
+
 -- Use `q` to close windows
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "help", "startuptime", "qf", "lspinfo", "fugitive", "null-ls-info" },
