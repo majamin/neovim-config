@@ -12,166 +12,238 @@ local red = hsl(0, 100, 40)
 -- ignore the "theme" variable for now
 ---@diagnostic disable: undefined-global
 
-local black = hsl(0, 0, 0)
-local grey1 = hsl(0, 0, 15)
-local grey2 = hsl(0, 0, 20)
-local grey3 = hsl(0, 0, 32)
-local grey4 = hsl(0, 0, 45)
-local white = hsl(100, 100, 100)
+local black = hsl(0,0,0)
+local grey1 = hsl(0,0,15)
+local grey2 = hsl(0,0,20)
+local grey3 = hsl(0,0,32)
+local grey4 = hsl(0,0,45)
+local white = hsl(100,100,100)
 
-local theme_yellow = hsl(51, 100, 50)
+local theme_yellow = 	hsl(51, 100, 50)
 local theme_pale_yellow = theme_yellow.li(60)
 local theme_blue = hsl(220, 60, 61)
 local theme_light_blue = hsl(200, 100, 76)
-local theme_orange = hsl(20, 60, 61)
-local theme_pink = hsl(0, 100, 84)
+local theme_orange = 	hsl(20, 60, 61)
+local theme_pink = hsl(0, 100, 84) 
 
 local theme = lush(function()
   return {
-    Normal({ fg = white, bg = grey1 }), -- Normal         xxx ctermfg=231 ctermbg=235 guifg=#ffffff guibg=#262626
-    ColorColumn({ bg = black }), -- ColorColumn    xxx ctermbg=16 guibg=#000000
-    Conceal({ fg = grey4 }), -- Conceal        xxx ctermfg=241 guifg=#666666
-    Cursor({ fg = grey2, bg = theme_pale_yellow }), -- Cursor         xxx guifg=#333333 guibg=#d7d787
-    lCursor({ fg = grey1, bg = theme_pink }), -- lCursor        xxx guifg=#262626 guibg=#ffafaf
-    CursorColumn({ bg = grey2 }), -- CursorColumn   xxx ctermbg=236 guibg=#333333
-    CursorLine({ bg = grey2 }), -- CursorLine     xxx ctermbg=236 guibg=#333333
-    Directory({ gui = "bold", fg = green }), -- Directory      xxx cterm=bold ctermfg=29 gui=bold guifg=#00875f
-    DiffAdd({ fg = green }), -- Diff mode: Added line |diff.txt|
-    DiffChange({ fg = yellow }), -- Diff mode: Changed line |diff.txt|
-    DiffDelete({ fg = red }), -- Diff mode: Deleted line |diff.txt|
-    DiffText({ bg = red }), -- Diff mode: Changed text within a changed line |diff.txt|
-    EndOfBuffer({ fg = theme_blue }), -- EndOfBuffer    xxx ctermfg=68 guifg=#5f87d7
-    TermCursor({ gui = "reverse" }), -- TermCursor     xxx cterm=reverse gui=reverse
-    ErrorMsg({ gui = "reverse", fg = red, bg = black }), -- ErrorMsg       xxx cterm=reverse ctermfg=196 ctermbg=16 gui=reverse guifg=#ff0000 guibg=#000000
-    VertSplit({ fg = grey3, bg = "#afaf87" }), -- VertSplit      xxx ctermfg=241 ctermbg=144 guifg=#666666 guibg=#afaf87
-    Folded({ fg = grey3, bg = black }), -- Folded         xxx ctermfg=241 ctermbg=16 guifg=#666666 guibg=#000000
-    FoldColumn({ Normal }), -- FoldColumn     xxx ctermfg=68 ctermbg=16 guifg=#5f87d7 guibg=#000000
+    Normal                                 { fg = white, bg = grey1, }, -- Normal         xxx ctermfg=231 ctermbg=235 guifg=#ffffff guibg=#262626
+    ColorColumn                            { bg = black, }, -- ColorColumn    xxx ctermbg=16 guibg=#000000
+    Conceal                                { fg = grey4, }, -- Conceal        xxx ctermfg=241 guifg=#666666
+    Cursor                                 { fg = grey2, bg = theme_pale_yellow, }, -- Cursor         xxx guifg=#333333 guibg=#d7d787
+    lCursor                                { fg = grey1, bg = theme_pink, }, -- lCursor        xxx guifg=#262626 guibg=#ffafaf
+    CursorColumn                           { bg = grey2, }, -- CursorColumn   xxx ctermbg=236 guibg=#333333
+    CursorLine                             { bg = grey2, }, -- CursorLine     xxx ctermbg=236 guibg=#333333
+    Directory                              { gui="bold", fg = green, }, -- Directory      xxx cterm=bold ctermfg=29 gui=bold guifg=#00875f
+    DiffAdd                                { fg = green }, -- Diff mode: Added line |diff.txt|
+    DiffChange                             { fg = yellow }, -- Diff mode: Changed line |diff.txt|
+    DiffDelete                             { fg = red }, -- Diff mode: Deleted line |diff.txt|
+    DiffText                               { bg = red}, -- Diff mode: Changed text within a changed line |diff.txt|
+    EndOfBuffer                            { fg = theme_blue, }, -- EndOfBuffer    xxx ctermfg=68 guifg=#5f87d7
+    TermCursor                             { gui="reverse", }, -- TermCursor     xxx cterm=reverse gui=reverse
+    ErrorMsg                               { gui="reverse", fg = red, bg = black, }, -- ErrorMsg       xxx cterm=reverse ctermfg=196 ctermbg=16 gui=reverse guifg=#ff0000 guibg=#000000
+    VertSplit                              { fg = grey3, bg = "#afaf87", }, -- VertSplit      xxx ctermfg=241 ctermbg=144 guifg=#666666 guibg=#afaf87
+    Folded                                 { fg = grey3, bg = black, }, -- Folded         xxx ctermfg=241 ctermbg=16 guifg=#666666 guibg=#000000
+    FoldColumn                             { Normal }, -- FoldColumn     xxx ctermfg=68 ctermbg=16 guifg=#5f87d7 guibg=#000000
     -- FoldColumn                             { fg = theme_blue, bg = black, }, -- FoldColumn     xxx ctermfg=68 ctermbg=16 guifg=#5f87d7 guibg=#000000
-    SignColumn({ bg = grey1 }), -- SignColumn     xxx ctermbg=235 guibg=#262626
-    IncSearch({ fg = black, bg = green }), -- IncSearch      xxx ctermfg=16 ctermbg=46 guifg=#000000 guibg=#00ff00
-    Substitute({ fg = black, bg = theme_orange }), -- Substitute     xxx links to Search
-    LineNr({ fg = grey3 }), -- LineNr         xxx ctermfg=241 guifg=#666666
-    CursorLineNr({ bg = grey2 }), -- CursorLineNr   xxx ctermbg=236 guibg=#333333
-    MatchParen({ fg = black, bg = theme_pale_yellow }), -- MatchParen     xxx ctermfg=16 ctermbg=220 guifg=#000000 guibg=#ffd700
-    ModeMsg({ fg = grey1, bg = theme_pale_yellow }), -- ModeMsg        xxx ctermfg=235 ctermbg=220 guifg=#262626 guibg=#ffd700
-    MsgSeparator({ fg = black, bg = "#afaf87" }), -- MsgSeparator   xxx links to StatusLine
-    MoreMsg({ fg = green }), -- MoreMsg        xxx ctermfg=29 guifg=#00875f
-    NonText({ fg = "#444466" }), -- NonText        xxx ctermfg=68 guifg=#444466
-    NormalFloat({ bg = "#4a4a4a" }), -- NormalFloat    xxx links to Pmenu
-    Pmenu({ NormalFloat }), -- Pmenu          xxx ctermbg = 239 guibg=#4a4a4a
-    PmenuSel({ fg = grey1, bg = theme_yellow }), -- PmenuSel       xxx ctermfg=235 ctermbg=186 guifg=#262626 guibg=#d7d787
-    PmenuSbar({ bg = grey1 }), -- PmenuSbar      xxx ctermbg=235 guibg=#262626
-    PmenuThumb({ fg = black, bg = theme_yellow }), -- PmenuThumb     xxx ctermbg=220 guibg=#ffd700
-    Question({ fg = theme_yellow }), -- Question       xxx ctermfg=220 guifg=#ffd700
-    QuickFixLine({ fg = black, bg = theme_blue }), -- QuickFixLine   xxx ctermfg=16 ctermbg=68 guifg=#000000 guibg=#5f87d7
-    Search({ Substitute }), -- Search         xxx ctermfg = 16 ctermbg = 173 guifg=#000000 guibg=#d7875f
-    SpecialKey({ fg = green }), -- SpecialKey     xxx ctermfg=29 guifg=#00875f
-    SpellBad({ sp = red, gui = "undercurl", fg = red }), -- SpellBad       xxx cterm=underline ctermfg=196 gui=undercurl guifg=#ff0000 guisp=#ff0000
-    SpellCap({ sp = yellow, gui = "undercurl", fg = yellow }), -- SpellCap       xxx cterm=underline ctermfg=226 gui=undercurl guifg=#ffff00 guisp=#ffff00
-    SpellLocal({ sp = theme_pink, gui = "undercurl", fg = "#ffafaf" }), -- SpellLocal     xxx cterm=underline ctermfg=217 gui=undercurl guifg=#ffafaf guisp=#ffafaf
-    SpellRare({ sp = theme_pink.sa(-60), gui = "undercurl", fg = theme_pink.sa(-60) }), -- SpellRare      xxx cterm=underline ctermfg=223 gui=undercurl guifg=#ffd7af guisp=#ffd7af
-    StatusLine({ fg = black, bg = "#afaf87" }), -- StatusLine     xxx ctermfg=16 ctermbg=144 guifg=#000000 guibg=#afaf87
-    StatusLineNC({ fg = grey3, bg = "#afaf87" }), -- StatusLineNC   xxx ctermfg=241 ctermbg=144 guifg=#666666 guibg=#afaf87
-    TabLine({ fg = grey3, bg = grey2 }), -- TabLine        xxx ctermfg=241 ctermbg=236 guifg=#666666 guibg=#333333
-    TabLineFill({ fg = "#ff8787", bg = grey2 }), -- TabLineFill    xxx ctermfg=210 ctermbg=236 guifg=#ff8787 guibg=#333333
-    TabLineSel({ fg = black, bg = "#afaf87" }), -- TabLineSel     xxx ctermfg=16 ctermbg=144 guifg=#000000 guibg=#afaf87
-    Title({ gui = "bold", fg = theme_yellow }), -- Title          xxx cterm=bold ctermfg=220 gui=bold guifg=#ffd700
-    Visual({ fg = black, bg = theme_pale_yellow }), -- Visual         xxx ctermfg = 186 ctermbg=64 guifg=#d7d787 guibg=#5f8700
-    VisualNOS({ fg = theme_yellow, bg = "#5f8700" }), -- VisualNOS      xxx ctermfg=186 ctermbg=64 guifg=#d7d787 guibg=#5f8700
-    WarningMsg({ fg = "#ff8787" }), -- WarningMsg     xxx ctermfg=210 guifg=#ff8787
-    Whitespace({ NonText }), -- Whitespace     xxx links to NonText
-    WildMenu({ fg = grey1, bg = theme_pale_yellow }), -- WildMenu       xxx ctermfg=235 ctermbg=186 guifg=#262626 guibg=#d7d787
-    Comment({ Conceal }), -- Comment        xxx ctermfg = 241 guifg=#666666
-    Constant({ fg = theme_pink }), -- Constant       xxx ctermfg=217 guifg=#ffafaf
-    String({ fg = theme_light_blue }), -- String         xxx ctermfg=117 guifg=#87d7ff
-    Character({ Constant }), -- Character      xxx links to Constant
-    Number({ Constant }), -- Number         xxx links to Constant
-    Boolean({ Constant }), -- Boolean        xxx links to Constant
-    Identifier({ fg = "#ff8787" }), -- Identifier     xxx ctermfg=210 guifg=#ff8787
-    Function({ fg = theme_yellow.li(60) }), -- Function       xxx ctermfg=223 guifg=#ffd7af
-    Statement({ gui = "bold", fg = theme_blue }), -- Statement      xxx cterm=bold ctermfg=68 gui=bold guifg=#5f87d7
-    Conditional({ Statement }), -- Conditional    xxx links to Statement
-    Repeat({ Statement }), -- Repeat         xxx links to Statement
-    Label({ Statement }), -- Label          xxx links to Statement
-    Operator({ fg = theme_orange }), -- Operator       xxx ctermfg=173 guifg=#d7875f
-    Keyword({ Statement }), -- Keyword        xxx links to Statement
-    Exception({ Statement }), -- Exception      xxx links to Statement
-    PreProc({ fg = theme_orange }), -- PreProc        xxx ctermfg=173 guifg=#d7875f
-    Include({ PreProc }), -- Include        xxx links to PreProc
-    Define({ gui = "bold", fg = theme_yellow }), -- Define         xxx cterm=bold ctermfg=220 gui=bold guifg=#ffd700
-    Macro({ PreProc }), -- Macro          xxx links to PreProc
-    PreCondit({ PreProc }), -- PreCondit      xxx links to PreProc
-    Type({ gui = "bold", fg = theme_blue }), -- Type           xxx cterm=bold ctermfg=68 gui=bold guifg=#5f87d7
-    StorageClass({ Type }), -- StorageClass   xxx links to Type
-    Structure({ fg = "#00ff00" }), -- Structure      xxx ctermfg=46 guifg=#00ff00
-    Typedef({ Type }), -- Typedef        xxx links to Type
-    Special({ fg = theme_yellow }), -- Special        xxx ctermfg=186 guifg=#d7d787
-    SpecialChar({ Special }), -- SpecialChar    xxx links to Special
-    Tag({ Special }), -- Tag            xxx links to Special
-    Delimiter({ Special }), -- Delimiter      xxx links to Special
-    SpecialComment({ Special }), -- SpecialComment xxx links to Special
-    Debug({ Special }), -- Debug          xxx links to Special
-    Underlined({ gui = "underline", fg = theme_blue }), -- Underlined     xxx cterm=underline ctermfg=68 gui=underline guifg=#5f87d7
-    Error({ gui = "reverse", fg = red, bg = white }), -- Error          xxx cterm=reverse ctermfg=196 ctermbg=231 gui=reverse guifg=#ff0000 guibg=#ffffff
-    Todo({ fg = red, bg = yellow }), -- Todo           xxx ctermfg=196 ctermbg=226 guifg=#ff0000 guibg=#ffff00
-    DiagnosticError({ fg = red }), -- DiagnosticError xxx ctermfg=1 guifg=Red
-    DiagnosticWarn({ fg = theme_orange }), -- DiagnosticWarn xxx ctermfg=3 guifg=Orange
-    DiagnosticInfo({ fg = "lightblue" }), -- DiagnosticInfo xxx ctermfg=4 guifg=LightBlue
-    DiagnosticHint({ fg = "lightgrey" }), -- DiagnosticHint xxx ctermfg=7 guifg=LightGrey
-    DiagnosticVirtualTextError({ DiagnosticError }), -- DiagnosticVirtualTextError xxx links to DiagnosticError
-    DiagnosticVirtualTextWarn({ DiagnosticWarn }), -- DiagnosticVirtualTextWarn xxx links to DiagnosticWarn
-    DiagnosticVirtualTextInfo({ DiagnosticInfo }), -- DiagnosticVirtualTextInfo xxx links to DiagnosticInfo
-    DiagnosticVirtualTextHint({ DiagnosticHint }), -- DiagnosticVirtualTextHint xxx links to DiagnosticHint
-    DiagnosticUnderlineError({ sp = red, gui = "underline" }), -- DiagnosticUnderlineError xxx cterm=underline gui=underline guisp=Red
-    DiagnosticUnderlineWarn({ sp = theme_orange, gui = "underline" }), -- DiagnosticUnderlineWarn xxx cterm=underline gui=underline guisp=Orange
-    DiagnosticUnderlineInfo({ sp = "lightblue", gui = "underline" }), -- DiagnosticUnderlineInfo xxx cterm=underline gui=underline guisp=LightBlue
-    DiagnosticUnderlineHint({ sp = "lightgrey", gui = "underline" }), -- DiagnosticUnderlineHint xxx cterm=underline gui=underline guisp=LightGrey
-    DiagnosticFloatingError({ DiagnosticError }), -- DiagnosticFloatingError xxx links to DiagnosticError
-    DiagnosticFloatingWarn({ DiagnosticWarn }), -- DiagnosticFloatingWarn xxx links to DiagnosticWarn
-    DiagnosticFloatingInfo({ DiagnosticInfo }), -- DiagnosticFloatingInfo xxx links to DiagnosticInfo
-    DiagnosticFloatingHint({ DiagnosticHint }), -- DiagnosticFloatingHint xxx links to DiagnosticHint
-    DiagnosticSignError({ DiagnosticError }), -- DiagnosticSignError xxx links to DiagnosticError
-    DiagnosticSignWarn({ DiagnosticWarn }), -- DiagnosticSignWarn xxx links to DiagnosticWarn
-    DiagnosticSignInfo({ DiagnosticInfo }), -- DiagnosticSignInfo xxx links to DiagnosticInfo
-    DiagnosticSignHint({ DiagnosticHint }), -- DiagnosticSignHint xxx links to DiagnosticHint
-    TSAttribute({ PreProc }), -- TSAttribute    xxx links to PreProc
-    TSComment({ Comment }), -- TSComment      xxx links to Comment
-    TSConstant({ Constant }), -- TSConstant     xxx links to Constant
-    TSConstBuiltin({ Special }), -- TSConstBuiltin xxx links to Special
-    TSConstMacro({ Define }), -- TSConstMacro   xxx links to Define
-    TSConstructor({ Special }), -- TSConstructor  xxx links to Special
-    TSDefine({ Define }), -- TSDefine       xxx links to Define
-    TSField({ Identifier }), -- TSField        xxx links to Identifier
-    TSFunction({ Function }), -- TSFunction     xxx links to Function
-    TSFuncBuiltin({ Special }), -- TSFuncBuiltin  xxx links to Special
-    TSMethod({ Function }), -- TSMethod       xxx links to Function
-    TSNone({}), -- TSNone         xxx cterm= gui=
-    TSOperator({ Operator }), -- TSOperator     xxx links to Operator
-    TSParameter({ Identifier }), -- TSParameter    xxx links to Identifier
-    TSPreProc({ PreProc }), -- TSPreProc      xxx links to PreProc
-    TSProperty({ Identifier }), -- TSProperty     xxx links to Identifier
-    TSString({ String }), -- TSString       xxx links to String
-    TSStringRegex({ String }), -- TSStringRegex  xxx links to String
-    TSSymbol({ Identifier }), -- TSSymbol       xxx links to Identifier
-    TSText({ TSNone }), -- TSText         xxx links to TSNone
-    TSStrong({ gui = "bold" }), -- TSStrong       xxx cterm=bold gui=bold
-    TSEmphasis({ gui = "italic" }), -- TSEmphasis     xxx cterm=italic gui=italic
-    TSUnderline({ gui = "underline" }), -- TSUnderline    xxx cterm=underline gui=underline
-    TSStrike({ gui = "strikethrough" }), -- TSStrike       xxx cterm=strikethrough gui=strikethrough
-    TSTitle({ Title }), -- TSTitle        xxx links to Title
-    TSLiteral({ String }), -- TSLiteral      xxx links to String
-    TSURI({ Underlined }), -- TSURI          xxx links to Underlined
-    TSMath({ Special }), -- TSMath         xxx links to Special
-    TSTextReference({ Constant }), -- TSTextReference xxx links to Constant
-    TSEnvironmentName({ Type }), -- TSEnvironmentName xxx links to Type
-    TSWarning({ Todo }), -- TSWarning      xxx links to Todo
-    TSDanger({ WarningMsg }), -- TSDanger       xxx links to WarningMsg
-    TSType({ Type }), -- TSType         xxx links to Type
-    TSTypeBuiltin({ Type }), -- TSTypeBuiltin  xxx links to Type
-    TSVariableBuiltin({ Special }), -- TSVariableBuiltin xxx links to Special
+    SignColumn                             { bg = grey1, }, -- SignColumn     xxx ctermbg=235 guibg=#262626
+    IncSearch                              { fg = black, bg = green, }, -- IncSearch      xxx ctermfg=16 ctermbg=46 guifg=#000000 guibg=#00ff00
+    Substitute                             { fg = black, bg = theme_orange, }, -- Substitute     xxx links to Search
+    LineNr                                 { fg = grey3, }, -- LineNr         xxx ctermfg=241 guifg=#666666
+    CursorLineNr                           { bg = grey2, }, -- CursorLineNr   xxx ctermbg=236 guibg=#333333
+    MatchParen                             { fg = black, bg = theme_pale_yellow, }, -- MatchParen     xxx ctermfg=16 ctermbg=220 guifg=#000000 guibg=#ffd700
+    ModeMsg                                { fg = grey1, bg = theme_pale_yellow, }, -- ModeMsg        xxx ctermfg=235 ctermbg=220 guifg=#262626 guibg=#ffd700
+    MsgSeparator                           { fg = black, bg = "#afaf87", }, -- MsgSeparator   xxx links to StatusLine
+    MoreMsg                                { fg = green, }, -- MoreMsg        xxx ctermfg=29 guifg=#00875f
+    NonText                                { fg = "#444466", }, -- NonText        xxx ctermfg=68 guifg=#444466
+    NormalFloat                            { bg = "#4a4a4a", }, -- NormalFloat    xxx links to Pmenu
+    Pmenu                                  { NormalFloat }, -- Pmenu          xxx ctermbg = 239 guibg=#4a4a4a
+    PmenuSel                               { fg = grey1, bg = theme_yellow, }, -- PmenuSel       xxx ctermfg=235 ctermbg=186 guifg=#262626 guibg=#d7d787
+    PmenuSbar                              { bg = grey1, }, -- PmenuSbar      xxx ctermbg=235 guibg=#262626
+    PmenuThumb                             { fg = black, bg = theme_yellow, }, -- PmenuThumb     xxx ctermbg=220 guibg=#ffd700
+    Question                               { fg = theme_yellow, }, -- Question       xxx ctermfg=220 guifg=#ffd700
+    QuickFixLine                           { fg = black, bg = theme_blue, }, -- QuickFixLine   xxx ctermfg=16 ctermbg=68 guifg=#000000 guibg=#5f87d7
+    Search                                 { Substitute }, -- Search         xxx ctermfg = 16 ctermbg = 173 guifg=#000000 guibg=#d7875f
+    SpecialKey                             { fg = green, }, -- SpecialKey     xxx ctermfg=29 guifg=#00875f
+    SpellBad                               { sp=red, gui="undercurl", fg = red, }, -- SpellBad       xxx cterm=underline ctermfg=196 gui=undercurl guifg=#ff0000 guisp=#ff0000
+    SpellCap                               { sp=yellow, gui="undercurl", fg = yellow, }, -- SpellCap       xxx cterm=underline ctermfg=226 gui=undercurl guifg=#ffff00 guisp=#ffff00
+    SpellLocal                             { sp=theme_pink, gui="undercurl", fg = "#ffafaf", }, -- SpellLocal     xxx cterm=underline ctermfg=217 gui=undercurl guifg=#ffafaf guisp=#ffafaf
+    SpellRare                              { sp=theme_pink.sa(-60), gui="undercurl", fg = theme_pink.sa(-60), }, -- SpellRare      xxx cterm=underline ctermfg=223 gui=undercurl guifg=#ffd7af guisp=#ffd7af
+    StatusLine                             { fg = yellow, bg = grey1, }, -- StatusLine     xxx ctermfg=16 ctermbg=144 guifg=#000000 guibg=#afaf87
+    StatusLineNC                           { fg = grey3, bg = "#afaf87", }, -- StatusLineNC   xxx ctermfg=241 ctermbg=144 guifg=#666666 guibg=#afaf87
+    TabLine                                { fg = grey3, bg = grey2, }, -- TabLine        xxx ctermfg=241 ctermbg=236 guifg=#666666 guibg=#333333
+    TabLineFill                            { fg = "#ff8787", bg = grey2, }, -- TabLineFill    xxx ctermfg=210 ctermbg=236 guifg=#ff8787 guibg=#333333
+    TabLineSel                             { fg = black, bg = "#afaf87", }, -- TabLineSel     xxx ctermfg=16 ctermbg=144 guifg=#000000 guibg=#afaf87
+    Title                                  { gui="bold", fg = theme_yellow, }, -- Title          xxx cterm=bold ctermfg=220 gui=bold guifg=#ffd700
+    Visual                                 { fg = black, bg = theme_pale_yellow }, -- Visual         xxx ctermfg = 186 ctermbg=64 guifg=#d7d787 guibg=#5f8700
+    VisualNOS                              { fg = theme_yellow, bg = "#5f8700", }, -- VisualNOS      xxx ctermfg=186 ctermbg=64 guifg=#d7d787 guibg=#5f8700
+    WarningMsg                             { fg = "#ff8787", }, -- WarningMsg     xxx ctermfg=210 guifg=#ff8787
+    Whitespace                             { NonText }, -- Whitespace     xxx links to NonText
+    WildMenu                               { fg = grey1, bg = theme_pale_yellow, }, -- WildMenu       xxx ctermfg=235 ctermbg=186 guifg=#262626 guibg=#d7d787
+    Comment                                { Conceal }, -- Comment        xxx ctermfg = 241 guifg=#666666
+    Constant                               { fg = theme_pink, }, -- Constant       xxx ctermfg=217 guifg=#ffafaf
+    String                                 { fg = theme_light_blue, }, -- String         xxx ctermfg=117 guifg=#87d7ff
+    Character                              { Constant }, -- Character      xxx links to Constant
+    Number                                 { Constant }, -- Number         xxx links to Constant
+    Boolean                                { Constant }, -- Boolean        xxx links to Constant
+    Identifier                             { fg = "#ff8787", }, -- Identifier     xxx ctermfg=210 guifg=#ff8787
+    Function                               { fg = theme_yellow.li(60), }, -- Function       xxx ctermfg=223 guifg=#ffd7af
+    Statement                              { gui="bold", fg = theme_blue, }, -- Statement      xxx cterm=bold ctermfg=68 gui=bold guifg=#5f87d7
+    Conditional                            { Statement }, -- Conditional    xxx links to Statement
+    Repeat                                 { Statement }, -- Repeat         xxx links to Statement
+    Label                                  { Statement }, -- Label          xxx links to Statement
+    Operator                               { fg = theme_orange, }, -- Operator       xxx ctermfg=173 guifg=#d7875f
+    Keyword                                { Statement }, -- Keyword        xxx links to Statement
+    Exception                              { Statement }, -- Exception      xxx links to Statement
+    PreProc                                { fg = theme_orange, }, -- PreProc        xxx ctermfg=173 guifg=#d7875f
+    Include                                { PreProc }, -- Include        xxx links to PreProc
+    Define                                 { gui="bold", fg = theme_yellow, }, -- Define         xxx cterm=bold ctermfg=220 gui=bold guifg=#ffd700
+    Macro                                  { PreProc }, -- Macro          xxx links to PreProc
+    PreCondit                              { PreProc }, -- PreCondit      xxx links to PreProc
+    Type                                   { gui="bold", fg = theme_blue, }, -- Type           xxx cterm=bold ctermfg=68 gui=bold guifg=#5f87d7
+    StorageClass                           { Type }, -- StorageClass   xxx links to Type
+    Structure                              { fg = "#00ff00", }, -- Structure      xxx ctermfg=46 guifg=#00ff00
+    Typedef                                { Type }, -- Typedef        xxx links to Type
+    Special                                { fg = theme_yellow, }, -- Special        xxx ctermfg=186 guifg=#d7d787
+    SpecialChar                            { Special }, -- SpecialChar    xxx links to Special
+    Tag                                    { Special }, -- Tag            xxx links to Special
+    Delimiter                              { Special }, -- Delimiter      xxx links to Special
+    SpecialComment                         { Special }, -- SpecialComment xxx links to Special
+    Debug                                  { Special }, -- Debug          xxx links to Special
+    Underlined                             { gui="underline", fg = theme_blue, }, -- Underlined     xxx cterm=underline ctermfg=68 gui=underline guifg=#5f87d7
+    Error                                  { gui="reverse", fg = red, bg = white, }, -- Error          xxx cterm=reverse ctermfg=196 ctermbg=231 gui=reverse guifg=#ff0000 guibg=#ffffff
+    Todo                                   { fg = red, bg = yellow, }, -- Todo           xxx ctermfg=196 ctermbg=226 guifg=#ff0000 guibg=#ffff00
+    DiagnosticError                        { fg = red, }, -- DiagnosticError xxx ctermfg=1 guifg=Red
+    DiagnosticWarn                         { fg = theme_orange, }, -- DiagnosticWarn xxx ctermfg=3 guifg=Orange
+    DiagnosticInfo                         { fg = "lightblue", }, -- DiagnosticInfo xxx ctermfg=4 guifg=LightBlue
+    DiagnosticHint                         { fg = "lightgrey", }, -- DiagnosticHint xxx ctermfg=7 guifg=LightGrey
+    DiagnosticVirtualTextError             { DiagnosticError }, -- DiagnosticVirtualTextError xxx links to DiagnosticError
+    DiagnosticVirtualTextWarn              { DiagnosticWarn }, -- DiagnosticVirtualTextWarn xxx links to DiagnosticWarn
+    DiagnosticVirtualTextInfo              { DiagnosticInfo }, -- DiagnosticVirtualTextInfo xxx links to DiagnosticInfo
+    DiagnosticVirtualTextHint              { DiagnosticHint }, -- DiagnosticVirtualTextHint xxx links to DiagnosticHint
+    DiagnosticUnderlineError               { sp=red, gui="underline", }, -- DiagnosticUnderlineError xxx cterm=underline gui=underline guisp=Red
+    DiagnosticUnderlineWarn                { sp=theme_orange, gui="underline", }, -- DiagnosticUnderlineWarn xxx cterm=underline gui=underline guisp=Orange
+    DiagnosticUnderlineInfo                { sp="lightblue", gui="underline", }, -- DiagnosticUnderlineInfo xxx cterm=underline gui=underline guisp=LightBlue
+    DiagnosticUnderlineHint                { sp="lightgrey", gui="underline", }, -- DiagnosticUnderlineHint xxx cterm=underline gui=underline guisp=LightGrey
+    DiagnosticFloatingError                { DiagnosticError }, -- DiagnosticFloatingError xxx links to DiagnosticError
+    DiagnosticFloatingWarn                 { DiagnosticWarn }, -- DiagnosticFloatingWarn xxx links to DiagnosticWarn
+    DiagnosticFloatingInfo                 { DiagnosticInfo }, -- DiagnosticFloatingInfo xxx links to DiagnosticInfo
+    DiagnosticFloatingHint                 { DiagnosticHint }, -- DiagnosticFloatingHint xxx links to DiagnosticHint
+    DiagnosticSignError                    { DiagnosticError }, -- DiagnosticSignError xxx links to DiagnosticError
+    DiagnosticSignWarn                     { DiagnosticWarn }, -- DiagnosticSignWarn xxx links to DiagnosticWarn
+    DiagnosticSignInfo                     { DiagnosticInfo }, -- DiagnosticSignInfo xxx links to DiagnosticInfo
+    DiagnosticSignHint                     { DiagnosticHint }, -- DiagnosticSignHint xxx links to DiagnosticHint
+    TSAttribute                            { PreProc }, -- TSAttribute    xxx links to PreProc
+    TSComment                              { Comment }, -- TSComment      xxx links to Comment
+    TSConstant                             { Constant }, -- TSConstant     xxx links to Constant
+    TSConstBuiltin                         { Special }, -- TSConstBuiltin xxx links to Special
+    TSConstMacro                           { Define }, -- TSConstMacro   xxx links to Define
+    TSConstructor                          { Special }, -- TSConstructor  xxx links to Special
+    TSDefine                               { Define }, -- TSDefine       xxx links to Define
+    TSField                                { Identifier }, -- TSField        xxx links to Identifier
+    TSFunction                             { Function }, -- TSFunction     xxx links to Function
+    TSFuncBuiltin                          { Special }, -- TSFuncBuiltin  xxx links to Special
+    TSMethod                               { Function }, -- TSMethod       xxx links to Function
+    TSNone                                 { }, -- TSNone         xxx cterm= gui=
+    TSOperator                             { Operator }, -- TSOperator     xxx links to Operator
+    TSParameter                            { Identifier }, -- TSParameter    xxx links to Identifier
+    TSPreProc                              { PreProc }, -- TSPreProc      xxx links to PreProc
+    TSProperty                             { Identifier }, -- TSProperty     xxx links to Identifier
+    TSString                               { String }, -- TSString       xxx links to String
+    TSStringRegex                          { String }, -- TSStringRegex  xxx links to String
+    TSSymbol                               { Identifier }, -- TSSymbol       xxx links to Identifier
+    TSText                                 { TSNone }, -- TSText         xxx links to TSNone
+    TSStrong                               { gui="bold", }, -- TSStrong       xxx cterm=bold gui=bold
+    TSEmphasis                             { gui="italic", }, -- TSEmphasis     xxx cterm=italic gui=italic
+    TSUnderline                            { gui="underline", }, -- TSUnderline    xxx cterm=underline gui=underline
+    TSStrike                               { gui="strikethrough", }, -- TSStrike       xxx cterm=strikethrough gui=strikethrough
+    TSTitle                                { Title }, -- TSTitle        xxx links to Title
+    TSLiteral                              { String }, -- TSLiteral      xxx links to String
+    TSURI                                  { Underlined }, -- TSURI          xxx links to Underlined
+    TSMath                                 { Special }, -- TSMath         xxx links to Special
+    TSTextReference                        { Constant }, -- TSTextReference xxx links to Constant
+    TSEnvironmentName                      { Type }, -- TSEnvironmentName xxx links to Type
+    TSWarning                              { Todo }, -- TSWarning      xxx links to Todo
+    TSDanger                               { WarningMsg }, -- TSDanger       xxx links to WarningMsg
+    TSType                                 { Type }, -- TSType         xxx links to Type
+    TSTypeBuiltin                          { Type }, -- TSTypeBuiltin  xxx links to Type
+    TSVariableBuiltin                      { Special }, -- TSVariableBuiltin xxx links to Special
 
-    TelescopeMatching({ fg = theme_yellow }), -- TelescopeMatching xxx links to Special
-    TelescopeSelection({ CursorLine }), -- TelescopeSelection xxx links to Visual
+    TelescopeMatching                      { fg = theme_yellow }, -- TelescopeMatching xxx links to Special
+    TelescopeSelection                     { CursorLine }, -- TelescopeSelection xxx links to Visual
+
+    -- Lualine
+    lualine_c_normal                       { bg=grey2, fg=white, }, -- lualine_c_normal xxx guifg=#ffffff guibg=#292929
+    lualine_a_normal                       { bg=theme_pale_yellow, gui="bold", fg=grey1, }, -- lualine_a_normal xxx gui=bold guifg=#292929 guibg=#ffee00
+    lualine_b_normal                       { bg=grey2, fg=theme_pale_yellow, }, -- lualine_b_normal xxx guifg=#ffee00 guibg=#292929
+    lualine_c_insert                       { lualine_c_normal }, -- lualine_c_insert xxx guifg=#ffffff guibg=#292929
+    lualine_a_insert                       { bg=theme_blue, gui="bold", fg=black, }, -- lualine_a_insert xxx gui=bold guifg=#292929 guibg=#92ebff
+    lualine_b_insert                       { bg=grey2, fg=theme_light_blue, }, -- lualine_b_insert xxx guifg=#92ebff guibg=#292929
+    lualine_c_visual                       { lualine_c_normal }, -- lualine_c_visual xxx guifg=#ffffff guibg=#292929
+    lualine_a_visual                       { bg=theme_light_blue, gui="bold", fg=black, }, -- lualine_a_visual xxx gui=bold guifg=#292929 guibg=#ffee00
+    lualine_b_visual                       { lualine_b_normal }, -- lualine_b_visual xxx guifg=#ffee00 guibg=#292929
+    lualine_c_replace                      { lualine_c_normal }, -- lualine_c_replace xxx guifg=#ffffff guibg=#292929
+    lualine_a_replace                      { bg=theme_pink, gui="bold", fg=grey1, }, -- lualine_a_replace xxx gui=bold guifg=#292929 guibg=#ffbebe
+    lualine_b_replace                      { bg=grey2, fg=theme_pink, }, -- lualine_b_replace xxx guifg=#ffbebe guibg=#292929
+    lualine_c_terminal                     { lualine_c_normal }, -- lualine_c_terminal xxx guifg=#ffffff guibg=#292929
+    lualine_a_terminal                     { bg=theme_pink.da(12), gui="bold", fg=black, }, -- lualine_a_terminal xxx gui=bold guifg=#292929 guibg=#ff9494
+    lualine_b_terminal                     { lualine_b_replace }, -- lualine_b_terminal xxx guifg=#ff9494 guibg=#292929
+    lualine_c_command                      { lualine_c_normal }, -- lualine_c_command xxx guifg=#ffffff guibg=#292929
+    lualine_a_command                      { lualine_a_terminal }, -- lualine_a_command xxx gui=bold guifg=#292929 guibg=#ff9494
+    lualine_b_command                      { lualine_b_replace }, -- lualine_b_command xxx guifg=#ff9494 guibg=#292929
+    lualine_c_inactive                     { lualine_c_normal }, -- lualine_c_inactive xxx guifg=#ffffff guibg=#292929
+    lualine_a_inactive                     { lualine_a_normal }, -- lualine_a_inactive xxx gui=bold guifg=#292929 guibg=#ffee00
+    lualine_b_inactive                     { bg=grey2, fg=theme_pale_yellow, }, -- lualine_b_inactive xxx guifg=#ffee00 guibg=#292929
+    lualine_b_diff_added_normal            { bg=grey2, fg=green, }, -- lualine_b_diff_added_normal xxx guifg=#4bb814 guibg=#292929
+    lualine_b_diff_added_insert            { bg=grey2, fg=green, }, -- lualine_b_diff_added_insert xxx guifg=#4bb814 guibg=#292929
+    lualine_b_diff_added_visual            { bg=grey2, fg=green, }, -- lualine_b_diff_added_visual xxx guifg=#4bb814 guibg=#292929
+    lualine_b_diff_added_replace           { bg=grey2, fg=green, }, -- lualine_b_diff_added_replace xxx guifg=#4bb814 guibg=#292929
+    lualine_b_diff_added_command           { bg=grey2, fg=green, }, -- lualine_b_diff_added_command xxx guifg=#4bb814 guibg=#292929
+    lualine_b_diff_added_terminal          { bg=grey2, fg=green, }, -- lualine_b_diff_added_terminal xxx guifg=#4bb814 guibg=#292929
+    lualine_b_diff_added_inactive          { bg=grey2, fg=green, }, -- lualine_b_diff_added_inactive xxx guifg=#4bb814 guibg=#292929
+    lualine_b_diff_modified_normal         { bg=grey2, fg=yellow, }, -- lualine_b_diff_modified_normal xxx guifg=#f4ed25 guibg=#292929
+    lualine_b_diff_modified_insert         { bg=grey2, fg=yellow, }, -- lualine_b_diff_modified_insert xxx guifg=#f4ed25 guibg=#292929
+    lualine_b_diff_modified_visual         { bg=grey2, fg=yellow, }, -- lualine_b_diff_modified_visual xxx guifg=#f4ed25 guibg=#292929
+    lualine_b_diff_modified_replace        { bg=grey2, fg=yellow, }, -- lualine_b_diff_modified_replace xxx guifg=#f4ed25 guibg=#292929
+    lualine_b_diff_modified_command        { bg=grey2, fg=yellow, }, -- lualine_b_diff_modified_command xxx guifg=#f4ed25 guibg=#292929
+    lualine_b_diff_modified_terminal       { bg=grey2, fg=yellow, }, -- lualine_b_diff_modified_terminal xxx guifg=#f4ed25 guibg=#292929
+    lualine_b_diff_modified_inactive       { bg=grey2, fg=yellow, }, -- lualine_b_diff_modified_inactive xxx guifg=#f4ed25 guibg=#292929
+    lualine_b_diff_removed_normal          { bg=grey2, fg=red, }, -- lualine_b_diff_removed_normal xxx guifg=#cc0000 guibg=#292929
+    lualine_b_diff_removed_insert          { bg=grey2, fg=red, }, -- lualine_b_diff_removed_insert xxx guifg=#cc0000 guibg=#292929
+    lualine_b_diff_removed_visual          { bg=grey2, fg=red, }, -- lualine_b_diff_removed_visual xxx guifg=#cc0000 guibg=#292929
+    lualine_b_diff_removed_replace         { bg=grey2, fg=red, }, -- lualine_b_diff_removed_replace xxx guifg=#cc0000 guibg=#292929
+    lualine_b_diff_removed_command         { bg=grey2, fg=red, }, -- lualine_b_diff_removed_command xxx guifg=#cc0000 guibg=#292929
+    lualine_b_diff_removed_terminal        { bg=grey2, fg=red, }, -- lualine_b_diff_removed_terminal xxx guifg=#cc0000 guibg=#292929
+    lualine_b_diff_removed_inactive        { bg=grey2, fg=red, }, -- lualine_b_diff_removed_inactive xxx guifg=#cc0000 guibg=#292929
+    lualine_b_diagnostics_error_normal     { bg=grey2, fg=red, }, -- lualine_b_diagnostics_error_normal xxx guifg=#cc0000 guibg=#292929
+    lualine_b_diagnostics_error_insert     { bg=grey2, fg=red, }, -- lualine_b_diagnostics_error_insert xxx guifg=#cc0000 guibg=#292929
+    lualine_b_diagnostics_error_visual     { bg=grey2, fg=red, }, -- lualine_b_diagnostics_error_visual xxx guifg=#cc0000 guibg=#292929
+    lualine_b_diagnostics_error_replace    { bg=grey2, fg=red, }, -- lualine_b_diagnostics_error_replace xxx guifg=#cc0000 guibg=#292929
+    lualine_b_diagnostics_error_command    { bg=grey2, fg=red, }, -- lualine_b_diagnostics_error_command xxx guifg=#cc0000 guibg=#292929
+    lualine_b_diagnostics_error_terminal   { bg=grey2, fg=red, }, -- lualine_b_diagnostics_error_terminal xxx guifg=#cc0000 guibg=#292929
+    lualine_b_diagnostics_error_inactive   { bg=grey2, fg=red, }, -- lualine_b_diagnostics_error_inactive xxx guifg=#cc0000 guibg=#292929
+    lualine_b_diagnostics_warn_normal      { bg=grey2, fg=theme_orange, }, -- lualine_b_diagnostics_warn_normal xxx guifg=#d78860 guibg=#292929
+    lualine_b_diagnostics_warn_insert      { bg=grey2, fg=theme_orange, }, -- lualine_b_diagnostics_warn_insert xxx guifg=#d78860 guibg=#292929
+    lualine_b_diagnostics_warn_visual      { bg=grey2, fg=theme_orange, }, -- lualine_b_diagnostics_warn_visual xxx guifg=#d78860 guibg=#292929
+    lualine_b_diagnostics_warn_replace     { bg=grey2, fg=theme_orange, }, -- lualine_b_diagnostics_warn_replace xxx guifg=#d78860 guibg=#292929
+    lualine_b_diagnostics_warn_command     { bg=grey2, fg=theme_orange, }, -- lualine_b_diagnostics_warn_command xxx guifg=#d78860 guibg=#292929
+    lualine_b_diagnostics_warn_terminal    { bg=grey2, fg=theme_orange, }, -- lualine_b_diagnostics_warn_terminal xxx guifg=#d78860 guibg=#292929
+    lualine_b_diagnostics_warn_inactive    { bg=grey2, fg=theme_orange, }, -- lualine_b_diagnostics_warn_inactive xxx guifg=#d78860 guibg=#292929
+    lualine_b_diagnostics_info_normal      { bg=grey2, fg=theme_light_blue, }, -- lualine_b_diagnostics_info_normal xxx guifg=#add8e6 guibg=#292929
+    lualine_b_diagnostics_info_insert      { bg=grey2, fg=theme_light_blue, }, -- lualine_b_diagnostics_info_insert xxx guifg=#add8e6 guibg=#292929
+    lualine_b_diagnostics_info_visual      { bg=grey2, fg=theme_light_blue, }, -- lualine_b_diagnostics_info_visual xxx guifg=#add8e6 guibg=#292929
+    lualine_b_diagnostics_info_replace     { bg=grey2, fg=theme_light_blue, }, -- lualine_b_diagnostics_info_replace xxx guifg=#add8e6 guibg=#292929
+    lualine_b_diagnostics_info_command     { bg=grey2, fg=theme_light_blue, }, -- lualine_b_diagnostics_info_command xxx guifg=#add8e6 guibg=#292929
+    lualine_b_diagnostics_info_terminal    { bg=grey2, fg=theme_light_blue, }, -- lualine_b_diagnostics_info_terminal xxx guifg=#add8e6 guibg=#292929
+    lualine_b_diagnostics_info_inactive    { bg=grey2, fg=theme_light_blue, }, -- lualine_b_diagnostics_info_inactive xxx guifg=#add8e6 guibg=#292929
+    lualine_b_diagnostics_hint_normal      { bg=grey2, fg=theme_pale_yellow.li(30), }, -- lualine_b_diagnostics_hint_normal xxx guifg=#d3d3d3 guibg=#292929
+    lualine_b_diagnostics_hint_insert      { bg=grey2, fg=theme_pale_yellow.li(30), }, -- lualine_b_diagnostics_hint_insert xxx guifg=#d3d3d3 guibg=#292929
+    lualine_b_diagnostics_hint_visual      { bg=grey2, fg=theme_pale_yellow.li(30), }, -- lualine_b_diagnostics_hint_visual xxx guifg=#d3d3d3 guibg=#292929
+    lualine_b_diagnostics_hint_replace     { bg=grey2, fg=theme_pale_yellow.li(30), }, -- lualine_b_diagnostics_hint_replace xxx guifg=#d3d3d3 guibg=#292929
+    lualine_b_diagnostics_hint_command     { bg=grey2, fg=theme_pale_yellow.li(30), }, -- lualine_b_diagnostics_hint_command xxx guifg=#d3d3d3 guibg=#292929
+    lualine_b_diagnostics_hint_terminal    { bg=grey2, fg=theme_pale_yellow.li(30), }, -- lualine_b_diagnostics_hint_terminal xxx guifg=#d3d3d3 guibg=#292929
+    lualine_b_diagnostics_hint_inactive    { bg=grey2, fg=theme_pale_yellow.li(30), }, -- lualine_b_diagnostics_hint_inactive xxx guifg=#d3d3d3 guibg=#292929
   }
 end)
 return theme

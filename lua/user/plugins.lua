@@ -43,6 +43,7 @@ packer.startup(function(use)
   use("https://github.com/dinhhuy258/git.nvim")
 
   -- This is fine
+  use("https://github.com/nvim-lualine/lualine.nvim")
   use("https://github.com/windwp/nvim-autopairs")
   use("https://github.com/ggandor/leap.nvim")
   use("https://github.com/numToStr/Comment.nvim")

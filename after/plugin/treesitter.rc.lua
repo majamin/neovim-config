@@ -3,15 +3,8 @@ if not status then
   return
 end
 
+-- See https://github.com/nvim-treesitter/nvim-treesitter#available-modules
 ts.setup({
-  highlight = {
-    enable = true,
-    disable = {},
-  },
-  indent = {
-    enable = true,
-    disable = {},
-  },
   ensure_installed = {
     "typescript",
     "tsx",
@@ -24,8 +17,26 @@ ts.setup({
     "lua",
     "vue",
   },
+  highlight = {
+    enable = true,
+    disable = {},
+  },
+  indent = {
+    enable = true,
+    disable = {},
+  },
   autotag = {
     enable = true,
+  },
+  -- 'nvim-treesitter-incremental-selection-mod'
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "gnn",
+      node_incremental = "grn",
+      scope_incremental = "grc",
+      node_decremental = "grm",
+    },
   },
 })
 
