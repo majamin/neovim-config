@@ -3,42 +3,77 @@ if not status then
   return
 end
 
+vim.cmd("TSUpdate")
+
 -- See https://github.com/nvim-treesitter/nvim-treesitter#available-modules
 ts.setup({
   ensure_installed = {
-    "typescript",
-    "tsx",
-    "toml",
-    "php",
-    "json",
-    "yaml",
+    "bash",
+    "cmake",
     "css",
+    "dockerfile",
+    "go",
+    "hcl",
     "html",
+    "java",
+    "javascript",
+    "json",
+    "latex",
     "lua",
+    "markdown",
+    "python",
+    "query", -- for treesitter/playground
+    "toml",
+    "typescript",
     "vue",
-  },
+    "yaml",
+  }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  ignore_install = {}, -- List of parsers to ignore installing
   highlight = {
-    enable = true,
-    disable = {},
+    enable = true, -- false will disable the whole extension
+    disable = {}, -- list of language that will be disabled
   },
-  indent = {
-    enable = true,
-    disable = {},
-  },
-  autotag = {
-    enable = true,
-  },
-  -- 'nvim-treesitter-incremental-selection-mod'
   incremental_selection = {
     enable = true,
     keymaps = {
-      init_selection = "gnn",
-      node_incremental = "grn",
-      scope_incremental = "grc",
-      node_decremental = "grm",
+      init_selection = "<CR>",
+      scope_incremental = "<CR>",
+      node_incremental = "<TAB>",
+      node_decremental = "<S-TAB>",
+    },
+  },
+  endwise = {
+    enable = true,
+  },
+  indent = { enable = true },
+  autopairs = { enable = true },
+  -- requires https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+  textobjects = {
+    select = {
+      enable = true,
+      -- Automatically jump forward to textobj, similar to targets.vim
+      lookahead = true,
+      keymaps = {
+        -- You can use the capture groups defined in textobjects.scm
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+        ["al"] = "@loop.outer",
+        ["il"] = "@loop.inner",
+        ["ib"] = "@block.inner",
+        ["ab"] = "@block.outer",
+        ["ir"] = "@parameter.inner",
+        ["ar"] = "@parameter.outer",
+      },
+      lsp_interop = {
+        enable = true,
+        border = "none",
+        peek_definition_code = {
+          [";dF"] = "@function.outer",
+          [";dC"] = "@class.outer",
+        },
+      },
     },
   },
 })
-
-local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-parser_config.tsx.filetype_to_parsername = { "javascript", "typescript.tsx" }

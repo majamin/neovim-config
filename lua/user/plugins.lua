@@ -26,14 +26,9 @@ packer.startup(function(use)
   use("https://github.com/williamboman/mason-lspconfig.nvim")
   use("https://github.com/glepnir/lspsaga.nvim")
   use("https://github.com/L3MON4D3/LuaSnip")
-  use({
-    "https://github.com/nvim-treesitter/nvim-treesitter",
-    run = function()
-      if pcall(require, "nvim-treesitter") then
-        vim.cmd("TSUpdate")
-      end
-    end,
-  })
+  use("https://github.com/nvim-treesitter/nvim-treesitter")
+  use("https://github.com/nvim-treesitter/nvim-treesitter-textobjects")
+  use("https://github.com/nvim-treesitter/playground")
 
   -- See everything, go fast
   use("https://github.com/ThePrimeagen/harpoon")

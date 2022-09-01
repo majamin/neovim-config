@@ -1,33 +1,38 @@
 -- Non-plugin based keymaps
-
+local opts = { silent = true }
+local expr_opts = { silent = true, expr = true }
 vim.keymap.set("n", "x", '"_x')
 
--- Increment/decrement
-vim.keymap.set("n", "+", "<C-a>")
-vim.keymap.set("n", "-", "<C-x>")
+--Remap for dealing with visual line wraps
+vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", expr_opts)
+vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", expr_opts)
+
+-- better indenting
+vim.keymap.set("v", "<", "<gv", opts)
+vim.keymap.set("v", ">", ">gv", opts)
 
 -- Browse buffers
-vim.keymap.set("n", "<Tab>", ":bnext<CR>")
-vim.keymap.set("n", "<S-Tab>", ":bprev<CR>")
+vim.keymap.set("n", "<Tab>", ":bnext<CR>", opts)
+vim.keymap.set("n", "<S-Tab>", ":bprev<CR>", opts)
 
 -- Move window
-vim.keymap.set("", "<C-h>", "<C-w>h")
-vim.keymap.set("", "<C-k>", "<C-w>k")
-vim.keymap.set("", "<C-j>", "<C-w>j")
-vim.keymap.set("", "<C-l>", "<C-w>l")
+vim.keymap.set("", "<C-h>", "<C-w>h", opts)
+vim.keymap.set("", "<C-k>", "<C-w>k", opts)
+vim.keymap.set("", "<C-j>", "<C-w>j", opts)
+vim.keymap.set("", "<C-l>", "<C-w>l", opts)
 
 -- Resize window
-vim.keymap.set("n", "<left>", "<C-w><")
-vim.keymap.set("n", "<right>", "<C-w>>")
-vim.keymap.set("n", "<up>", "<C-w>+")
-vim.keymap.set("n", "<down>", "<C-w>-")
+vim.keymap.set("n", "<left>", "<C-w><", opts)
+vim.keymap.set("n", "<right>", "<C-w>>", opts)
+vim.keymap.set("n", "<up>", "<C-w>+", opts)
+vim.keymap.set("n", "<down>", "<C-w>-", opts)
 
-vim.keymap.set("n", "<ESC>", ":noh<CR>")
+vim.keymap.set("n", "<ESC>", ":noh<CR>", opts)
 
-vim.keymap.set("n", "<F3>", ":setlocal spell! spelllang=en_ca<CR>")
-vim.keymap.set("n", "<F4>", ":setlocal spell! spelllang=en-basic<CR>")
+vim.keymap.set("n", "<F3>", ":setlocal spell! spelllang=en_ca<CR>", opts)
+vim.keymap.set("n", "<F4>", ":setlocal spell! spelllang=en-basic<CR>", opts)
 
-vim.keymap.set("n", "<C-b>", ":bp|bd #<CR>")
-vim.keymap.set("n", "<C-q>", "<C-w>q")
+vim.keymap.set("n", "<C-b>", ":bp|bd #<CR>", opts)
+vim.keymap.set("n", "<C-q>", "<C-w>q", opts)
 
-vim.keymap.set("t", "<ESC><ESC>", "<C-\\><C-n>")
+vim.keymap.set("t", "<ESC><ESC>", "<C-\\><C-n>", opts)

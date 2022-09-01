@@ -15,8 +15,8 @@ o.fileencoding = "utf-8" -- the encoding written to a file
 o.foldenable = false -- don't start files folded; enable with zi; wait for https://github.com/neovim/neovim/pull/17446
 o.foldcolumn = "1"
 o.foldlevelstart = 99 -- Using ufo provider need a large value, feel free to decrease the value
-o.foldmethod = "expr"
-o.foldexpr = "nvim_treesitter#foldexpr()"
+-- o.foldmethod = "expr"
+-- o.foldexpr = "nvim_treesitter#foldexpr()"
 o.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50" -- block in normal and beam cursor in insert mode
 o.history = 500 -- Use the 'history' option to set the number of lines from command mode that are remembered.
 o.hlsearch = true -- highlight all matches on previous search pattern
@@ -61,3 +61,4 @@ o.wildignore = [[
 *.swp,.lock,.DS_Store,._*
 */tmp/*,*.so,*.swp,*.zip,**/node_modules/**,**/target/**,**.terraform/**"
 ]]
+o.wrap = false
