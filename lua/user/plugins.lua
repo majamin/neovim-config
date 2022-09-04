@@ -17,6 +17,7 @@ packer.startup(function(use)
   use("https://github.com/hrsh7th/cmp-nvim-lua") -- Hack Neovim
   use("https://github.com/saadparwaiz1/cmp_luasnip")
   use("https://github.com/hrsh7th/cmp-buffer")
+  use("https://github.com/rafamadriz/friendly-snippets")
 
   -- LSP
   use("https://github.com/neovim/nvim-lspconfig")
