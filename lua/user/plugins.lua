@@ -7,6 +7,9 @@ if not status then
 end
 
 packer.startup(function(use)
+  -- Better startup times
+  use("https://github.com/lewis6991/impatient.nvim")
+
   -- Deps
   use("https://github.com/wbthomason/packer.nvim")
   use("https://github.com/kyazdani42/nvim-web-devicons")

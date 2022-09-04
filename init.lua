@@ -1,3 +1,8 @@
+local status, impatient = pcall(require, "impatient")
+if status then
+  impatient.enable_profile()
+end
+
 -- Don't forget to set your user defaults:
 -- lua/user/user-conf.lua
 require("user.user-conf")
