@@ -7,7 +7,16 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 
 -- Use `<ESC>` to close windows
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "lspsagafinder", "help", "startuptime", "qf", "lspinfo", "fugitive", "null-ls-info" },
+  pattern = {
+    "lspsagafinder",
+    "sagacodeactions",
+    "help",
+    "startuptime",
+    "qf",
+    "lspinfo",
+    "fugitive",
+    "null-ls-info",
+  },
   command = [[nnoremap <buffer><silent> <ESC> :close<CR>]],
 })
 

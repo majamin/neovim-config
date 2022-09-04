@@ -41,6 +41,7 @@ packer.startup(function(use)
   -- This is fine
   use("https://github.com/nvim-lualine/lualine.nvim")
   use("https://github.com/windwp/nvim-autopairs")
+  use("https://github.com/lukas-reineke/indent-blankline.nvim")
   use("https://github.com/ggandor/leap.nvim")
   use("https://github.com/numToStr/Comment.nvim")
   use("https://github.com/tpope/vim-surround")
