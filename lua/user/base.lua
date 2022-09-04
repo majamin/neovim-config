@@ -2,6 +2,9 @@ local o = vim.opt
 local fn = vim.fn
 
 -- vim.cmd("colorscheme slate") -- best native fallback
+-- vim.cmd([[
+-- hi Cursor guifg=#000000 guibg=#11f0c3
+-- ]])
 
 o.backup = false -- creates a backup file
 o.clipboard = "unnamedplus" -- allows neovim to access the system clipboard
@@ -17,7 +20,9 @@ o.foldcolumn = "1"
 o.foldlevelstart = 99 -- Using ufo provider need a large value, feel free to decrease the value
 -- o.foldmethod = "expr"
 -- o.foldexpr = "nvim_treesitter#foldexpr()"
+-- o.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175"
 o.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50" -- block in normal and beam cursor in insert mode
+-- o.guicursor = "n-v-c:block"
 o.history = 500 -- Use the 'history' option to set the number of lines from command mode that are remembered.
 o.hlsearch = true -- highlight all matches on previous search pattern
 o.ignorecase = true -- ignore case in search patterns
@@ -26,8 +31,7 @@ o.lazyredraw = true -- do not redraw screen while running macros
 o.list = true
 o.listchars = "eol:¬,tab:>·,trail:~,extends:>,precedes:<"
 o.mouse = ""
-o.number = false
-o.relativenumber = true
+o.number = true
 o.scrolloff = 3 -- Minimal number of screen lines to keep above and below the cursor
 o.shiftwidth = 2 -- the number of spaces inserted for each indentation
 o.shortmess = o.shortmess + "c" -- prevent "pattern not found" messages

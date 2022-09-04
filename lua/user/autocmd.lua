@@ -5,10 +5,10 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   group = TrimWhiteSpaceGrp,
 })
 
--- Use `q` to close windows
+-- Use `<ESC>` to close windows
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "help", "startuptime", "qf", "lspinfo", "fugitive", "null-ls-info" },
-  command = [[nnoremap <buffer><silent> q :close<CR>]],
+  pattern = { "lspsagafinder", "help", "startuptime", "qf", "lspinfo", "fugitive", "null-ls-info" },
+  command = [[nnoremap <buffer><silent> <ESC> :close<CR>]],
 })
 
 -- Use `q` to quit man-style pages
@@ -24,4 +24,11 @@ vim.api.nvim_create_autocmd(
 vim.api.nvim_create_autocmd("InsertLeave", {
   pattern = "*",
   command = "set nopaste",
+})
+
+-- Highlight on yank
+local yankGrp = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
+vim.api.nvim_create_autocmd("TextYankPost", {
+  command = "silent! lua vim.highlight.on_yank()",
+  group = yankGrp,
 })

@@ -31,9 +31,9 @@ local theme = lush(function()
     Normal                                 { fg = white, bg = grey1, }, -- Normal         xxx ctermfg=231 ctermbg=235 guifg=#ffffff guibg=#262626
     ColorColumn                            { bg = black, }, -- ColorColumn    xxx ctermbg=16 guibg=#000000
     Conceal                                { fg = grey4, }, -- Conceal        xxx ctermfg=241 guifg=#666666
-    Cursor                                 { fg = grey2, bg = theme_pale_yellow, }, -- Cursor         xxx guifg=#333333 guibg=#d7d787
-    lCursor                                { fg = grey1, bg = theme_pink, }, -- lCursor        xxx guifg=#262626 guibg=#ffafaf
-    CursorColumn                           { bg = grey2, }, -- CursorColumn   xxx ctermbg=236 guibg=#333333
+    -- Cursor                                 { fg = grey2, bg = theme_yellow, }, -- Cursor         xxx guifg=#333333 guibg=#d7d787
+    -- lCursor                                { fg = grey1, bg = theme_pink, }, -- lCursor        xxx guifg=#262626 guibg=#ffafaf
+    -- CursorColumn                           { bg = grey2, }, -- CursorColumn   xxx ctermbg=236 guibg=#333333
     CursorLine                             { bg = grey2, }, -- CursorLine     xxx ctermbg=236 guibg=#333333
     Directory                              { gui="bold", fg = green, }, -- Directory      xxx cterm=bold ctermfg=29 gui=bold guifg=#00875f
     DiffAdd                                { fg = green }, -- Diff mode: Added line |diff.txt|

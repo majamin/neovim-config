@@ -9,3 +9,7 @@ require("user.autocmd")
 require("user.highlights")
 require("user.slate_new.colors.slate_new")
 require("user.vimwiki")
+
+-- Fixes the cursor colors in Windows Terminal
+-- https://github.com/microsoft/terminal/issues/9610
+require("user.windows")
