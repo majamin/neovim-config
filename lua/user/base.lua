@@ -2,9 +2,7 @@ local o = vim.opt
 local fn = vim.fn
 
 -- vim.cmd("colorscheme slate") -- best native fallback
--- vim.cmd([[
--- hi Cursor guifg=#000000 guibg=#11f0c3
--- ]])
+vim.cmd("colorscheme tender")
 
 o.backup = false -- creates a backup file
 o.clipboard = "unnamedplus" -- allows neovim to access the system clipboard
@@ -53,17 +51,4 @@ o.undofile = true -- enable/disable undo file creation
 o.updatetime = 300 -- faster completion
 o.wildignorecase = true -- When set case is ignored when completing file names and directories
 o.wildmode = "full"
-o.wildignore = [[
-.git,.hg,.svn
-*.aux,*.out,*.toc
-*.o,*.obj,*.exe,*.dll,*.manifest,*.rbc,*.class
-*.ai,*.bmp,*.gif,*.ico,*.jpg,*.jpeg,*.png,*.psd,*.webp
-*.avi,*.divx,*.mp4,*.webm,*.mov,*.m2ts,*.mkv,*.vob,*.mpg,*.mpeg
-*.mp3,*.oga,*.ogg,*.wav,*.flac
-*.eot,*.otf,*.ttf,*.woff
-*.doc,*.pdf,*.cbr,*.cbz
-*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz,*.kgb
-*.swp,.lock,.DS_Store,._*
-*/tmp/*,*.so,*.swp,*.zip,**/node_modules/**,**/target/**,**.terraform/**"
-]]
 o.wrap = false

@@ -35,9 +35,13 @@ vim.api.nvim_create_autocmd("InsertLeave", {
   command = "set nopaste",
 })
 
--- Highlight on yank
-local yankGrp = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
+-- [[ Highlight on yank ]]
+-- See `:help vim.highlight.on_yank()`
+local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
-  command = "silent! lua vim.highlight.on_yank()",
-  group = yankGrp,
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+  group = highlight_group,
+  pattern = "*",
 })

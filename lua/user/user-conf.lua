@@ -9,6 +9,7 @@ M.lang = "en_ca" -- Canadian English
 M.servers = {
   "sumneko_lua",
   "tsserver",
+  "cssls",
   "volar",
   "tailwindcss",
   "pyright",

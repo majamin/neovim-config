@@ -42,6 +42,7 @@ packer.startup(function(use)
   use("https://github.com/dinhhuy258/git.nvim")
 
   -- This is fine
+  use("https://github.com/jacoborus/tender.vim")
   use("https://github.com/nvim-lualine/lualine.nvim")
   use("https://github.com/windwp/nvim-autopairs")
   use("https://github.com/lukas-reineke/indent-blankline.nvim")
@@ -50,7 +51,12 @@ packer.startup(function(use)
   use("https://github.com/tpope/vim-surround")
   use("https://github.com/norcalli/nvim-colorizer.lua")
   use("https://github.com/vimwiki/vimwiki")
-
-  -- Make your own color theme!
-  use("rktjmp/lush.nvim")
 end)
+
+-- Automatically source and re-compile packer whenever you save this init.lua
+local packer_group = vim.api.nvim_create_augroup("Packer", { clear = true })
+vim.api.nvim_create_autocmd("BufWritePost", {
+  command = "source <afile> | PackerCompile",
+  group = packer_group,
+  pattern = vim.fn.expand("$MYVIMRC"),
+})
