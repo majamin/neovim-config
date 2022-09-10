@@ -40,6 +40,7 @@ packer.startup(function(use)
   use("https://github.com/nvim-telescope/telescope-file-browser.nvim")
   use("https://github.com/lewis6991/gitsigns.nvim")
   use("https://github.com/dinhhuy258/git.nvim")
+  use("https://github.com/jpalardy/vim-slime")
 
   -- This is fine
   use("https://github.com/jacoborus/tender.vim")
