@@ -51,6 +51,13 @@ packer.startup(function(use)
   use("https://github.com/tpope/vim-surround")
   use("https://github.com/norcalli/nvim-colorizer.lua")
   use("https://github.com/vimwiki/vimwiki")
+  use({
+    "goolord/alpha-nvim",
+    requires = { "kyazdani42/nvim-web-devicons" },
+    config = function()
+      require("alpha").setup(require("alpha.themes.dashboard").config)
+    end,
+  })
 end)
 
 -- Automatically source and re-compile packer whenever you save this init.lua
