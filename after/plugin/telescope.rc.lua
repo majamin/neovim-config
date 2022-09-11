@@ -5,10 +5,25 @@ end
 local actions = require("telescope.actions")
 local builtin = require("telescope.builtin")
 
-local function telescope_buffer_dir()
-  return vim.fn.expand("%:p:h")
-end
+local my_file_browser = require("user/functions").my_file_browser
 
+-- local function telescope_buffer_dir()
+--   return vim.fn.expand("%:p:h")
+-- end
+--
+-- local function file_browser()
+--   telescope.extensions.file_browser.file_browser({
+--     path = "%:p:h",
+--     cwd = telescope_buffer_dir(),
+--     respect_gitignore = false,
+--     hidden = true,
+--     grouped = true,
+--     previewer = false,
+--     initial_mode = "normal",
+--     layout_config = { height = 40 },
+--   })
+-- end
+--
 local fb_actions = require("telescope").extensions.file_browser.actions
 
 telescope.setup({
@@ -74,15 +89,4 @@ end)
 vim.keymap.set("n", ";e", function()
   builtin.diagnostics()
 end)
-vim.keymap.set("n", ";w", function()
-  telescope.extensions.file_browser.file_browser({
-    path = "%:p:h",
-    cwd = telescope_buffer_dir(),
-    respect_gitignore = false,
-    hidden = true,
-    grouped = true,
-    previewer = false,
-    initial_mode = "normal",
-    layout_config = { height = 40 },
-  })
-end)
+vim.keymap.set("n", ";w", my_file_browser)

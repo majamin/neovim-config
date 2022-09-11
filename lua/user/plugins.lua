@@ -39,8 +39,23 @@ packer.startup(function(use)
   use("https://github.com/nvim-telescope/telescope.nvim")
   use("https://github.com/nvim-telescope/telescope-file-browser.nvim")
   use("https://github.com/lewis6991/gitsigns.nvim")
-  use("https://github.com/dinhhuy258/git.nvim")
   use("https://github.com/jpalardy/vim-slime")
+  use({
+    "TimUntersberger/neogit",
+    requires = {
+      "nvim-lua/plenary.nvim",
+      {
+        "sindrets/diffview.nvim",
+        cmd = {
+          "DiffviewOpen",
+          "DiffviewClose",
+          "DiffviewToggleFiles",
+          "DiffviewFocusFiles",
+        },
+      },
+    },
+    cmd = "Neogit",
+  })
 
   -- This is fine
   use("https://github.com/jacoborus/tender.vim")

@@ -1,90 +1,177 @@
-local status, alpha = pcall(require, "alpha")
-if not status then
+-- adopted from https://github.com/AdamWhittingham/vim-config/blob/nvim/lua/config/startup_screen.lua
+local status_ok, alpha = pcall(require, "alpha")
+if not status_ok then
   return
 end
+
+local path_ok, path = pcall(require, "plenary.path")
+if not path_ok then
+  return
+end
+
 local dashboard = require("alpha.themes.dashboard")
+local nvim_web_devicons = require("nvim-web-devicons")
+local cdir = vim.fn.getcwd()
 
-function os.capture(cmd, raw)
-  local f = assert(io.popen(cmd, "r"))
-  local s = assert(f:read("*a"))
-  f:close()
-  if raw then
-    return s
+local function get_extension(fn)
+  local match = fn:match("^.+(%..+)$")
+  local ext = ""
+  if match ~= nil then
+    ext = match:sub(2)
   end
-  s = string.gsub(s, "^%s+", "")
-  s = string.gsub(s, "%s+$", "")
-  s = string.gsub(s, "[\n\r]+", " ")
-  return s
+  return ext
 end
 
-function os.capture(cmd, raw)
-  local f = assert(io.popen(cmd, "r"))
-  local s = assert(f:read("*a"))
-  f:close()
-  if raw then
-    return s
+local function icon(fn)
+  local nwd = require("nvim-web-devicons")
+  local ext = get_extension(fn)
+  return nwd.get_icon(fn, ext, { default = true })
+end
+
+local function file_button(fn, sc, short_fn)
+  short_fn = short_fn or fn
+  local ico_txt
+  local fb_hl = {}
+
+  local ico, hl = icon(fn)
+  local hl_option_type = type(nvim_web_devicons.highlight)
+  if hl_option_type == "boolean" then
+    if hl and nvim_web_devicons.highlight then
+      table.insert(fb_hl, { hl, 0, 1 })
+    end
   end
-  s = string.gsub(s, "^%s+", "")
-  s = string.gsub(s, "%s+$", "")
-  s = string.gsub(s, "[\n\r]+", " ")
-  return s
+  if hl_option_type == "string" then
+    table.insert(fb_hl, { nvim_web_devicons.highlight, 0, 1 })
+  end
+  ico_txt = ico .. "  "
+
+  local file_button_el = dashboard.button(sc, ico_txt .. short_fn, "<cmd>e " .. fn .. " <CR>")
+  local fn_start = short_fn:match(".*/")
+  if fn_start ~= nil then
+    table.insert(fb_hl, { "Comment", #ico_txt - 2, #fn_start + #ico_txt - 2 })
+  end
+  file_button_el.opts.hl = fb_hl
+  return file_button_el
 end
 
-local function get_dir_basename(string)
-  local just_dir = string:gsub("/$", "")
-  just_dir = just_dir:gsub("(.*/)", "")
-  return just_dir
-end
+local default_mru_ignore = { "gitcommit" }
 
-local proj_name = get_dir_basename(vim.fn.getcwd())
-
--- Set header
-dashboard.section.header.val = { proj_name }
-
--- dashboard.section.header.val = {
---   "                                                     ",
---   "  ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗ ",
---   "  ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║ ",
---   "  ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║ ",
---   "  ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║ ",
---   "  ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║ ",
---   "  ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝ ",
---   "                                                     ",
--- }
-
--- Set menu
-dashboard.section.buttons.val = {
-  dashboard.button("e", "  > New file", ":ene <BAR> startinsert <CR>"),
-  dashboard.button("f", "  > Find file", ":Telescope find_files<CR>"),
-  dashboard.button("w", "פּ  > Browse files", ":Telescope file_browser<CR>"),
-  dashboard.button(
-    "o",
-    "  > Recent project files",
-    ":lua require('telescope.builtin').oldfiles({ only_cwd = true })<CR>"
-  ),
-  dashboard.button("q", "  > Quit", ":qa<CR>"),
+local mru_opts = {
+  ignore = function(path, ext)
+    return (string.find(path, "COMMIT_EDITMSG")) or (vim.tbl_contains(default_mru_ignore, ext))
+  end,
 }
 
--- Set footer
---   NOTE: This is currently a feature in my fork of alpha-nvim (opened PR #21, will update snippet if added to main)
---   To see test this yourself, add the function as a dependecy in packer and uncomment the footer lines
---   ```init.lua
---   return require('packer').startup(function()
---       use 'wbthomason/packer.nvim'
---       use {
---           'goolord/alpha-nvim', branch = 'feature/startify-fortune',
---           requires = {'BlakeJC94/alpha-nvim-fortune'},
---           config = function() require("config.alpha") end
---       }
---   end)
---   ```
--- local fortune = require("alpha.fortune")
--- dashboard.section.footer.val = fortune()
+--- @param start number
+--- @param cwd string optional
+--- @param items_number number optional number of items to generate, default = 10
+local function mru(start, cwd, items_number, opts)
+  opts = opts or mru_opts
+  items_number = items_number or 9
 
--- Send config to alpha
-alpha.setup(dashboard.opts)
+  local oldfiles = {}
+  for _, v in pairs(vim.v.oldfiles) do
+    if #oldfiles == items_number then
+      break
+    end
+    local cwd_cond
+    if not cwd then
+      cwd_cond = true
+    else
+      cwd_cond = vim.startswith(v, cwd)
+    end
+    local ignore = (opts.ignore and opts.ignore(v, get_extension(v))) or false
+    if (vim.fn.filereadable(v) == 1) and cwd_cond and not ignore then
+      oldfiles[#oldfiles + 1] = v
+    end
+  end
 
--- Disable folding on alpha buffer
-vim.cmd([[
-    autocmd FileType alpha setlocal nofoldenable
-]])
+  local special_shortcuts = { "a", "s", "d" }
+  local target_width = 35
+
+  local tbl = {}
+  for i, fn in ipairs(oldfiles) do
+    local short_fn
+    if cwd then
+      short_fn = vim.fn.fnamemodify(fn, ":.")
+    else
+      short_fn = vim.fn.fnamemodify(fn, ":~")
+    end
+
+    if #short_fn > target_width then
+      short_fn = path.new(short_fn):shorten(1, { -2, -1 })
+      if #short_fn > target_width then
+        short_fn = path.new(short_fn):shorten(1, { -1 })
+      end
+    end
+
+    local shortcut = ""
+    if i <= #special_shortcuts then
+      shortcut = special_shortcuts[i]
+    else
+      shortcut = tostring(i + start - 1 - #special_shortcuts)
+    end
+
+    local file_button_el = file_button(fn, " " .. shortcut, short_fn)
+    tbl[i] = file_button_el
+  end
+  return {
+    type = "group",
+    val = tbl,
+    opts = {},
+  }
+end
+
+local section_mru = {
+  type = "group",
+  val = {
+    {
+      type = "text",
+      val = "Old files",
+      opts = {
+        hl = "SpecialComment",
+        shrink_margin = false,
+        position = "center",
+      },
+    },
+    { type = "padding", val = 1 },
+    {
+      type = "group",
+      val = function()
+        return { mru(1, cdir, 9) }
+      end,
+      opts = { shrink_margin = false },
+    },
+  },
+}
+
+local buttons = {
+  type = "group",
+  val = {
+    { type = "text", val = "Quick links", opts = { hl = "SpecialComment", position = "center" } },
+    { type = "padding", val = 1 },
+    dashboard.button("e", "  New File", ":ene <BAR> startinsert <CR>"),
+    dashboard.button("f", "  Find File", ":Telescope find_files <CR>"),
+    dashboard.button("w", "  File Browser", ":lua require('user/functions').my_file_browser()<CR>"),
+    dashboard.button("g", "  Find Text", ":Telescope live_grep <CR>"),
+    dashboard.button("o", "  Old Files", ":lua require('telescope.builtin').oldfiles({ only_cwd = true }) <CR>"),
+    dashboard.button("g", "  NeoGit", ":Neogit <CR>"),
+    dashboard.button("u", "  Update Plugins", ":PackerSync --preview<CR>"),
+    dashboard.button("q", "  Quit", ":qa<CR>"),
+  },
+  position = "center",
+}
+
+local opts = {
+  layout = {
+    { type = "padding", val = 2 },
+    section_mru,
+    { type = "padding", val = 2 },
+    buttons,
+  },
+  opts = {
+    margin = 5,
+  },
+}
+
+alpha.setup(opts)
