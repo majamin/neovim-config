@@ -2,9 +2,16 @@ local o = vim.opt
 local fn = vim.fn
 
 -- vim.cmd("colorscheme slate") -- best native fallback
-vim.cmd("colorscheme tender")
+vim.cmd("colorscheme tokyonight")
 
+-- [[ Setting options ]]
+-- See `:help vim.o`
+
+-- Enable break indent
+
+vim.wo.signcolumn = "auto:4"
 o.backup = false -- creates a backup file
+o.breakindent = true
 o.clipboard = "unnamedplus" -- allows neovim to access the system clipboard
 o.cmdheight = 1 -- space for displaying messages/commands
 o.completeopt = { "menu", "menuone", "noselect", "noinsert" } -- A comma separated list of options for Insert mode completion
@@ -48,7 +55,7 @@ o.timeoutlen = 400 -- time to wait for a mapped sequence to complete (in millise
 o.ttimeoutlen = 0 -- Time in milliseconds to wait for a key code sequence to complete
 o.undodir = fn.stdpath("data") .. "/undodir" -- set undo directory
 o.undofile = true -- enable/disable undo file creation
-o.updatetime = 300 -- faster completion
+o.updatetime = 250 -- faster completion
 o.wildignorecase = true -- When set case is ignored when completing file names and directories
 o.wildmode = "full"
 o.wrap = false

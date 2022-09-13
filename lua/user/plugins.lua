@@ -36,6 +36,7 @@ packer.startup(function(use)
 
   -- See everything, go fast
   use("https://github.com/ThePrimeagen/harpoon")
+  use("https://github.com/folke/which-key.nvim")
   use("https://github.com/nvim-telescope/telescope.nvim")
   use("https://github.com/nvim-telescope/telescope-file-browser.nvim")
   use("https://github.com/lewis6991/gitsigns.nvim")
@@ -58,7 +59,8 @@ packer.startup(function(use)
   })
 
   -- This is fine
-  use("https://github.com/jacoborus/tender.vim")
+  -- use("https://github.com/jacoborus/tender.vim")
+  use("https://github.com/folke/tokyonight.nvim")
   use("https://github.com/nvim-lualine/lualine.nvim")
   use("https://github.com/windwp/nvim-autopairs")
   use("https://github.com/lukas-reineke/indent-blankline.nvim")

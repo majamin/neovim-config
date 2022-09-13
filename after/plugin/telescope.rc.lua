@@ -7,23 +7,6 @@ local builtin = require("telescope.builtin")
 
 local my_file_browser = require("user/functions").my_file_browser
 
--- local function telescope_buffer_dir()
---   return vim.fn.expand("%:p:h")
--- end
---
--- local function file_browser()
---   telescope.extensions.file_browser.file_browser({
---     path = "%:p:h",
---     cwd = telescope_buffer_dir(),
---     respect_gitignore = false,
---     hidden = true,
---     grouped = true,
---     previewer = false,
---     initial_mode = "normal",
---     layout_config = { height = 40 },
---   })
--- end
---
 local fb_actions = require("telescope").extensions.file_browser.actions
 
 telescope.setup({
@@ -48,7 +31,8 @@ telescope.setup({
         },
         ["n"] = {
           -- your custom normal mode mappings
-          ["N"] = fb_actions.create,
+          ["n"] = fb_actions.create_from_prompt,
+          ["x"] = fb_actions.remove,
           ["h"] = fb_actions.goto_parent_dir,
           ["l"] = function()
             vim.cmd('execute "normal \\<cr>"')
