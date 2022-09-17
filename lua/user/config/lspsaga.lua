@@ -14,7 +14,7 @@ local opts = { noremap = true, silent = true }
 -- Lsp finder find the symbol definition implement reference
 -- when you use action in finder like open vsplit then your can
 -- use <C-t> to jump back
-vim.keymap.set("n", "gd", "<cmd>Lspsaga preview_definition<CR>", opts)
+vim.keymap.set("n", "gd", "<cmd>Lspsaga peek_definition<CR>", opts)
 vim.keymap.set("n", "gh", "<cmd>Lspsaga lsp_finder<CR>", opts)
 vim.keymap.set("n", "gr", "<cmd>Lspsaga rename<CR>", opts)
 -- vim.keymap.set("n", "gs", "<Cmd>Lspsaga signature_help<CR>", opts) -- NOT WORKING??

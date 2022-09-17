@@ -3,8 +3,6 @@ if not status then
   return
 end
 
-vim.cmd("TSUpdate")
-
 -- See https://github.com/nvim-treesitter/nvim-treesitter#available-modules
 ts.setup({
   ensure_installed = {

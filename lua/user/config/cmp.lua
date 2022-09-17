@@ -2,14 +2,6 @@ local status, cmp = pcall(require, "cmp")
 if not status then
   return
 end
-local status2, lspkind = pcall(require, "lspkind")
-if not status2 then
-  return
-end
-
-local luasnip = require("luasnip")
-
-local is_wsl = vim.env.USER == "tj-wsl"
 
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
@@ -38,39 +30,28 @@ end
 
 lspkind.init()
 
-local cmp = require("cmp")
-
 cmp.setup({
   mapping = {
-    ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+    ["<C-n>"] = function()
+      if cmp.visible() then
+        cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+      else
+        cmp.complete()
+      end
+    end,
     ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
     ["<C-d>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
     ["<C-e>"] = cmp.mapping.abort(),
-    ["<c-y>"] = cmp.mapping(
+    ["<C-y>"] = cmp.mapping(
       cmp.mapping.confirm({
         behavior = cmp.ConfirmBehavior.Insert,
         select = true,
       }),
       { "i", "c" }
     ),
-
-    ["<c-/>"] = cmp.mapping({
-      i = cmp.mapping.complete(),
-      c = function(
-        _ --[[fallback]]
-      )
-        if cmp.visible() then
-          if not cmp.confirm({ select = true }) then
-            return
-          end
-        else
-          cmp.complete()
-        end
-      end,
-    }),
     ["<tab>"] = cmp.config.disable,
-    ["<c-q>"] = cmp.mapping.confirm({
+    ["<C-q>"] = cmp.mapping.confirm({
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     }),

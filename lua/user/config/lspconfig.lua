@@ -74,6 +74,7 @@ for _, lsp in ipairs(servers) do
     capabilities = capabilities,
     settings = {
       volar = {
+        format = { enabled = false },
         filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json" },
       },
       tsserver = {

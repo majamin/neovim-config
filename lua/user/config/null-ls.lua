@@ -15,15 +15,6 @@ local sources = {
 
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
--- Neovim ^0.8
-local format = function(payload)
-  vim.lsp.buf.format({
-    filter = function(client)
-      return client.name ~= "volar"
-    end,
-  })
-end
-
 null_ls.setup({
   debug = false,
   sources = sources,
@@ -33,7 +24,9 @@ null_ls.setup({
       vim.api.nvim_create_autocmd("BufWritePre", {
         group = augroup,
         buffer = bufnr,
-        callback = format,
+        callback = function()
+          vim.lsp.buf.format({ bufnr = bufnr })
+        end,
       })
     end
   end,
