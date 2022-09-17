@@ -11,8 +11,8 @@ tokyo.setup({
   styles = {
     -- Style to be applied to different syntax groups
     -- Value is any valid attr-list value `:help attr-list`
-    comments = "NONE",
-    keywords = "NONE",
+    comments = { italic = false },
+    keywords = { italic = false },
     functions = "NONE",
     variables = "NONE",
     -- Background styles. Can be "dark", "transparent" or "normal"
@@ -31,8 +31,11 @@ tokyo.setup({
   on_colors = function(colors) end,
 
   --- You can override specific highlights to use other groups or a hex color
-  --- fucntion will be called with a Highlights and ColorScheme table
+  --- function will be called with a Highlights and ColorScheme table
   ---@param highlights Highlights
   ---@param colors ColorScheme
   on_highlights = function(highlights, colors) end,
 })
+
+local theme = require("user/user-conf").colorscheme
+vim.cmd("colorscheme " .. theme)

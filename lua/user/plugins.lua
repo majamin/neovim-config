@@ -15,6 +15,7 @@ packer.startup(function(use)
   use("https://github.com/kyazdani42/nvim-web-devicons")
   use("https://github.com/nvim-lua/plenary.nvim")
 
+  -- Completion
   use("https://github.com/hrsh7th/nvim-cmp")
   use("https://github.com/hrsh7th/cmp-nvim-lsp")
   use("https://github.com/hrsh7th/cmp-nvim-lua") -- Hack Neovim
@@ -58,16 +59,19 @@ packer.startup(function(use)
     cmd = "Neogit",
   })
 
-  -- This is fine
-  -- use("https://github.com/jacoborus/tender.vim")
+  -- Spicy
   use("https://github.com/folke/tokyonight.nvim")
+  use("https://github.com/norcalli/nvim-colorizer.lua")
   use("https://github.com/nvim-lualine/lualine.nvim")
-  use("https://github.com/windwp/nvim-autopairs")
   use("https://github.com/lukas-reineke/indent-blankline.nvim")
+
+  -- Butter
+  use("https://github.com/windwp/nvim-autopairs")
   use("https://github.com/ggandor/leap.nvim")
   use("https://github.com/numToStr/Comment.nvim")
   use("https://github.com/tpope/vim-surround")
-  use("https://github.com/norcalli/nvim-colorizer.lua")
+
+  -- This is fine
   use("https://github.com/vimwiki/vimwiki")
   use({
     "goolord/alpha-nvim",

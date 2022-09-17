@@ -1,15 +1,6 @@
-local o = vim.opt
 local fn = vim.fn
+local o = vim.opt
 
--- vim.cmd("colorscheme slate") -- best native fallback
-vim.cmd("colorscheme tokyonight")
-
--- [[ Setting options ]]
--- See `:help vim.o`
-
--- Enable break indent
-
-vim.wo.signcolumn = "auto:4"
 o.backup = false -- creates a backup file
 o.breakindent = true
 o.clipboard = "unnamedplus" -- allows neovim to access the system clipboard
@@ -20,30 +11,24 @@ o.cursorline = true -- highlight the current line
 o.dir = fn.stdpath("data") .. "/swp" -- swap file directory
 o.expandtab = true -- convert tabs to spaces
 o.fileencoding = "utf-8" -- the encoding written to a file
-o.foldenable = false -- don't start files folded; enable with zi; wait for https://github.com/neovim/neovim/pull/17446
 o.foldcolumn = "1"
+o.foldenable = false -- don't start files folded; enable with zi; wait for https://github.com/neovim/neovim/pull/17446
 o.foldlevelstart = 99 -- Using ufo provider need a large value, feel free to decrease the value
--- o.foldmethod = "expr"
--- o.foldexpr = "nvim_treesitter#foldexpr()"
--- o.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175"
 o.guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50" -- block in normal and beam cursor in insert mode
--- o.guicursor = "n-v-c:block"
 o.history = 500 -- Use the 'history' option to set the number of lines from command mode that are remembered.
 o.hlsearch = true -- highlight all matches on previous search pattern
 o.ignorecase = true -- ignore case in search patterns
 o.laststatus = 3
 o.lazyredraw = true -- do not redraw screen while running macros
 o.list = true
--- o.listchars = ""
--- o.listchars = "eol:¬,tab:>·,trail:~,extends:>,precedes:<"
 o.mouse = ""
 o.number = true
 o.scrolloff = 3 -- Minimal number of screen lines to keep above and below the cursor
 o.shiftwidth = 2 -- the number of spaces inserted for each indentation
 o.shortmess = o.shortmess + "c" -- prevent "pattern not found" messages
 o.showmode = false -- we don't need to see things like -- INSERT -- anymore
--- o.showtabline = 2 -- always show tabs
 o.sidescrolloff = 5 -- The minimal number of columns to scroll horizontally
+o.signcolumn = "yes" -- say 'yes' unless you love spastic window shaking
 o.smartcase = true -- smart case
 o.smartindent = true -- make indenting smarter again
 o.splitbelow = true -- force all horizontal splits to go below current window
