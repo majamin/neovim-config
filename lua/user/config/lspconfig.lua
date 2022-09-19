@@ -93,6 +93,23 @@ for _, lsp in ipairs(servers) do
           checkThirdParty = false,
         },
       },
+      ["rust-analyzer"] = {
+        format = { enabled = true },
+        imports = {
+          granularity = {
+            group = "module",
+          },
+          prefix = "self",
+        },
+        cargo = {
+          buildScripts = {
+            enable = true,
+          },
+        },
+        procMacro = {
+          enable = true,
+        },
+      },
     },
   })
 end

@@ -20,12 +20,10 @@ packer.startup(function(use)
   use({ "https://github.com/glepnir/lspsaga.nvim", config = get_config("lspsaga") })
   use({ "https://github.com/williamboman/mason.nvim", config = get_config("mason") })
   use("https://github.com/williamboman/mason-lspconfig.nvim")
-  use({ "https://github.com/nvim-treesitter/nvim-treesitter", config = get_config("treesitter") })
   use({ "https://github.com/neovim/nvim-lspconfig", config = get_config("lspconfig") })
   use({ "https://github.com/onsails/lspkind-nvim", config = get_config("lspkind") })
   use({ "https://github.com/jose-elias-alvarez/null-ls.nvim", config = get_config("null-ls") }) -- Extends LSPs
-  use("https://github.com/nvim-treesitter/nvim-treesitter-textobjects")
-  -- use("https://github.com/nvim-treesitter/playground")
+  use({ "https://github.com/nvim-treesitter/nvim-treesitter", config = get_config("treesitter") })
 
   -- Completion
   use({ "https://github.com/hrsh7th/nvim-cmp", config = get_config("cmp") })
