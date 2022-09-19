@@ -1,10 +1,10 @@
 -- Install packer
-local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
+local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 local is_bootstrap = false
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   is_bootstrap = true
-  vim.fn.execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
-  vim.cmd [[packadd packer.nvim]]
+  vim.fn.execute("!git clone https://github.com/wbthomason/packer.nvim " .. install_path)
+  vim.cmd([[packadd packer.nvim]])
 end
 
 local function get_config(name)
@@ -38,7 +38,6 @@ require('packer').startup(function(use)
 
   -- See everything, go fast
   use({ "https://github.com/ThePrimeagen/harpoon", config = get_config("harpoon") })
-  use({ "https://github.com/folke/which-key.nvim", config = get_config("which-key") })
   use({ "https://github.com/nvim-telescope/telescope.nvim", config = get_config("telescope") })
   use("https://github.com/nvim-telescope/telescope-file-browser.nvim")
   use({ "https://github.com/lewis6991/gitsigns.nvim", config = get_config("gitsigns") })
@@ -75,9 +74,9 @@ require('packer').startup(function(use)
     ft = { "html", "tsx", "vue", "svelte", "php", "res" },
   })
   use({ "https://github.com/windwp/nvim-autopairs", config = get_config("autopairs") })
-  use({ "https://github.com/ggandor/leap.nvim", config = get_config("leap") })
   use({ "https://github.com/numToStr/Comment.nvim", config = get_config("comment") })
   use("https://github.com/tpope/vim-surround")
+  use({ "https://github.com/folke/which-key.nvim", config = get_config("which-key") })
 
   -- This is fine
   use({ "https://github.com/vimwiki/vimwiki", config = get_config("vimwiki") })

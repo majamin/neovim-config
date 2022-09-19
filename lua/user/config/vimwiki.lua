@@ -3,7 +3,3 @@ local g = vim.g
 g.vimwiki_url_maxsave = 0 -- Don't shorten URL so you can plumb links
 -- g.vimwiki_ext2syntax = {'.Rmd': 'markdown', '.rmd': 'markdown','.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
 vim.g.vimwiki_list = { { path = os.getenv("ONEDRIVE") .. "/Projects/notes" } }
-
--- Vimwiki insists on mapping my Tab and S-Tab. WHY?!
-vim.keymap.set("n", "<S-F9>", "<Plug>VimwikiNextLink")
-vim.keymap.set("n", "<S-F8>", "<Plug>VimwikiPrevLink")

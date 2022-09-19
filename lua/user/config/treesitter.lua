@@ -5,7 +5,27 @@ end
 
 -- See https://github.com/nvim-treesitter/nvim-treesitter#available-modules
 ts.setup({
-  auto_install = true, -- automatically install missing parsers
+  ensure_installed = {
+    "bash",
+    "cmake",
+    "css",
+    "dockerfile",
+    "go",
+    "hcl",
+    "html",
+    "java",
+    "javascript",
+    "json",
+    "latex",
+    "lua",
+    "markdown",
+    "python",
+    "query", -- for treesitter/playground
+    "toml",
+    "typescript",
+    "vue",
+    "yaml",
+  },
   highlight = { enable = true },
   endwise = { enable = true },
   indent = { enable = true },

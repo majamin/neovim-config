@@ -1,6 +1,8 @@
 local fn = vim.fn
 local o = vim.opt
+local g = vim.g
 
+g.mapleader = ","
 o.backup = false -- creates a backup file
 o.breakindent = true
 o.clipboard = "unnamedplus" -- allows neovim to access the system clipboard
