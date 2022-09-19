@@ -1,5 +1,3 @@
-vim.opt.clipboard:prepend({ "unnamed", "unnamedplus" })
-
 vim.cmd([[
 " inverted cursor workaround for windows terminal
 " guicursor will leave reverse to the terminal, which won't work in WT.
@@ -16,7 +14,7 @@ function! WindowsTerminalFixHighlight()
     call matchadd('WindowsTerminalCursorFg', '\%#.', 100, 99991)
 
     " find fg color under cursor or fall back to Normal fg then black
-    let bg = synIDattr(synIDtrans(synID(line("."), col("."), 1)), 'fg#') 
+    let bg = synIDattr(synIDtrans(synID(line("."), col("."), 1)), 'fg#')
     if bg == "" | let bg = synIDattr(synIDtrans(hlID('Normal')), 'fg#') | endif
     if bg == "" | let bg = "black" | endif
     exec 'hi WindowsTerminalCursorBg guibg=' . bg

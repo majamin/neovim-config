@@ -1,16 +1,18 @@
-require("user.ensure_packer")
-
-local status, packer = pcall(require, "packer")
-if not status then
-  print("Packer is not installed")
-  return
+-- Install packer
+local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
+local is_bootstrap = false
+if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+  is_bootstrap = true
+  vim.fn.execute('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
+  vim.cmd [[packadd packer.nvim]]
 end
 
 local function get_config(name)
   return string.format('require("user/config/%s")', name)
 end
 
-packer.startup(function(use)
+-- stylua: ignore start
+require('packer').startup(function(use)
   use("https://github.com/lewis6991/impatient.nvim")
   use("https://github.com/wbthomason/packer.nvim")
   use({ "https://github.com/kyazdani42/nvim-web-devicons", config = get_config("web-devicons") })
@@ -42,11 +44,11 @@ packer.startup(function(use)
   use({ "https://github.com/lewis6991/gitsigns.nvim", config = get_config("gitsigns") })
   use({ "https://github.com/jpalardy/vim-slime", config = get_config("slime") })
   use({
-    "TimUntersberger/neogit",
+    "https://github.com/TimUntersberger/neogit",
     requires = {
-      "nvim-lua/plenary.nvim",
+      "https://github.com/nvim-lua/plenary.nvim",
       {
-        "sindrets/diffview.nvim",
+        "https://github.com/sindrets/diffview.nvim",
         cmd = {
           "DiffviewOpen",
           "DiffviewClose",
@@ -84,7 +86,20 @@ packer.startup(function(use)
     requires = { "kyazdani42/nvim-web-devicons" },
     config = get_config("alpha"),
   })
+
+  if is_bootstrap then
+    require('packer').sync()
+  end
 end)
+
+if is_bootstrap then
+  print '=================================='
+  print '    Plugins are being installed'
+  print '    Wait until Packer completes,'
+  print '       then restart nvim'
+  print '=================================='
+  return
+end
 
 -- Automatically source and re-compile packer whenever you save this init.lua
 local packer_group = vim.api.nvim_create_augroup("Packer", { clear = true })

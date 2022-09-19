@@ -21,7 +21,6 @@ o.ignorecase = true -- ignore case in search patterns
 o.laststatus = 3
 o.lazyredraw = true -- do not redraw screen while running macros
 o.list = true
-o.mouse = ""
 o.number = true
 o.scrolloff = 3 -- Minimal number of screen lines to keep above and below the cursor
 o.shiftwidth = 2 -- the number of spaces inserted for each indentation

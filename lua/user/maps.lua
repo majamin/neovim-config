@@ -32,8 +32,8 @@ vim.keymap.set("n", "<ESC>", ":noh<CR>", opts)
 vim.keymap.set("n", "<F3>", ":setlocal spell! spelllang=en_ca<CR>", opts)
 vim.keymap.set("n", "<F4>", ":setlocal spell! spelllang=en-basic<CR>", opts)
 
+-- to mimic <C-w>q for window
 vim.keymap.set("n", "<C-w>b", ":bp|bd! #<CR>", opts)
-vim.keymap.set("n", "<C-q>", "<C-w>q", opts)
 
 vim.keymap.set("t", "<ESC><ESC>", "<C-\\><C-n>", opts)
 

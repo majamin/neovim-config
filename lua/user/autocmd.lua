@@ -11,6 +11,7 @@ vim.api.nvim_create_autocmd("BufEnter", { command = [[set formatoptions-=cro]] }
 -- Use `<ESC>` to close windows
 vim.api.nvim_create_autocmd("FileType", {
   pattern = {
+    "man",
     "lspsagafinder",
     "sagacodeactions",
     "help",
@@ -22,9 +23,6 @@ vim.api.nvim_create_autocmd("FileType", {
   },
   command = [[nnoremap <buffer><silent> <ESC> :close<CR>]],
 })
-
--- Use `q` to quit man-style pages
-vim.api.nvim_create_autocmd("FileType", { pattern = "man", command = [[nnoremap <buffer><silent> q :quit<CR>]] })
 
 -- go to last loc when opening a buffer
 vim.api.nvim_create_autocmd(
@@ -43,7 +41,7 @@ vim.api.nvim_create_autocmd("InsertLeave", {
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function()
-    vim.highlight.on_yank()
+    vim.highlight.on_yank({ higroup = "Constant", timeout = 400 })
   end,
   group = highlight_group,
   pattern = "*",

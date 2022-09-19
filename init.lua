@@ -10,6 +10,7 @@ require("user.base")
 require("user.maps")
 require("user.autocmd")
 
--- Fixes the cursor colors in Windows Terminal
+-- Windows, WSL, ssh from Terminal?
+-- Fixes: cursor colors
 -- https://github.com/microsoft/terminal/issues/9610
-require("user.windows")
+require("user.windows") -- lua/user/windows.lua
