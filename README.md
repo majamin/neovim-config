@@ -9,36 +9,17 @@ You can download or clone this repo to your [config folder](https://vi.stackexch
 
 _Inspirations_:
 
+- [Neovim Kickstart](https://github.com/nvim-lua/kickstart.nvim)
 - [Craftzdog's Neovim Config](https://github.com/craftzdog/dotfiles-public/tree/master/.config/nvim)
 - [Allaman's Neovim Config](https://github.com/Allaman/nvim)
-- [Author of LSP-config Neovim Config](https://github.com/wbthomason/dotfiles/tree/linux/neovim/.config/nvim)
+- [LSP-config Author's Config](https://github.com/wbthomason/dotfiles/tree/linux/neovim/.config/nvim)
 
-# First Run
+# First few runs
 
-On first run, Neovim will install `Packer` but not any of the plugins.
-Restart Neovim and run `:PackerSync`. Error messages on this run are normal.
-Restart Neovim one more time. Run `:checkhealth` and pay attention to any important messages there.
-Edit `user-conf.lua` to your liking and you should be good to go!
+- On first run, `Packer` is installed and plugins are synced. Restart Neovim.
+- Run `:checkhealth` and pay attention to any important messages there.
+- Edit `user-conf.lua` to set spelling language, etc.
 
-# Quick use guide
+# Tips
 
-- `;k` for key bindings
-- `;h` for help topics
-- `;f` to find files
-- `;w` to browse files
-- `;e` opens LSP diagnostics for whole project (via Telescope)
-- `<F3>` and `<F4>` toggles spelling for English and _basic_ English (enables a kind of "check if my document is way too complicated")
-- `<Ctrl-b>` closes buffer
-- `<Ctrl-q>` closes window
-- `<Tab>`, `<Shift-Tab>` to switch between buffers
-- `tt` opens Harpoon (pressing 1, 2, etc. opens that file)
-- `ta` adds the buffer filepath to the Harpoon list
-- `t1`, `t2` opens the first, or second file, etc.
-- `<S-l>` and `<S-h>` initiates [leap](https://github.com/ggandor/leap.nvim) (I insist on using `s` and `S` as per the original Vim bindings)
-- `<C-e>` goes to next ERROR
-
-# A little bit more in-depth
-
-- Use `user-conf.lua` for basic settings
-- Surround with Tim Pope's vim-surround
-- Telescope file browser uses Vim keys (hjkl) to move around/open
+If `which-key` doesn't help you to understand my key bindings, hit `;k` to browse them.
