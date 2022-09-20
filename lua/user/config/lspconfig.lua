@@ -5,59 +5,29 @@ if not status then
   return
 end
 
-local protocol = require("vim.lsp.protocol")
-
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
-  local function buf_set_keymap(...)
-    vim.api.nvim_buf_set_keymap(bufnr, ...)
-  end
-
-  local function buf_set_option(...)
-    vim.api.nvim_buf_set_option(bufnr, ...)
-  end
-
-  --Enable completion triggered by <c-x><c-o>
-  buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
-
-  -- Mappings.
-  local opts = { noremap = true, silent = true }
-
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
-  buf_set_keymap("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-  --buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  buf_set_keymap("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-  --buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+local function on_attach(client, _) -- (client, bunfr)
+  -- disable formatting for LSP clients as this is handled by null-ls
+  client.server_capabilities.documentFormattingProvider = false
+  client.server_capabilities.documentRangeFormattingProvider = false
+  local wk = require("which-key")
+  local default_options = { silent = true }
+  -- LSP <C-l>
+  wk.register({
+    name = "LSP",
+    a = { "<cmd>Lspsaga code_action<CR>", "Code action" },
+    d = { "<cmd>Lspsaga peek_definition<CR>", "Peek definition" },
+    n = { "<cmd>Lspsaga diagnostic_jump_next<CR>", "Next diagnostic" },
+    o = { "<cmd>LSoutlineToggle<CR>", "Outline" },
+    r = { "<cmd>Lspsaga rename<CR>", "Rename object" },
+    s = { "<Cmd>Lspsaga signature_help<CR>", "Signature help" },
+  }, { prefix = "<C-l>", mode = "n", opts = default_options })
+  -- LSP no leader
+  wk.register({
+    name = "LSP",
+    gd = { "<cmd>Lspsaga lsp_finder<CR>", "Find definition" },
+    K = { "<cmd>Lspsaga hover_doc<CR>", "LSP hover doc" },
+  })
 end
-
-protocol.CompletionItemKind = {
-  "", -- Text
-  "", -- Method
-  "", -- Function
-  "", -- Constructor
-  "", -- Field
-  "", -- Variable
-  "", -- Class
-  "ﰮ", -- Interface
-  "", -- Module
-  "", -- Property
-  "", -- Unit
-  "", -- Value
-  "", -- Enum
-  "", -- Keyword
-  "﬌", -- Snippet
-  "", -- Color
-  "", -- File
-  "", -- Reference
-  "", -- Folder
-  "", -- EnumMember
-  "", -- Constant
-  "", -- Struct
-  "", -- Event
-  "ﬦ", -- Operator
-  "", -- TypeParameter
-}
 
 -- Set up completion using nvim_cmp with LSP source
 local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
@@ -74,7 +44,6 @@ for _, lsp in ipairs(servers) do
     capabilities = capabilities,
     settings = {
       volar = {
-        format = { enabled = false },
         filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json" },
       },
       tsserver = {
@@ -94,7 +63,6 @@ for _, lsp in ipairs(servers) do
         },
       },
       ["rust-analyzer"] = {
-        format = { enabled = true },
         imports = {
           granularity = {
             group = "module",

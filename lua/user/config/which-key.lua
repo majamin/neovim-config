@@ -6,6 +6,12 @@ end
 local options = { silent = true }
 
 wk.setup({
+  layout = {
+    height = { min = 4, max = 25 }, -- min and max height of the columns
+    width = { min = 20, max = 50 }, -- min and max width of the columns
+    spacing = 2, -- spacing between columns
+    align = "center", -- align columns left, center or right
+  },
   hidden = {
     "<silent>",
     "<Plug>",
@@ -25,6 +31,9 @@ wk.register({
   ["<Tab>"] = { "<cmd>e#<cr>", "Prev buffer" },
 })
 
+-- WHY HERE?!?!?
+vim.keymap.del("n", "<C-l>")
+
 -- Harpoon <C-h>
 wk.register({
   ["<C-h>"] = {
@@ -40,23 +49,6 @@ wk.register({
     "Add current file to harpoon list",
   },
 }, { prefix = "<C-h>", mode = "n", options })
-
--- LSP <C-l>
-vim.keymap.del("n", "<C-l>")
-wk.register({
-  name = "LSP",
-  a = { "<cmd>Lspsaga code_action<CR>", "Code action" },
-  d = { "<cmd>Lspsaga peek_definition<CR>", "Peek definition" },
-  h = { "<cmd>Lspsaga lsp_finder<CR>", "Find definition" },
-  n = { "<cmd>Lspsaga diagnostic_jump_next<CR>", "Next diagnostic" },
-  o = { "<cmd>LSoutlineToggle<CR>", "Outline" },
-  r = { "<cmd>Lspsaga rename<CR>", "Rename object" },
-  s = { "<Cmd>Lspsaga signature_help<CR>", "Signature help" },
-}, { prefix = "<C-l>", mode = "n" })
-wk.register({
-  name = "LSP",
-  K = { "<cmd>Lspsaga hover_doc<CR>", "LSP hover doc" },
-})
 
 -- Vimwiki <leader>
 vim.keymap.set("n", "<S-F19>", "<Plug>VimwikiNextLink")

@@ -30,4 +30,13 @@ ts.setup({
   endwise = { enable = true },
   indent = { enable = true },
   autopairs = { enable = true },
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "<space>",
+      node_incremental = "<space>",
+      scoce_incremental = "grc",
+      node_decremental = "<backspace>",
+    },
+  },
 })
