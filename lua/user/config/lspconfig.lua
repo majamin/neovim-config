@@ -16,16 +16,17 @@ local function on_attach(client, _) -- (client, bunfr)
     name = "LSP",
     a = { "<cmd>Lspsaga code_action<CR>", "Code action" },
     d = { "<cmd>Lspsaga peek_definition<CR>", "Peek definition" },
-    n = { "<cmd>Lspsaga diagnostic_jump_next<CR>", "Next diagnostic" },
     o = { "<cmd>LSoutlineToggle<CR>", "Outline" },
     r = { "<cmd>Lspsaga rename<CR>", "Rename object" },
     s = { "<Cmd>Lspsaga signature_help<CR>", "Signature help" },
   }, { prefix = "<C-l>", mode = "n", opts = default_options })
   -- LSP no leader
   wk.register({
-    name = "LSP",
-    gd = { "<cmd>Lspsaga lsp_finder<CR>", "Find definition" },
-    K = { "<cmd>Lspsaga hover_doc<CR>", "LSP hover doc" },
+    name = "LSP - no leader",
+    gd = { "<cmd>Lspsaga lsp_finder<CR>", "Explore definitions" },
+    K = { "<cmd>Lspsaga hover_doc<CR>", "View doc for symbol" },
+    ["<C-j>"] = { "<cmd>Lspsaga diagnostic_jump_next<CR>", "Next diagnostic" },
+    ["<C-k>"] = { "<cmd>Lspsaga diagnostic_jump_prev<CR>", "Previous diagnostic" },
   })
 end
 
