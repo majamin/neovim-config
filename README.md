@@ -18,7 +18,7 @@ _Inspirations_:
 
 - On first run, `Packer` is installed and plugins are synced. Restart Neovim.
 - Run `:checkhealth` and pay attention to any important messages there.
-- Edit `user-conf.lua` to set spelling language, etc.
+- Edit `lua/user/user-conf.lua` to set spelling language, etc.
 
 # Tips
 

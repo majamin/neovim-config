@@ -1,16 +1,20 @@
+--[[ IMPATIENT ]]
 local status, impatient = pcall(require, "impatient")
 if status then
   impatient.enable_profile()
 end
 
--- Don't forget to set your user defaults:
--- lua/user/user-conf.lua
-require("user.plugins")
-require("user.base")
-require("user.maps")
-require("user.autocmd")
+--[[ IGNITION ]]
+-- Go here: `lua/user/user-conf.lua`
 
--- Windows, WSL, ssh from Terminal?
--- Fixes: cursor colors
--- https://github.com/microsoft/terminal/issues/9610
-require("user.windows") -- lua/user/windows.lua
+--[[ MEAT ]]
+-- stylua: ignore start
+require("user.plugins") -- `lua/user/plugins.lua`
+require("user.base")    -- `lua/user/base.lua`
+require("user.maps")    -- `lua/user/maps.lua`
+require("user.autocmd") -- `lua/user/autocmd.lua`
+
+--[[ SAD BUT TRUE ]]
+if os.getenv("WT") then
+  require("user.windows")
+end

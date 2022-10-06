@@ -3,10 +3,12 @@ if not status then
   return
 end
 
+local theme = require("user.user-conf").lualine_theme
+
 lualine.setup({
   options = {
     icons_enabled = false,
-    theme = "tokyonight",
+    theme = theme,
     component_separators = "",
     section_separators = "",
   },

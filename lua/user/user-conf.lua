@@ -1,13 +1,12 @@
+--[[ START HERE ]]
 local M = {}
 
 -- M.lang = "en_us" -- US English
 M.lang = "en_ca" -- Canadian English
-M.colorscheme = "tokyonight-storm"
-M.lualine_theme = "auto" -- or 'tokyonight', 'onedark'
+M.colorscheme = "tokyonight"
+M.lualine_theme = "auto" -- can be `tokyonight`, `onedark`
 
--- Servers will not configure unless they are listed here
--- LSP Defaults are usually good. Add server customization in `plugin/lspconfig.lua`
--- Defaults: https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+-- Only servers listed here will be loaded
 M.servers = {
   "sumneko_lua",
   "tsserver",
@@ -15,8 +14,9 @@ M.servers = {
   "volar",
   "tailwindcss",
   "pyright",
-  "r_language_server",
   "rust_analyzer",
 }
-
+-- No further action is required. Some servers require a few customizations.
+-- See: https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+-- `lua/user/config/lspconfig.lua` contains examples of how to do so
 return M

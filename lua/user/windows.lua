@@ -1,3 +1,6 @@
+-- Windows, WSL, ssh from Terminal?
+-- Fixes: cursor colors
+-- https://github.com/microsoft/terminal/issues/9610
 vim.cmd([[
 " inverted cursor workaround for windows terminal
 " guicursor will leave reverse to the terminal, which won't work in WT.

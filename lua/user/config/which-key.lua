@@ -31,7 +31,7 @@ wk.register({
   ["<Tab>"] = { "<cmd>e#<cr>", "Prev buffer" },
 })
 
--- WHY HERE?!?!?
+-- If we want C-l to be LSP we need this
 vim.keymap.del("n", "<C-l>")
 
 -- Harpoon <C-h>

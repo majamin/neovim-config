@@ -33,6 +33,7 @@ require('packer').startup(function(use)
   use("https://github.com/hrsh7th/cmp-nvim-lua") -- Hack Neovim
   use("https://github.com/saadparwaiz1/cmp_luasnip")
   use("https://github.com/hrsh7th/cmp-buffer")
+  use("https://github.com/hrsh7th/cmp-path")
   use("https://github.com/rafamadriz/friendly-snippets")
   use({ "https://github.com/L3MON4D3/LuaSnip", config = get_config("luasnip") })
 

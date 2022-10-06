@@ -33,9 +33,10 @@ end
 -- Set up completion using nvim_cmp with LSP source
 local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
+-- Import requested servers
 local servers = require("user.user-conf").servers
 
--- Server configuration
+--[[ SERVER CONFIGURATION ]]
 -- Most servers have good defaults, so defining settings below is
 -- not typically necessary (some do)
 -- see: https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
@@ -56,7 +57,6 @@ for _, lsp in ipairs(servers) do
           -- Get the language server to recognize the `vim` global
           globals = { "vim" },
         },
-
         workspace = {
           -- Make the server aware of Neovim runtime files
           library = vim.api.nvim_get_runtime_file("", true),

@@ -5,7 +5,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   group = TrimWhiteSpaceGrp,
 })
 
--- don't auto comment new line
+-- Don't auto comment new line
 vim.api.nvim_create_autocmd("BufEnter", { command = [[set formatoptions-=cro]] })
 
 -- Use `<ESC>` to close windows
@@ -13,7 +13,7 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = {
     "man",
     "lspsagafinder",
-    "sagacodeactions",
+    "sagacodeaction",
     "help",
     "startuptime",
     "qf",
@@ -24,7 +24,7 @@ vim.api.nvim_create_autocmd("FileType", {
   command = [[nnoremap <buffer><silent> <ESC> :close<CR>]],
 })
 
--- go to last loc when opening a buffer
+-- Go to last location when opening a buffer
 vim.api.nvim_create_autocmd(
   "BufReadPost",
   { command = [[if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g`\"" | endif]] }
