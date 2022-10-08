@@ -8,9 +8,9 @@ end
 -- Go here: `lua/user/user-conf.lua`
 
 --[[ MEAT ]]
+require("user.maps") -- `lua/user/maps.lua`
 require("user.plugins") -- `lua/user/plugins.lua`
-require("user.base")    -- `lua/user/base.lua`
-require("user.maps")    -- `lua/user/maps.lua`
+require("user.base") -- `lua/user/base.lua`
 require("user.autocmd") -- `lua/user/autocmd.lua`
 
 --[[ SAD BUT TRUE ]]

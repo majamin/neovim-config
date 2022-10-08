@@ -5,7 +5,7 @@ end
 local actions = require("telescope.actions")
 local builtin = require("telescope.builtin")
 
-local my_file_browser = require("user/functions").my_file_browser
+local compact_browser = require("user/functions").compact_browser
 
 local fb_actions = require("telescope").extensions.file_browser.actions
 
@@ -45,12 +45,28 @@ telescope.setup({
 
 telescope.load_extension("file_browser")
 
-vim.keymap.set("n", ";;", function() builtin.resume() end, { desc = "Continue Finding ... "})
-vim.keymap.set("n", ";f", function() builtin.find_files({ no_ignore = false, hidden = true, }) end, { desc = "Find Files"})
-vim.keymap.set("n", ";w", my_file_browser, { desc = "Browse Files"} )
-vim.keymap.set("n", ";o", function() builtin.oldfiles({ only_cwd = true }) end, { desc = "Old Files"})
-vim.keymap.set("n", ";g", function() builtin.live_grep() end, { desc = "Grep Files"})
-vim.keymap.set("n", ";b", function() builtin.buffers() end, { desc = "Find Buffers"})
-vim.keymap.set("n", ";h", function() builtin.help_tags() end, { desc = "Find Help Tags" })
-vim.keymap.set("n", ";k", function() builtin.keymaps() end, { desc = "Find Keymaps"})
-vim.keymap.set("n", ";e", function() builtin.diagnostics() end, { desc = "View LSP diagnostics"})
+vim.keymap.set("n", ";;", function()
+  builtin.resume()
+end, { desc = "Continue Finding ... " })
+vim.keymap.set("n", ";f", function()
+  builtin.find_files({ no_ignore = false, hidden = true })
+end, { desc = "Find Files" })
+vim.keymap.set("n", ";w", compact_browser, { desc = "Browse Files" })
+vim.keymap.set("n", ";o", function()
+  builtin.oldfiles({ only_cwd = true })
+end, { desc = "Old Files" })
+vim.keymap.set("n", ";g", function()
+  builtin.live_grep()
+end, { desc = "Grep Files" })
+vim.keymap.set("n", ";b", function()
+  builtin.buffers()
+end, { desc = "Find Buffers" })
+vim.keymap.set("n", ";h", function()
+  builtin.help_tags()
+end, { desc = "Find Help Tags" })
+vim.keymap.set("n", ";k", function()
+  builtin.keymaps()
+end, { desc = "Find Keymaps" })
+vim.keymap.set("n", ";e", function()
+  builtin.diagnostics()
+end, { desc = "View LSP diagnostics" })

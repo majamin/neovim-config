@@ -46,3 +46,9 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   group = highlight_group,
   pattern = "*",
 })
+
+-- Automatically open Alpha when the last buffer is deleted and only one window left
+-- https://github.com/goolord/alpha-nvim/discussions/85#discussioncomment-2397855
+vim.cmd(
+  [[ au BufDelete * if empty(filter(tabpagebuflist(), '!buflisted(v:val)')) && winnr('$') == 1 | exec 'Alpha' | endif ]]
+)

@@ -7,7 +7,7 @@ M.telescope_buffer_dir = function()
   return vim.fn.expand("%:p:h")
 end
 
-M.my_file_browser = function()
+M.compact_browser = function()
   require("telescope").extensions.file_browser.file_browser({
     path = "%:p:h",
     cwd = M.telescope_buffer_dir(),

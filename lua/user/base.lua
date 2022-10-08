@@ -16,6 +16,7 @@ o.fileencoding = "utf-8" -- the encoding written to a file
 o.foldcolumn = "1"
 o.foldenable = false -- don't start files folded; enable with zi; wait for https://github.com/neovim/neovim/pull/17446
 o.foldlevelstart = 99 -- Using ufo provider need a large value, feel free to decrease the value
+o.hidden = false
 o.history = 500 -- Use the 'history' option to set the number of lines from command mode that are remembered.
 o.hlsearch = true -- highlight all matches on previous search pattern
 o.ignorecase = true -- ignore case in search patterns

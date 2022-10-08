@@ -26,7 +26,7 @@ vim.keymap.set("n", "<F3>", ":setlocal spell!<CR>", opts, { desc = "Toggle spell
 vim.keymap.set("n", "<F4>", ":setlocal spell! spelllang=en-basic<CR>", opts, { desc = "Toggle basic English spelling" })
 
 -- to mimic <C-w>q for window
-vim.keymap.set("n", "<C-w>b", ":bp|bd! #<CR>", opts, { desc = "Kill buffer" })
+vim.keymap.set("n", "<C-w>b", ":bd<CR>", opts, { desc = "Kill buffer" })
 
 -- paste from the yank register
 vim.keymap.set({ "n", "v" }, "<leader>p", '"0p', { desc = "Paste from yank register" })

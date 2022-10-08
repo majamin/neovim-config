@@ -152,7 +152,7 @@ local buttons = {
     { type = "padding", val = 1 },
     dashboard.button("e", "  New File", ":ene <BAR> startinsert <CR>"),
     dashboard.button("f", "  Find File", ":Telescope find_files <CR>"),
-    dashboard.button("w", "  File Browser", ":lua require('user/functions').my_file_browser()<CR>"),
+    dashboard.button("w", "  File Browser", ":lua require('user/functions').compact_browser()<CR>"),
     dashboard.button("g", "  Find Text", ":Telescope live_grep <CR>"),
     dashboard.button("o", "  Old Files", ":lua require('telescope.builtin').oldfiles({ only_cwd = true }) <CR>"),
     dashboard.button("g", "  NeoGit", ":Neogit <CR>"),
