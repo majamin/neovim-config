@@ -8,7 +8,6 @@ end
 -- Go here: `lua/user/user-conf.lua`
 
 --[[ MEAT ]]
--- stylua: ignore start
 require("user.plugins") -- `lua/user/plugins.lua`
 require("user.base")    -- `lua/user/base.lua`
 require("user.maps")    -- `lua/user/maps.lua`

@@ -11,15 +11,13 @@ local function get_config(name)
   return string.format('require("user/config/%s")', name)
 end
 
--- stylua: ignore start
-require('packer').startup(function(use)
+require("packer").startup(function(use)
   use("https://github.com/lewis6991/impatient.nvim")
   use("https://github.com/wbthomason/packer.nvim")
   use({ "https://github.com/kyazdani42/nvim-web-devicons", config = get_config("web-devicons") })
   use("https://github.com/nvim-lua/plenary.nvim")
 
   -- LSP
-  use({ "https://github.com/glepnir/lspsaga.nvim", config = get_config("lspsaga") })
   use({ "https://github.com/williamboman/mason.nvim", config = get_config("mason") })
   use("https://github.com/williamboman/mason-lspconfig.nvim")
   use({ "https://github.com/neovim/nvim-lspconfig", config = get_config("lspconfig") })
@@ -88,16 +86,16 @@ require('packer').startup(function(use)
   })
 
   if is_bootstrap then
-    require('packer').sync()
+    require("packer").sync()
   end
 end)
 
 if is_bootstrap then
-  print '=================================='
-  print '    Plugins are being installed'
-  print '    Wait until Packer completes,'
-  print '       then restart nvim'
-  print '=================================='
+  print("==================================")
+  print("    Plugins are being installed")
+  print("    Wait until Packer completes,")
+  print("       then restart nvim")
+  print("==================================")
   return
 end
 

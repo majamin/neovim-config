@@ -55,7 +55,6 @@ vim.keymap.set("n", "<S-F19>", "<Plug>VimwikiNextLink")
 vim.keymap.set("n", "<S-F18>", "<Plug>VimwikiPrevLink")
 wk.register({
   w = {
-    name = "Vimwiki",
-    w = { "<Plug>VimwikiIndex", "Open default Vimwiki" },
+    name = "Wiki",
   },
 }, { prefix = "<leader>", mode = "n", options })

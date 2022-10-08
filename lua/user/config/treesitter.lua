@@ -25,8 +25,12 @@ ts.setup({
     "typescript",
     "vue",
     "yaml",
+    "org", -- orgmode
   },
-  highlight = { enable = true },
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = { "org" }, -- orgmode spellcheck
+  },
   endwise = { enable = true },
   indent = { enable = true },
   autopairs = { enable = true },

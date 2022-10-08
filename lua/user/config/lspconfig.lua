@@ -14,19 +14,23 @@ local function on_attach(client, _) -- (client, bunfr)
   -- LSP <C-l>
   wk.register({
     name = "LSP",
-    a = { "<cmd>Lspsaga code_action<CR>", "Code action" },
-    d = { "<cmd>Lspsaga peek_definition<CR>", "Peek definition" },
+    a = { "<cmd>lua vim.lsp.buf.code_action()<CR>", "Code action" },
+    r = { "<cmd>lua vim.lsp.buf.rename()<CR>", "Rename symbol" },
+    i = {
+      "<cmd>lua vim.lsp.buf.implementation()<CR>",
+      "Show implementations",
+    },
+    t = { "<cmd>lua vim.lsp.buf.type_definition()<CR>", "Type definition" },
     o = { "<cmd>LSoutlineToggle<CR>", "Outline" },
-    r = { "<cmd>Lspsaga rename<CR>", "Rename object" },
-    s = { "<Cmd>Lspsaga signature_help<CR>", "Signature help" },
   }, { prefix = "<C-l>", mode = "n", opts = default_options })
   -- LSP no leader
   wk.register({
     name = "LSP - no leader",
-    gd = { "<cmd>Lspsaga lsp_finder<CR>", "Explore definitions" },
-    K = { "<cmd>Lspsaga hover_doc<CR>", "View doc for symbol" },
-    ["<C-j>"] = { "<cmd>Lspsaga diagnostic_jump_next<CR>", "Next diagnostic" },
-    ["<C-k>"] = { "<cmd>Lspsaga diagnostic_jump_prev<CR>", "Previous diagnostic" },
+    gd = { "<cmd>lua vim.lsp.buf.definition()<CR>", "Go to definition" },
+    gD = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "Go to declaration" },
+    K = { "<cmd>lua vim.lsp.buf.hover()<CR>", "View doc for symbol" },
+    ["<C-j>"] = { "<cmd>lua vim.diagnostic.goto_next()<CR>", "Next Diagnostic" },
+    ["<C-k>"] = { "<cmd>lua vim.diagnostic.goto_prev()<CR>", "Prev Diagnostic" },
   })
 end
 
@@ -54,11 +58,9 @@ for _, lsp in ipairs(servers) do
       },
       Lua = {
         diagnostics = {
-          -- Get the language server to recognize the `vim` global
           globals = { "vim" },
         },
         workspace = {
-          -- Make the server aware of Neovim runtime files
           library = vim.api.nvim_get_runtime_file("", true),
           checkThirdParty = false,
         },
