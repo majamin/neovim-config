@@ -155,7 +155,7 @@ local buttons = {
     dashboard.button("w", "  File Browser", ":lua require('user/functions').compact_browser()<CR>"),
     dashboard.button("g", "  Find Text", ":Telescope live_grep <CR>"),
     dashboard.button("o", "  Old Files", ":lua require('telescope.builtin').oldfiles({ only_cwd = true }) <CR>"),
-    dashboard.button("g", "  NeoGit", ":Neogit <CR>"),
+    dashboard.button("g", "  Fugitive", ":Git <CR>"),
     dashboard.button("u", "  Update Plugins", ":PackerSync --preview<CR>"),
     dashboard.button("q", "  Quit", ":qa<CR>"),
   },

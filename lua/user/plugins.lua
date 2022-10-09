@@ -41,23 +41,16 @@ require("packer").startup(function(use)
   use("https://github.com/nvim-telescope/telescope-file-browser.nvim")
   use({ "https://github.com/lewis6991/gitsigns.nvim", config = get_config("gitsigns") })
   use({ "https://github.com/jpalardy/vim-slime", config = get_config("slime") })
+  use({ "https://github.com/tpope/vim-fugitive" })
   use({
-    "https://github.com/TimUntersberger/neogit",
-    requires = {
-      "https://github.com/nvim-lua/plenary.nvim",
-      {
-        "https://github.com/sindrets/diffview.nvim",
-        cmd = {
-          "DiffviewOpen",
-          "DiffviewClose",
-          "DiffviewToggleFiles",
-          "DiffviewFocusFiles",
-        },
-        config = get_config("diffview"),
-      },
+    "https://github.com/sindrets/diffview.nvim",
+    cmd = {
+      "DiffviewOpen",
+      "DiffviewClose",
+      "DiffviewToggleFiles",
+      "DiffviewFocusFiles",
     },
-    cmd = "Neogit",
-    config = get_config("neogit"),
+    config = get_config("diffview"),
   })
 
   -- Spicy

@@ -4,7 +4,6 @@ if not status then
 end
 
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
-
 -- Don't show the dumb matching stuff.
 vim.opt.shortmess:append("c")
 
@@ -14,6 +13,10 @@ if not ok then
 end
 
 lspkind.init()
+
+if not require("user.user-conf").autocmp then
+  cmp.setup({ completion = { autocomplete = false }})
+end
 
 cmp.setup({
   mapping = {

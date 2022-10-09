@@ -34,30 +34,23 @@ snip_env = {
 
 ls.config.set_config({ history = true, updateevents = "TextChanged,TextChangedI" })
 
--- load friendly-snippets
 vsc.lazy_load()
--- load lua snippets
 lua.load({ paths = os.getenv("HOME") .. "/.config/nvim/snippets/" })
 
--- expansion key
--- this will expand the current item or jump to the next item within the snippet.
 vim.keymap.set({ "i", "s" }, "<c-j>", function()
   if ls.expand_or_jumpable() then
     ls.expand_or_jump()
   end
-end, { silent = true })
+end, { silent = true }, { desc = "Jump to next item in active snippet" })
 
--- jump backwards key.
--- this always moves to the previous item within the snippet
 vim.keymap.set({ "i", "s" }, "<c-k>", function()
   if ls.jumpable(-1) then
     ls.jump(-1)
   end
-end, { silent = true })
+end, { silent = true }, { desc = "Jump to previous item in active snippet" })
 
--- selecting within a list of options.
 vim.keymap.set("i", "<c-h>", function()
   if ls.choice_active() then
     ls.change_choice(1)
   end
-end)
+end, { desc = "Snippets - select within a list of options" })

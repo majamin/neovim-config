@@ -7,31 +7,19 @@ end
 
 local function on_attach(client, _) -- (client, bunfr)
   -- disable formatting for LSP clients as this is handled by null-ls
+  -- stylua: ignore start
   client.server_capabilities.documentFormattingProvider = false
   client.server_capabilities.documentRangeFormattingProvider = false
-  local wk = require("which-key")
-  local default_options = { silent = true }
-  -- LSP <C-l>
-  wk.register({
-    name = "LSP",
-    a = { "<cmd>lua vim.lsp.buf.code_action()<CR>", "Code action" },
-    r = { "<cmd>lua vim.lsp.buf.rename()<CR>", "Rename symbol" },
-    i = {
-      "<cmd>lua vim.lsp.buf.implementation()<CR>",
-      "Show implementations",
-    },
-    t = { "<cmd>lua vim.lsp.buf.type_definition()<CR>", "Type definition" },
-    o = { "<cmd>LSoutlineToggle<CR>", "Outline" },
-  }, { prefix = "<C-l>", mode = "n", opts = default_options })
-  -- LSP no leader
-  wk.register({
-    name = "LSP - no leader",
-    gd = { "<cmd>lua vim.lsp.buf.definition()<CR>", "Go to definition" },
-    gD = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "Go to declaration" },
-    K = { "<cmd>lua vim.lsp.buf.hover()<CR>", "View doc for symbol" },
-    ["<C-j>"] = { "<cmd>lua vim.diagnostic.goto_next()<CR>", "Next Diagnostic" },
-    ["<C-k>"] = { "<cmd>lua vim.diagnostic.goto_prev()<CR>", "Prev Diagnostic" },
-  })
+  vim.keymap.set("n", "<C-l>a", "<cmd>lua vim.lsp.buf.code_action()<CR>",     { desc = "Code action"          })
+  vim.keymap.set("n", "<C-l>r", "<cmd>lua vim.lsp.buf.rename()<CR>",          { desc = "Rename symbol"        })
+  vim.keymap.set("n", "<C-l>i", "<cmd>lua vim.lsp.buf.implementation()<CR>",  { desc = "Show implementations" })
+  vim.keymap.set("n", "<C-l>t", "<cmd>lua vim.lsp.buf.type_definition()<CR>", { desc = "Type definition"      })
+  vim.keymap.set("n", "gd",     "<cmd>lua vim.lsp.buf.definition()<CR>",      { desc = "Go to definition"     })
+  vim.keymap.set("n", "gD",     "<cmd>lua vim.lsp.buf.declaration()<CR>",     { desc = "Go to declaration"    })
+  vim.keymap.set("n", "K",      "<cmd>lua vim.lsp.buf.hover()<CR>",           { desc = "View doc for symbol"  })
+  vim.keymap.set("n", "<C-j>",  "<cmd>lua vim.diagnostic.goto_next()<CR>",    { desc = "Next Diagnostic"      })
+  vim.keymap.set("n", "<C-k>",  "<cmd>lua vim.diagnostic.goto_prev()<CR>",    { desc = "Prev Diagnostic"      })
+  -- stylua: ignore stop
 end
 
 -- Set up completion using nvim_cmp with LSP source
@@ -42,7 +30,7 @@ local servers = require("user.user-conf").servers
 
 --[[ SERVER CONFIGURATION ]]
 -- Most servers have good defaults, so defining settings below is
--- not typically necessary (some do)
+-- not typically necessary (there are exceptions)
 -- see: https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup({
