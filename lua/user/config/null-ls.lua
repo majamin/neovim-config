@@ -8,6 +8,7 @@ local formatting = null_ls.builtins.formatting
 local sources = {
   formatting.prettierd, -- Don't forget to add your prettierrc to your project!
   formatting.stylua.with({ extra_args = { "--indent-type", "Spaces", "--indent-width", "2" } }),
+  formatting.shfmt,
   formatting.latexindent.with({
     extra_args = { "-g", "/dev/null" }, -- https://github.com/cmhughes/latexindent.pl/releases/tag/V3.9.3
   }),
