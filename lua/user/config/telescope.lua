@@ -28,10 +28,10 @@ telescope.setup({
           ["<C-w>"] = function()
             vim.cmd("normal vbd")
           end,
+          ["<C-e>"] = fb_actions.create_from_prompt,
         },
         ["n"] = {
           -- your custom normal mode mappings
-          ["n"] = fb_actions.create_from_prompt,
           ["x"] = fb_actions.remove,
           ["h"] = fb_actions.goto_parent_dir,
           ["l"] = function()

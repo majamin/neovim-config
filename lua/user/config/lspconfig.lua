@@ -37,6 +37,7 @@ for _, lsp in ipairs(servers) do
     on_attach = on_attach,
     capabilities = capabilities,
     settings = {
+      cssls = { format = { enable = false } },
       volar = {
         filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json" },
       },
