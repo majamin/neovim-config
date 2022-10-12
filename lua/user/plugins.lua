@@ -71,6 +71,7 @@ require("packer").startup(function(use)
   use({ "https://github.com/folke/which-key.nvim", config = get_config("which-key") })
 
   -- This is fine
+  use({"https://github.com/famiu/bufdelete.nvim"})
   use({ "https://github.com/vimwiki/vimwiki", config = get_config("vimwiki") })
   use({
     "goolord/alpha-nvim",

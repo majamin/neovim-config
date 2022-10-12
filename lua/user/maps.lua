@@ -16,7 +16,7 @@ vim.keymap.set("v", ">", ">gv", opts, { desc = "Indent lines in" })
 
 -- Windows and buffers
 vim.keymap.set("n", "<BS>", "<C-^>", opts, { desc = "Jump to alternate buffer" })
-vim.keymap.set("n", "<C-w>b", ":bdelete<CR>", opts, { desc = "Kill buffer" })
+vim.keymap.set("n", "<C-w>b", ":Bdelete<CR>", opts, { desc = "Kill buffer" })
 
 -- Spelling
 vim.keymap.set("n", "<F3>", ":setlocal spell!<CR>", opts, { desc = "Toggle spelling" })
