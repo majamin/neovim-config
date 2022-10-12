@@ -8,11 +8,9 @@ M.autocmp = false -- auto completions? (C-n for manual cmp)
 -- M.lang = "en_us" -- US English
 M.lang = "en_ca" -- Canadian English
 M.colorscheme = "tokyonight"
-M.lualine_theme = "auto" -- can be `tokyonight`, `onedark`
+M.lualine_theme = "auto" -- see 'https://github.com/nvim-lualine/lualine.nvim/blob/master/THEMES.md'
 
 -- These servers will be installed and setup with defaults
--- Defaults can be overridden in `lua/user/config/lspconfig.lua`
--- See: https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 M.servers = {
   "sumneko_lua",
   "tsserver",
@@ -22,5 +20,7 @@ M.servers = {
   "pyright",
   "rust_analyzer",
 }
+-- Defaults can be overridden in `lua/user/config/lspconfig.lua`
+-- See: https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 
 return M
