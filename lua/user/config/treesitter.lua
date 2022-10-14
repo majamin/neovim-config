@@ -25,7 +25,7 @@ ts.setup({
     "typescript",
     "vue",
     "yaml",
-    "org", -- orgmode
+    "r",
   },
   highlight = {
     enable = true,
