@@ -2,8 +2,9 @@
 local M = {}
 
 -- Guests and VSCode addicts
-M.whichkey = false -- show key completion hints (`;k` to see all keymaps)
-M.autocmp = false -- auto completions? (C-n for manual cmp)
+M.whichkey = false -- show key completion hints (`;k` to telescope all keymaps)
+M.autocmp = false -- auto completions? (`C-n` for manual cmp)
+M.autofmt = false -- autoformat on save? (`C-l f` to manually format)
 
 -- M.lang = "en_us" -- US English
 M.lang = "en_ca" -- Canadian English

@@ -3,6 +3,8 @@ if not status then
   return
 end
 
+local autofmt = require("user.user-conf").autofmt
+
 local formatting = null_ls.builtins.formatting
 
 local sources = {
@@ -26,7 +28,9 @@ null_ls.setup({
         group = augroup,
         buffer = bufnr,
         callback = function()
-          vim.lsp.buf.format({ bufnr = bufnr })
+          if autofmt then
+            vim.lsp.buf.format({ bufnr = bufnr })
+          end
         end,
       })
     end
