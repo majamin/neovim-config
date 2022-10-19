@@ -20,6 +20,7 @@ M.servers = {
   "tailwindcss",
   "pyright",
   "rust_analyzer",
+  "html",
 }
 -- Defaults can be overridden in `lua/user/config/lspconfig.lua`
 -- See: https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
