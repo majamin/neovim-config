@@ -1,6 +1,24 @@
 local opts = { silent = true }
 local expr_opts = { silent = true, expr = true }
 
+-- Use `<ESC>` to close windows
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = {
+    "man",
+    "lspsagafinder",
+    "sagacodeaction",
+    "help",
+    "startuptime",
+    "qf",
+    "lspinfo",
+    "fugitive",
+    "null-ls-info",
+  },
+  callback = function()
+    vim.keymap.set({ "n" }, "<ESC>", ":close<CR>", { silent = true })
+  end,
+})
+
 -- Sanity
 vim.keymap.set({ "n", "v" }, "<space>", "<Nop>", { silent = true })
 vim.keymap.set("n", "<ESC>", ":noh<CR>", opts, { desc = "Search highlight off" })
@@ -38,15 +56,21 @@ end, { desc = "Open harpoon" })
 vim.keymap.set("n", "<C-h>a", function()
   return require("harpoon.mark").add_file()
 end, { desc = "Add current file to harpoon" })
-vim.keymap.set("n", "<C-h>1", function()
-  return require("harpoon.ui").nav_file(1)
-end, { desc = "Harpoon: navigate to file 1" })
-vim.keymap.set("n", "<C-h>2", function()
-  return require("harpoon.ui").nav_file(2)
-end, { desc = "Harpoon: navigate to file 2" })
-vim.keymap.set("n", "<C-h>3", function()
-  return require("harpoon.ui").nav_file(3)
-end, { desc = "Harpoon: navigate to file 3" })
-vim.keymap.set("n", "<C-h>4", function()
-  return require("harpoon.ui").nav_file(4)
-end, { desc = "Harpoon: navigate to file 4" })
+
+local function harpoon_sel(n)
+  vim.keymap.set("n", tostring(n), function()
+    if vim.api.nvim_buf_get_lines(0, n, n + 1, false) then
+      require("harpoon.ui").nav_file(n)
+    end
+  end)
+end
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = {
+    "harpoon",
+  },
+  callback = function()
+    for i = 1, 10 do
+      harpoon_sel(i)
+    end
+  end,
+})

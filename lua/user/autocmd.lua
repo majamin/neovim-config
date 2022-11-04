@@ -8,22 +8,6 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 -- Don't auto comment new line
 vim.api.nvim_create_autocmd("BufEnter", { command = [[set formatoptions-=cro]] })
 
--- Use `<ESC>` to close windows
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = {
-    "man",
-    "lspsagafinder",
-    "sagacodeaction",
-    "help",
-    "startuptime",
-    "qf",
-    "lspinfo",
-    "fugitive",
-    "null-ls-info",
-  },
-  command = [[nnoremap <buffer><silent> <ESC> :close<CR>]],
-})
-
 -- Go to last location when opening a buffer
 vim.api.nvim_create_autocmd(
   "BufReadPost",
