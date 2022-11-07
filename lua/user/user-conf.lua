@@ -21,6 +21,7 @@ M.servers = {
   "pyright",
   "rust_analyzer",
   "html",
+  "intelephense",
 }
 -- Defaults can be overridden in `lua/user/config/lspconfig.lua`
 -- See: https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md

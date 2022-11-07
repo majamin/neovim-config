@@ -24,7 +24,7 @@ o.laststatus = 3 -- global statusline = 3
 o.lazyredraw = true -- do not redraw screen while running macros
 o.list = true
 o.mouse = ""
-o.number = true -- standard line numbers are fine
+o.relativenumber = true -- line numbers
 o.scrolloff = 3 -- Minimal number of screen lines to keep above and below the cursor
 o.shiftwidth = 2 -- the number of spaces inserted for each indentation
 o.shortmess = o.shortmess + "c" -- prevent "pattern not found" messages

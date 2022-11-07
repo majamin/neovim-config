@@ -57,17 +57,20 @@ vim.keymap.set("n", "<C-h>a", function()
   return require("harpoon.mark").add_file()
 end, { desc = "Add current file to harpoon" })
 
+local harpoon_select = vim.api.nvim_create_augroup("HarpoonSelect", { clear = true })
 local function harpoon_sel(n)
   vim.keymap.set("n", tostring(n), function()
-    if vim.api.nvim_buf_get_lines(0, n, n + 1, false) then
+    print("pressed: " .. n)
+    if vim.api.nvim_buf_get_lines(0, n - 1, n, false) then
       require("harpoon.ui").nav_file(n)
     end
-  end)
+  end, { buffer = true, nowait = true })
 end
 vim.api.nvim_create_autocmd("FileType", {
   pattern = {
     "harpoon",
   },
+  group = harpoon_select,
   callback = function()
     for i = 1, 10 do
       harpoon_sel(i)
