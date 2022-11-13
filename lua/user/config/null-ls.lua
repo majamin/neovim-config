@@ -6,14 +6,27 @@ end
 local autofmt = require("user.user-conf").autofmt
 
 local formatting = null_ls.builtins.formatting
+local code_actions = null_ls.builtins.code_actions
+
+-- [[ READ THIS! ]]
+-- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTIN_CONFIG.md
 
 local sources = {
-  formatting.prettierd, -- Don't forget to add your prettierrc to your project!
+  -- Python
+  formatting.black,
+  -- C, C++, C#, Java, Cuda
+  formatting.clang_format,
+  -- Latex
+  -- https://github.com/cmhughes/latexindent.pl/releases/tag/V3.9.3
+  formatting.latexindent.with({ extra_args = { "-g", "/dev/null" } }),
+  -- HTML, JS, CSS
+  formatting.prettierd,
+  -- Lua
   formatting.stylua.with({ extra_args = { "--indent-type", "Spaces", "--indent-width", "2" } }),
+  -- Shell (bash, etc.)
   formatting.shfmt,
-  formatting.latexindent.with({
-    extra_args = { "-g", "/dev/null" }, -- https://github.com/cmhughes/latexindent.pl/releases/tag/V3.9.3
-  }),
+  -- Git code actions
+  code_actions.gitsigns,
 }
 
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
