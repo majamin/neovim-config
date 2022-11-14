@@ -21,6 +21,8 @@ local sources = {
   formatting.latexindent.with({ extra_args = { "-g", "/dev/null" } }),
   -- HTML, JS, CSS
   formatting.prettierd,
+  -- Rust,
+  formatting.rustfmt,
   -- Lua
   formatting.stylua.with({ extra_args = { "--indent-type", "Spaces", "--indent-width", "2" } }),
   -- Shell (bash, etc.)
