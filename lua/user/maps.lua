@@ -1,6 +1,8 @@
 local opts = { silent = true }
 local expr_opts = { silent = true, expr = true }
 
+local abbrev = require("user.functions").abbrev
+
 -- Use `<ESC>` to close windows
 vim.api.nvim_create_autocmd("FileType", {
   pattern = {
@@ -77,3 +79,6 @@ vim.api.nvim_create_autocmd("FileType", {
     end
   end,
 })
+
+-- Abbreviations
+abbrev("ssss", "▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒")

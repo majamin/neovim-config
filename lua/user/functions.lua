@@ -20,4 +20,9 @@ M.compact_browser = function()
   })
 end
 
+-- Waiting for an API, like https://github.com/neovim/neovim/pull/19238
+M.abbrev = function(l, r)
+  vim.cmd{ cmd = 'abbrev', args = { l, r } }
+end
+
 return M
