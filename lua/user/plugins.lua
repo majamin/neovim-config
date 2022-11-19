@@ -55,9 +55,12 @@ require("packer").startup(function(use)
 
   -- Spicy
   use({ "https://github.com/folke/tokyonight.nvim", config = get_config("tokyonight") })
+  use({ "https://github.com/ellisonleao/gruvbox.nvim", config = get_config("gruvbox")  })
+  use({ "https://github.com/EdenEast/nightfox.nvim", config = get_config("nightfox")  })
   use({ "https://github.com/norcalli/nvim-colorizer.lua", config = get_config("colorizer") })
   use({ "https://github.com/nvim-lualine/lualine.nvim", config = get_config("lualine") })
   use({ "https://github.com/lukas-reineke/indent-blankline.nvim", config = get_config("indent") })
+  use({ "https://github.com/folke/zen-mode.nvim", config = get_config("zen-mode") })
 
   -- Butter
   use({

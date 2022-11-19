@@ -2,10 +2,12 @@ local fn = vim.fn
 local o = vim.opt
 local g = vim.g
 
+local bg = require("user.user-conf").background
+
 g.mapleader = ","
 o.backup = false -- creates a backup file
 o.breakindent = true
--- o.clipboard = "unnamedplus" -- allows neovim to access the system clipboard
+o.background = bg
 o.cmdheight = 1 -- space for displaying messages/commands
 o.completeopt = { "menu", "menuone", "noselect", "noinsert" } -- A comma separated list of options for Insert mode completion
 o.conceallevel = 0 -- so that `` is visible in markdown files

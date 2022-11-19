@@ -31,6 +31,8 @@ vim.keymap.set({ "n", "v" }, "<leader>p", '"0p', { desc = "Paste from yank regis
 vim.keymap.set("v", "<", "<gv", opts, { desc = "Indent lines out" })
 vim.keymap.set("v", ">", ">gv", opts, { desc = "Indent lines in" })
 
+vim.keymap.set("n", "zm", ":ZenMode<CR>", { silent = true })
+
 -- If we want C-l to be LSP we need this
 -- vim.keymap.del("n", "<C-l>", opts)
 
