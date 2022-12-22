@@ -42,6 +42,12 @@ require("packer").startup(function(use)
   use({ "https://github.com/lewis6991/gitsigns.nvim", config = get_config("gitsigns") })
   use({ "https://github.com/jpalardy/vim-slime", config = get_config("slime") })
   use({ "https://github.com/tpope/vim-fugitive" })
+  -- Lua
+  use({
+    "folke/todo-comments.nvim",
+    requires = "nvim-lua/plenary.nvim",
+    config = get_config("todo-comments")
+  })
   use({
     "https://github.com/sindrets/diffview.nvim",
     cmd = {
