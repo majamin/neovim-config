@@ -25,13 +25,13 @@ o.ignorecase = true -- ignore case in search patterns
 o.laststatus = 3 -- global statusline = 3
 o.lazyredraw = true -- do not redraw screen while running macros
 o.list = true
-o.mouse = ""
+o.mouse = "" -- I use tmux to grab text from the screen
 o.number = true -- show line numbers (or only the current one)
 o.relativenumber = true -- line numbers
 o.scrolloff = 3 -- Minimal number of screen lines to keep above and below the cursor
 o.shiftwidth = 2 -- the number of spaces inserted for each indentation
 o.shortmess = o.shortmess + "c" -- prevent "pattern not found" messages
-o.showmode = false -- we don't need to see things like -- INSERT -- anymore
+o.showmode = false -- mode is built into the statusline so let's leave it out
 o.sidescrolloff = 5 -- the minimal number of columns to scroll horizontally
 o.signcolumn = "yes" -- "yes" ensures that the gutter doesn't open and close spastically
 o.smartcase = true -- smart case

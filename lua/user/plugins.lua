@@ -77,10 +77,11 @@ require("packer").startup(function(use)
   use({ "https://github.com/famiu/bufdelete.nvim" })
   use({ "https://github.com/vimwiki/vimwiki", config = get_config("vimwiki") })
   use({
-    "goolord/alpha-nvim",
-    requires = { "kyazdani42/nvim-web-devicons" },
+    "https://github.com/goolord/alpha-nvim",
+    requires = { "https://github.com/kyazdani42/nvim-web-devicons" },
     config = get_config("alpha"),
   })
+  use({ "https://github.com/rktjmp/lush.nvim"})
 
   if is_bootstrap then
     require("packer").sync()
