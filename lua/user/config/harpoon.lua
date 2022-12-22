@@ -24,3 +24,31 @@ local settings = {
 }
 
 harpoon.setup(settings)
+
+-- Keymaps
+vim.keymap.set("n", "<C-h>", function()
+  require("harpoon.ui").toggle_quick_menu()
+end, { desc = "Open harpoon" })
+vim.keymap.set("n", "<leader>a", function()
+  require("harpoon.mark").add_file()
+  require("harpoon.ui").toggle_quick_menu()
+  print("Added!")
+end, { desc = "Add current file to harpoon" })
+
+-- Quick select via 'leader'
+local function harpoon_sel(n)
+  vim.keymap.set("n", "<leader>" .. tostring(n), function()
+    require("harpoon.ui").nav_file(n)
+  end, { nowait = true }, { desc = "Open Harpoon file " .. tostring(n) })
+end
+for i = 1, 9 do
+  harpoon_sel(i)
+end
+
+-- Go to next/prev Harpoon file
+vim.keymap.set("n", "<TAB>", function()
+  require("harpoon.ui").nav_next()
+end, { nowait = true })
+vim.keymap.set("n", "<S-TAB>", function()
+  require("harpoon.ui").nav_prev()
+end, { nowait = true })

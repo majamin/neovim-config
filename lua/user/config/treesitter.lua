@@ -3,33 +3,13 @@ if not status then
   return
 end
 
+local langs = require("user.user-conf").treesitter_langs
+
 -- See https://github.com/nvim-treesitter/nvim-treesitter#available-modules
 ts.setup({
-  ensure_installed = {
-    "bash",
-    "cmake",
-    "css",
-    "dockerfile",
-    "go",
-    "hcl",
-    "html",
-    "java",
-    "javascript",
-    "json",
-    "latex",
-    "lua",
-    "markdown",
-    "python",
-    "query", -- for treesitter/playground
-    "toml",
-    "typescript",
-    "vue",
-    "yaml",
-    "r",
-  },
+  ensure_installed = langs,
   highlight = {
     enable = true,
-    additional_vim_regex_highlighting = { "org" }, -- orgmode spellcheck
   },
   endwise = { enable = true },
   indent = { enable = true },

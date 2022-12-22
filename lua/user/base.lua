@@ -2,12 +2,12 @@ local fn = vim.fn
 local o = vim.opt
 local g = vim.g
 
-local bg = require("user.user-conf").background
+local conf = require("user.user-conf")
 
-g.mapleader = ","
+g.mapleader = conf.mapleader
 o.backup = false -- creates a backup file
 o.breakindent = true
-o.background = bg
+o.background = conf.background
 o.cmdheight = 1 -- space for displaying messages/commands
 o.completeopt = { "menu", "menuone", "noselect", "noinsert" } -- A comma separated list of options for Insert mode completion
 o.conceallevel = 0 -- so that `` is visible in markdown files
