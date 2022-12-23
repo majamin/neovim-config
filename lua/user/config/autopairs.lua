@@ -4,5 +4,7 @@ if not status then
 end
 
 autopairs.setup({
-  disable_filetype = { "TelescopePrompt", "vim" },
+  check_ts = true,
+  ignored_next_char = "[%w%.]",
+  enable_check_bracket_line = false,
 })
