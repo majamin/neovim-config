@@ -21,5 +21,5 @@ gruvbox.setup({
   transparent_mode = false,
 })
 
-local theme = require("user.user-conf").colorscheme
+local theme = require("user").colorscheme
 if theme == "gruvbox" then vim.cmd("colorscheme " .. theme) end

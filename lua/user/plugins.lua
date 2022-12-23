@@ -12,7 +12,6 @@ local function get_config(name)
 end
 
 require("packer").startup(function(use)
-  use("https://github.com/lewis6991/impatient.nvim")
   use("https://github.com/wbthomason/packer.nvim")
   use({ "https://github.com/kyazdani42/nvim-web-devicons", config = get_config("web-devicons") })
   use("https://github.com/nvim-lua/plenary.nvim")

@@ -11,5 +11,5 @@ tokyo.setup({
   lualine_bold = true, -- When `true`, section headers in the lualine theme will be bold
 })
 
-local theme = require("user.user-conf").colorscheme
+local theme = require("user").colorscheme
 if theme == "tokyonight" then vim.cmd("colorscheme " .. theme) end

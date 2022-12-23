@@ -1,4 +1,4 @@
-if not require("user.user-conf").whichkey then return end
+if not require("user").whichkey then return end
 
 local status_ok, wk = pcall(require, "which-key")
 if not status_ok then

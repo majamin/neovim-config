@@ -39,7 +39,7 @@ nightfox.setup({
   groups = {},
 })
 
-local theme = require("user.user-conf").colorscheme
+local theme = require("user").colorscheme
 if theme == "nightfox" or theme == "duskfox" or theme == "terafox" then
   vim.cmd("colorscheme " .. theme)
 end

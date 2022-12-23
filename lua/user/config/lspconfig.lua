@@ -25,10 +25,10 @@ end
 local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 -- Import requested servers
-local servers = require("user.user-conf").lsp_servers
+local servers = require("user").lsp_servers
 
 -- Import override settings
-local overrides = require("user.user-conf").overrides
+local overrides = require("user").overrides
 
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup({

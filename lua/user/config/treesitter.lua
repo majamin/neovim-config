@@ -3,7 +3,7 @@ if not status then
   return
 end
 
-local langs = require("user.user-conf").treesitter_langs
+local langs = require("user").treesitter_langs
 
 -- See https://github.com/nvim-treesitter/nvim-treesitter#available-modules
 ts.setup({

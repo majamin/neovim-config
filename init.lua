@@ -1,16 +1,10 @@
---[[ IMPATIENT ]]
-local status, impatient = pcall(require, "impatient")
-if status then
-  impatient.enable_profile()
-end
-
 --[[ IGNITION ]]
--- Go here: `lua/user/user-conf.lua`
+-- Tweak your settings here: `lua/user/init.lua`
 
 --[[ MEAT ]]
-require("user.maps") -- `lua/user/maps.lua`
+require("user.maps")    -- `lua/user/maps.lua`
 require("user.plugins") -- `lua/user/plugins.lua`
-require("user.base") -- `lua/user/base.lua`
+require("user.base")    -- `lua/user/base.lua`
 require("user.autocmd") -- `lua/user/autocmd.lua`
 
 --[[ SAD BUT TRUE ]]

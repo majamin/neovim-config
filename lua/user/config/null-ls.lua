@@ -3,7 +3,7 @@ if not status then
   return
 end
 
-local autofmt = require("user.user-conf").autofmt
+local autofmt = require("user").autofmt
 
 local formatting = null_ls.builtins.formatting
 local code_actions = null_ls.builtins.code_actions

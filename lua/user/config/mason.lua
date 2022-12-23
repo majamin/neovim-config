@@ -9,7 +9,7 @@ end
 
 mason.setup({})
 
-local servers = require("user.user-conf").servers
+local servers = require("user").servers
 lspconfig.setup({
   ensure_installed = servers,
 })

@@ -2,7 +2,7 @@ local fn = vim.fn
 local o = vim.opt
 local g = vim.g
 
-local conf = require("user.user-conf")
+local conf = require("user")
 
 g.mapleader = conf.mapleader
 o.backup = false -- creates a backup file

@@ -14,7 +14,7 @@ end
 
 lspkind.init()
 
-if not require("user.user-conf").autocmp then
+if not require("user").autocmp then
   cmp.setup({ completion = { autocomplete = false }})
 end
 
