@@ -14,6 +14,6 @@ require("user.base") -- `lua/user/base.lua`
 require("user.autocmd") -- `lua/user/autocmd.lua`
 
 --[[ SAD BUT TRUE ]]
-if os.getenv("WT") then
-  require("user.windows")
-end
+-- This file fixes weird Windows Terminal cursor issues
+-- Just add an empty file ~/.wsl_true to activate this.
+require("user.wsl_fix_cursor")

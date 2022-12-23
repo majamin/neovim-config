@@ -1,6 +1,13 @@
 -- Windows, WSL, ssh from Terminal?
 -- Fixes: cursor colors
 -- https://github.com/microsoft/terminal/issues/9610
+local file_exists = function(name)
+   local f=io.open(name,"r")
+   if f~=nil then io.close(f) return true else return false end
+end
+
+if not file_exists(os.getenv("HOME") .. "/.wsl_true") then return end
+
 vim.cmd([[
 " inverted cursor workaround for windows terminal
 " guicursor will leave reverse to the terminal, which won't work in WT.
