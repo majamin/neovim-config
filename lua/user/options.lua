@@ -1,13 +1,12 @@
 local fn = vim.fn
 local o = vim.opt
 local g = vim.g
+local user = require("user")
 
-local conf = require("user")
-
-g.mapleader = conf.mapleader
+g.mapleader = user.mapleader
 o.backup = false -- creates a backup file
 o.breakindent = true
-o.background = conf.background
+o.background = user.background
 o.cmdheight = 1 -- space for displaying messages/commands
 o.completeopt = { "menu", "menuone", "noselect", "noinsert" } -- A comma separated list of options for Insert mode completion
 o.conceallevel = 0 -- so that `` is visible in markdown files
@@ -36,6 +35,7 @@ o.sidescrolloff = 5 -- the minimal number of columns to scroll horizontally
 o.signcolumn = "yes" -- "yes" ensures that the gutter doesn't open and close spastically
 o.smartcase = true -- smart case
 o.smartindent = true -- make indenting smarter again
+o.spelllang = user.lang
 o.splitbelow = true -- force all horizontal splits to go below current window
 o.splitright = true -- force all vertical splits to go to the right of current window
 o.swapfile = true -- enable/disable swap file creation

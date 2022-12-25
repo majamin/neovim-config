@@ -16,7 +16,7 @@ M.lang = "en_ca" -- Canadian English
 -- [[ APPEARANCE ]]
 M.background = "dark" -- "light", or "transparent"
 M.lualine_theme = "auto" -- see 'https://github.com/nvim-lualine/lualine.nvim/blob/master/THEMES.md'
-M.colorscheme = "duskfox"
+-- M.colorscheme = "duskfox"
 -- M.colorscheme = "tokyonight"
 -- M.colorscheme = "gruvbox"
 -- M.colorscheme = "nightfox"

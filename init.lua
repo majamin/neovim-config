@@ -1,13 +1,8 @@
---[[ IGNITION ]]
--- Tweak your settings here: `lua/user/init.lua`
+require("user/options")
 
---[[ MEAT ]]
-require("user.maps")    -- `lua/user/maps.lua`
-require("user.plugins") -- `lua/user/plugins.lua`
-require("user.base")    -- `lua/user/base.lua`
-require("user.autocmd") -- `lua/user/autocmd.lua`
+require("bootstrap")
+require("lazy").setup("plugins")
 
---[[ SAD BUT TRUE ]]
--- This file fixes weird Windows Terminal cursor issues
--- Just add an empty file ~/.wsl_true to activate this.
-require("user.wsl_fix_cursor")
+require("user/maps")
+require("user/autocmd")
+require("user/wsl_fix_cursor")
