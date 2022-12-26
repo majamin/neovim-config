@@ -1,9 +1,7 @@
 local fn = vim.fn
 local o = vim.opt
-local g = vim.g
 local user = require("user")
 
-g.mapleader = user.mapleader
 o.backup = false -- creates a backup file
 o.breakindent = true
 o.background = user.background
@@ -49,3 +47,8 @@ o.updatetime = 250 -- faster completion
 o.wildignorecase = true -- When set case is ignored when completing file names and directories
 o.wildmode = "full"
 o.wrap = false
+
+vim.cmd(
+  [[ hi SpellBad guisp=yellow gui=undercurl guifg=yellow guibg=NONE ctermfg=NONE ctermbg=NONE term=undercurl cterm=undercurl ]]
+)
+

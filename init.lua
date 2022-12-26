@@ -1,6 +1,5 @@
-require("user/options")
-
 require("bootstrap")
+vim.g.mapleader = require("user").mapleader
 require("lazy").setup("plugins", {
   checker = {
     enabled = true,
@@ -8,6 +7,7 @@ require("lazy").setup("plugins", {
   },
 })
 
+require("user/options")
 require("user/autocmd")
 require("user/functions")
 require("user/maps")

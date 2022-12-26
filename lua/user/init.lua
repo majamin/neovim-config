@@ -52,15 +52,15 @@ M.treesitter_langs = {
 -- These will be installed and setup automatically.
 -- For nice usage, some LSP servers require overrides (see below).
 M.lsp_servers = {
-  "sumneko_lua",
-  "tsserver",
-  "cssls",
-  "volar",
-  "tailwindcss",
-  "pyright",
-  "rust_analyzer",
-  "html",
-  "intelephense",
+  "cssls", -- css
+  "html", -- html
+  "intelephense", -- php
+  "pyright", -- python
+  "rust_analyzer", -- rust
+  "sumneko_lua", -- lua
+  "tailwindcss", -- tailwindcss
+  "tsserver", -- js, jsx, ts, tsx
+  "volar", -- vue
 }
 
 -- Optional LSP setting overrides
