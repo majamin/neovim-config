@@ -1,6 +1,6 @@
 local M = {
   "folke/which-key.nvim",
-  enabled = require("user").whichkey or true,
+  enabled = require("user").whichkey,
 }
 
 function M.config()

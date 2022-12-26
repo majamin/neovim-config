@@ -1,7 +1,12 @@
 require("user/options")
 
 require("bootstrap")
-require("lazy").setup("plugins")
+require("lazy").setup("plugins", {
+  checker = {
+    enabled = true,
+    notify = false,
+  },
+})
 
 require("user/autocmd")
 require("user/functions")

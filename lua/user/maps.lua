@@ -1,8 +1,8 @@
--- NOTE: plugin specific maps contained in each config file lua/user/config/*
+-- NOTE: plugin specific maps contained in each plugin file lua/plugins/*
 
 local opts = { silent = true }
 local expr_opts = { silent = true, expr = true }
-local abbrev = require("user.functions").abbrev
+local abbrev = require("user/functions").abbrev
 
 -- Use `<ESC>` to close windows
 vim.api.nvim_create_autocmd("FileType", {

@@ -1,19 +1,19 @@
--- [[ USER CONFIGURATION ]]
--- The only file you need to edit (probably)
+------------------------------------------------------ [[ USER CONFIGURATION ]]
+--                                    The only file you need to edit (probably)
 
 local M = {}
 
--- [[ ASSISTANCE AND AUTOMATION ]]
-M.whichkey = false -- show key completion hints (enable with `:WhichKey`)
-M.autocmp = false -- auto completions? (`C-n` for manual completion)
-M.autofmt = false -- autoformat on save? (`C-l f` to manually format)
+----------------------------------------------- [[ ASSISTANCE AND AUTOMATION ]]
+M.whichkey = false -- show key completion hints?
+M.autocmp = false -- enable auto completions? (`C-n` for manual completion)
+M.autofmt = false -- enable autoformat on save? (`C-l f` to manually format)
 
--- [[ LOCALE AND BASICS ]]
+------------------------------------------------------- [[ LOCALE AND BASICS ]]
 M.mapleader = ";"
 M.lang = "en_ca" -- Canadian English
 -- M.lang = "en_us" -- US English
 
--- [[ APPEARANCE ]]
+-------------------------------------------------------------- [[ APPEARANCE ]]
 M.background = "dark" -- "light", or "transparent"
 M.lualine_theme = "auto" -- see 'https://github.com/nvim-lualine/lualine.nvim/blob/master/THEMES.md'
 M.colorscheme = "miami-nights"
@@ -23,7 +23,7 @@ M.colorscheme = "miami-nights"
 -- M.colorscheme = "terafox"
 -- M.colorscheme = "gruvbox"
 
--- [[ LSP AND TREESITTER ]]
+------------------------------------------------------ [[ LSP AND TREESITTER ]]
 -- Treesitter languages (automatic)
 M.treesitter_langs = {
   "bash",

@@ -18,7 +18,6 @@ local function icon(fn)
   return nwd.get_icon(fn, ext, { default = true })
 end
 
-
 function M.config()
   -- adopted from https://github.com/AdamWhittingham/vim-config/blob/nvim/lua/config/startup_screen.lua
   local alpha = require("alpha")
@@ -126,7 +125,7 @@ function M.config()
     val = {
       {
         type = "text",
-        val = "Old files",
+        val = "Recent files",
         opts = {
           hl = "SpecialComment",
           shrink_margin = false,
@@ -147,15 +146,14 @@ function M.config()
   local buttons = {
     type = "group",
     val = {
-      { type = "text", val = "Quick links", opts = { hl = "SpecialComment", position = "center" } },
+      { type = "text", val = "Menu", opts = { hl = "SpecialComment", position = "center" } },
       { type = "padding", val = 1 },
       dashboard.button("e", "  New File", ":ene <BAR> startinsert <CR>"),
       dashboard.button("f", "  Find File", ":Telescope find_files <CR>"),
       dashboard.button("w", "  File Browser", ":lua require('user/functions').compact_browser()<CR>"),
-      dashboard.button("g", "  Find Text", ":Telescope live_grep <CR>"),
-      dashboard.button("o", "  Old Files", ":lua require('telescope.builtin').oldfiles({ only_cwd = true }) <CR>"),
-      dashboard.button("g", "  Fugitive", ":Git <CR>"),
-      dashboard.button("u", "  Update Plugins", ":PackerSync --preview<CR>"),
+      dashboard.button("r", "  Grep Files", ":Telescope live_grep <CR>"),
+      dashboard.button("g", "  Git (Fugitive)", ":Git <CR>"),
+      dashboard.button("p", "  Manage Plugins", ":Lazy update"),
       dashboard.button("q", "  Quit", ":qa<CR>"),
     },
     position = "center",

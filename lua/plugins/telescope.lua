@@ -11,17 +11,6 @@ local M = {
   lazy = true,
 }
 
--- Use git files or fallback to normal find_files
-M.project_files = function()
-  local opts = {} -- define here if you want to define something
-  vim.fn.system('git rev-parse --is-inside-work-tree')
-  if vim.v.shell_error == 0 then
-    require"telescope.builtin".git_files(opts)
-  else
-    require"telescope.builtin".find_files(opts)
-  end
-end
-
 function M.config()
   local trouble = require("trouble.providers.telescope")
   local telescope = require("telescope")
@@ -39,8 +28,8 @@ function M.config()
       mappings = {
         i = {
           ["<c-t>"] = trouble.open_with_trouble,
-          ["<C-Down>"] = require("telescope.actions").cycle_history_next,
-          ["<C-Up>"] = require("telescope.actions").cycle_history_prev,
+          ["<C-Down>"] = actions.cycle_history_next,
+          ["<C-Up>"] = actions.cycle_history_prev,
         },
       },
       -- mappings = { i = { ["<esc>"] = actions.close } },
@@ -122,8 +111,10 @@ end
 function M.init()
   local builtin = require("telescope.builtin")
   local compact_browser = require("user/functions").compact_browser
+  local project_files = require("user/functions").project_files
+
   vim.keymap.set("n", "<leader><leader>", function() builtin.resume() end, { desc = "Continue Finding ... " })
-  vim.keymap.set("n", "<leader>f", function() require("plugins.telescope").project_files() end, { desc = "Find Files" })
+  vim.keymap.set("n", "<leader>f", project_files, { desc = "Find Files" })
   vim.keymap.set("n", "<leader>w", compact_browser, { desc = "Browse Files" })
   vim.keymap.set("n", "<leader>o", function() builtin.oldfiles({ only_cwd = true }) end, { desc = "Old Files" })
   vim.keymap.set("n", "<leader>g", function() builtin.live_grep() end, { desc = "Grep Files" })
