@@ -3,7 +3,7 @@ local M = {
   dependencies = {
     "hrsh7th/nvim-cmp",
     "hrsh7th/cmp-nvim-lsp",
-  }
+  },
 }
 
 local function on_attach(client, _) -- (client, bunfr)
