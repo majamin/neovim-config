@@ -1,12 +1,7 @@
 return {
-  { "jpalardy/vim-slime" },
   { "tpope/vim-fugitive" },
   { "norcalli/nvim-colorizer.lua" },
-  {
-    "lukas-reineke/indent-blankline.nvim",
-    dependencies = { "jesseleite/nvim-noirbuddy" }, -- fixes indent line colors
-  },
-  { "folke/zen-mode.nvim" },
+  { "lukas-reineke/indent-blankline.nvim" },
   { "windwp/nvim-ts-autotag", ft = { "html", "tsx", "vue", "svelte", "php", "res" } },
   { "windwp/nvim-autopairs", config = true },
   { "numToStr/Comment.nvim", config = true },
