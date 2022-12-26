@@ -31,17 +31,19 @@ function M.init()
       settings = overrides
     })
   end
-
-  vim.keymap.set("n", "<C-l>a", "<cmd>lua vim.lsp.buf.code_action()<CR>",     { desc = "Code action"          })
-  vim.keymap.set("n", "<C-l>r", "<cmd>lua vim.lsp.buf.rename()<CR>",          { desc = "Rename symbol"        })
-  vim.keymap.set("n", "<C-l>i", "<cmd>lua vim.lsp.buf.implementation()<CR>",  { desc = "Show implementations" })
-  vim.keymap.set("n", "<C-l>t", "<cmd>lua vim.lsp.buf.type_definition()<CR>", { desc = "Type definition"      })
-  vim.keymap.set("n", "<C-l>f", "<cmd>lua vim.lsp.buf.format()<CR>",          { desc = "Format the buffer"    })
-  vim.keymap.set("n", "gd",     "<cmd>lua vim.lsp.buf.definition()<CR>",      { desc = "Go to definition"     })
-  vim.keymap.set("n", "gD",     "<cmd>lua vim.lsp.buf.declaration()<CR>",     { desc = "Go to declaration"    })
-  vim.keymap.set("n", "K",      "<cmd>lua vim.lsp.buf.hover()<CR>",           { desc = "View doc for symbol"  })
-  vim.keymap.set("n", "<C-j>",  "<cmd>lua vim.diagnostic.goto_next()<CR>",    { desc = "Next Diagnostic"      })
-  vim.keymap.set("n", "<C-k>",  "<cmd>lua vim.diagnostic.goto_prev()<CR>",    { desc = "Prev Diagnostic"      })
 end
+
+M.keys = {
+  { "<C-l>a", "<cmd>lua vim.lsp.buf.code_action()<CR>",     { desc = "Code action"          }},
+  { "<C-l>r", "<cmd>lua vim.lsp.buf.rename()<CR>",          { desc = "Rename symbol"        }},
+  { "<C-l>i", "<cmd>lua vim.lsp.buf.implementation()<CR>",  { desc = "Show implementations" }},
+  { "<C-l>t", "<cmd>lua vim.lsp.buf.type_definition()<CR>", { desc = "Type definition"      }},
+  { "<C-l>f", "<cmd>lua vim.lsp.buf.format()<CR>",          { desc = "Format the buffer"    }},
+  { "gd",     "<cmd>lua vim.lsp.buf.definition()<CR>",      { desc = "Go to definition"     }},
+  { "gD",     "<cmd>lua vim.lsp.buf.declaration()<CR>",     { desc = "Go to declaration"    }},
+  { "K",      "<cmd>lua vim.lsp.buf.hover()<CR>",           { desc = "View doc for symbol"  }},
+  { "<C-j>",  "<cmd>lua vim.diagnostic.goto_next()<CR>",    { desc = "Next Diagnostic"      }},
+  { "<C-k>",  "<cmd>lua vim.diagnostic.goto_prev()<CR>",    { desc = "Prev Diagnostic"      }},
+}
 
 return M

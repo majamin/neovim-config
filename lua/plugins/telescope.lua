@@ -108,20 +108,16 @@ function M.config()
   telescope.load_extension("file_browser")
 end
 
-function M.init()
-  local builtin = require("telescope.builtin")
-  local compact_browser = require("user/functions").compact_browser
-  local project_files = require("user/functions").project_files
-
-  vim.keymap.set("n", "<leader><leader>", function() builtin.resume() end, { desc = "Continue Finding ... " })
-  vim.keymap.set("n", "<leader>f", project_files, { desc = "Find Files" })
-  vim.keymap.set("n", "<leader>w", compact_browser, { desc = "Browse Files" })
-  vim.keymap.set("n", "<leader>o", function() builtin.oldfiles({ only_cwd = true }) end, { desc = "Old Files" })
-  vim.keymap.set("n", "<leader>g", function() builtin.live_grep() end, { desc = "Grep Files" })
-  vim.keymap.set("n", "<leader>b", function() builtin.buffers() end, { desc = "Find Buffers" })
-  vim.keymap.set("n", "<leader>h", function() builtin.help_tags() end, { desc = "Find Help Tags" })
-  vim.keymap.set("n", "<leader>k", function() builtin.keymaps() end, { desc = "Find Keymaps" })
-  vim.keymap.set("n", "<leader>e", function() builtin.diagnostics() end, { desc = "View LSP diagnostics" })
-end
+M.keys = {
+  { "<leader><leader>", function() require("telescope.builtin") end, { desc = "Continue Finding ... " } },
+  { "<leader>f", require("user/functions").project_files, { desc = "Find Files" } },
+  { "<leader>w", require("user/functions").compact_browser, { desc = "Browse Files" }},
+  { "<leader>o", function() require("telescope.builtin").oldfiles({ only_cwd = true }) end, { desc = "Old Files" }},
+  { "<leader>g", function() require("telescope.builtin").live_grep() end, { desc = "Grep Files" }},
+  { "<leader>b", function() require("telescope.builtin").buffers() end, { desc = "Find Buffers" }},
+  { "<leader>h", function() require("telescope.builtin").help_tags() end, { desc = "Find Help Tags" }},
+  { "<leader>k", function() require("telescope.builtin").keymaps() end, { desc = "Find Keymaps" }},
+  { "<leader>e", function() require("telescope.builtin").diagnostics() end, { desc = "View LSP diagnostics" }},
+}
 
 return M
