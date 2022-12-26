@@ -8,6 +8,7 @@ local M = {
     { "nvim-telescope/telescope-symbols.nvim" },
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
   },
+  lazy = true,
 }
 
 -- Use git files or fallback to normal find_files

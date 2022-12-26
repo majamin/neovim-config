@@ -3,7 +3,8 @@ local M = {
   dependencies = {
     "saadparwaiz1/cmp_luasnip",
     "rafamadriz/friendly-snippets",
-  }
+  },
+  lazy = true,
 }
 
 function M.config()
