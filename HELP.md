@@ -19,7 +19,7 @@ it's time to start Neovim.
 - On first run, `Packer` is installed and plugins are installed.
 - Restart Neovim. Treesitter will install a few languages in the background.
 - Use `;w` to browse files and `;f` to find files.
-- Editing `lua/user/user-conf.lua` should be enough to get you started (no need to dig into other files, but you're more than welcome to!)
+- Editing `lua/user/init.lua` should be enough to get you started (no need to dig into other files, but you're more than welcome to!)
 
 ## Trouble? Tips?
 

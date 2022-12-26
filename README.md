@@ -5,4 +5,5 @@ These are configuration files for [Neovim](https://neovim.io/).
 
 # NOTES
 
-- Editing `user/user-conf.lua` should be enough for most people
+- Just edit `lua/user/init.lua` and you should be happy with the results.
+- 2022-12-25 I switched to [lazy.nvim](https://github.com/folke/lazy.nvim) for package management.

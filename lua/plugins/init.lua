@@ -8,8 +8,8 @@ return {
   },
   { "folke/zen-mode.nvim" },
   { "windwp/nvim-ts-autotag", ft = { "html", "tsx", "vue", "svelte", "php", "res" } },
-  { "windwp/nvim-autopairs" },
-  { "numToStr/Comment.nvim" },
+  { "windwp/nvim-autopairs", config = true },
+  { "numToStr/Comment.nvim", config = true },
   { "tpope/vim-surround" },
   { "famiu/bufdelete.nvim" },
 }

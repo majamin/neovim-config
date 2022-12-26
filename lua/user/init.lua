@@ -16,11 +16,12 @@ M.lang = "en_ca" -- Canadian English
 -- [[ APPEARANCE ]]
 M.background = "dark" -- "light", or "transparent"
 M.lualine_theme = "auto" -- see 'https://github.com/nvim-lualine/lualine.nvim/blob/master/THEMES.md'
--- M.colorscheme = "duskfox"
+M.colorscheme = "miami-nights"
 -- M.colorscheme = "tokyonight"
--- M.colorscheme = "gruvbox"
+-- M.colorscheme = "duskfox"
 -- M.colorscheme = "nightfox"
 -- M.colorscheme = "terafox"
+-- M.colorscheme = "gruvbox"
 
 -- [[ LSP AND TREESITTER ]]
 -- Treesitter languages (automatic)
