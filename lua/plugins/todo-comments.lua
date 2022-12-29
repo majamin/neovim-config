@@ -5,7 +5,9 @@ local M = {
 
 function M.config()
   local todo = require("todo-comments")
-  todo.setup({})
+  todo.setup({
+    signs = false,
+  })
 end
 
 function M.init()

@@ -1,7 +1,9 @@
 local fn = vim.fn
 local o = vim.opt
+local g = vim.g
 local user = require("user")
 
+g.mapleader = user.mapleader
 o.backup = false -- creates a backup file
 o.breakindent = true
 o.background = user.background

@@ -1,6 +1,5 @@
 local M = {
   "vimwiki/vimwiki",
-  lazy = true,
 }
 
 function M.init()

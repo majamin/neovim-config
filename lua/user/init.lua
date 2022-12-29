@@ -23,6 +23,16 @@ M.colorscheme = "duskfox"
 -- M.colorscheme = "terafox"
 -- M.colorscheme = "gruvbox"
 
+M.lazy_opts = {
+  checker = {
+    enabled = true,
+    notify = false,
+  },
+  change_detection = {
+    notify = false,
+  },
+}
+
 ------------------------------------------------------ [[ LSP AND TREESITTER ]]
 -- Treesitter languages (automatic)
 M.treesitter_langs = {

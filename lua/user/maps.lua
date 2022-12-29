@@ -27,7 +27,6 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.keymap.set({ "n"      }, "x"        , '"_x')
 vim.keymap.set({ "n", "v" }, "<space>"  , "<Nop>",           opts)
 vim.keymap.set({ "n"      }, "<ESC>"    , ":noh<CR>",        opts)
-vim.keymap.set({ "n"      }, "zm"       , ":ZenMode<CR>",    opts, { desc = "Toggle zen mode" })
 vim.keymap.set({ "n", "v" }, "<leader>p", '"0p',             opts, { desc = "Paste from yank register" })
 vim.keymap.set({      "v" }, "<"        , "<gv",             opts, { desc = "Indent lines out" })
 vim.keymap.set({      "v" }, ">"        , ">gv",             opts, { desc = "Indent lines in" })
@@ -37,6 +36,9 @@ vim.keymap.set({ "n"      }, "<F3>", ":setlocal spell!<CR>", opts, { desc = "Tog
 vim.keymap.set({ "n"      }, "k"        , "v:count == 0 ? 'gk' : 'k'", expr_opts)
 vim.keymap.set({ "n"      }, "j"        , "v:count == 0 ? 'gj' : 'j'", expr_opts)
 vim.keymap.set({ "n"      }, "<F4>", ":setlocal spell! spelllang=en-basic<CR>", opts, { desc = "Toggle basic English spelling" })
+
+vim.keymap.set( "v", "<leader><leader>y", 'y<cr>:call system("tmux load-buffer -", @0)<cr>gv', opts)
+vim.keymap.set( "n", "<leader><leader>p", ':let @0 = system("tmux save-buffer -")<cr>"0p<cr>g;', opts)
 
 -- Abbreviations
 abbrev("ssss", "▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒")
