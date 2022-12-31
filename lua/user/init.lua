@@ -33,6 +33,8 @@ M.lazy_opts = {
   },
 }
 
+M.primary_vimwiki_path = (os.getenv("ONEDRIVE") or "/home/marian/Maja") .. "/Projects/notes"
+
 ------------------------------------------------------ [[ LSP AND TREESITTER ]]
 -- Treesitter languages (automatic)
 M.treesitter_langs = {
