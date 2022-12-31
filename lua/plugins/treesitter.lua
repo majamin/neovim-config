@@ -1,5 +1,5 @@
 local M = {
-  "nvim-treesitter/nvim-treesitter"
+  "nvim-treesitter/nvim-treesitter",
 }
 
 function M.config()
@@ -19,7 +19,6 @@ function M.config()
       keymaps = {
         init_selection = "<space>",
         node_incremental = "<space>",
-        scoce_incremental = "grc",
         node_decremental = "<backspace>",
       },
     },
