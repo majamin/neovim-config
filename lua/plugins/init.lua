@@ -7,5 +7,5 @@ return {
   { "numToStr/Comment.nvim", config = true },
   { "tpope/vim-surround" },
   { "famiu/bufdelete.nvim" },
-  { "mbbill/undotree", keys = { { "U", ":UndotreeToggle|UndotreeFocus<CR>" } } },
+  { "mbbill/undotree", keys = { { "U", "<cmd>UndotreeToggle|UndotreeFocus<CR>", { silent = true } } } },
 }
