@@ -17,6 +17,7 @@ vim.api.nvim_create_autocmd("FileType", {
     "sagacodeaction",
     "startuptime",
     "lazy",
+    "checkhealth",
   },
   callback = function()
     vim.keymap.set({ "n" }, "<ESC>", ":close<CR>", { silent = true, buffer = true })

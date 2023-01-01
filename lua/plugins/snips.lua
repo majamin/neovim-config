@@ -4,7 +4,7 @@ local M = {
     "saadparwaiz1/cmp_luasnip",
     "rafamadriz/friendly-snippets",
   },
-  lazy = true,
+  keys = { "<C-n>" }
 }
 
 function M.config()
