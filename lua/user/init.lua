@@ -3,6 +3,8 @@
 
 local M = {}
 
+M.primary_vimwiki_path = (os.getenv("ONEDRIVE") or "/home/marian/Maja") .. "/Projects/notes"
+
 ----------------------------------------------- [[ ASSISTANCE AND AUTOMATION ]]
 M.whichkey = false -- show key completion hints?
 M.autocmp = false -- enable auto completions? (`C-n` for manual completion)
@@ -14,29 +16,27 @@ M.lang = "en_ca" -- Canadian English
 -- M.lang = "en_us" -- US English
 
 -------------------------------------------------------------- [[ APPEARANCE ]]
-M.background = "dark" -- "light", or "transparent"
+M.background = "dark" -- "light" or "dark"
+M.bg_is_transparent = false -- boolean
 M.lualine_theme = "auto" -- see 'https://github.com/nvim-lualine/lualine.nvim/blob/master/THEMES.md'
--- M.colorscheme = "noirbuddy"
-M.colorscheme = "tokyonight"
--- M.colorscheme = "duskfox"
+-- M.colorscheme = "noirbuddy" -- configure here: lua/plugins/noirbuddy.lua
+-- M.colorscheme = "tokyonight"
+-- M.colorscheme = "tokyonight-day"
+-- M.colorscheme = "tokyonight-dusk"
+-- M.colorscheme = "tokyonight-moon"
+-- M.colorscheme = "tokyonight-night"
+-- M.colorscheme = "carbonfox"
+-- M.colorscheme = "dawnfox"
+-- M.colorscheme = "dayfox"
+M.colorscheme = "duskfox"
 -- M.colorscheme = "nightfox"
+-- M.colorscheme = "nordfox"
 -- M.colorscheme = "terafox"
 -- M.colorscheme = "gruvbox"
 
-M.lazy_opts = {
-  checker = {
-    enabled = true,
-    notify = false,
-  },
-  change_detection = {
-    notify = false,
-  },
-}
+---------------------------------------------------------------[[ TREESITTER ]]
+-- NOTE: these will be installed automatically
 
-M.primary_vimwiki_path = (os.getenv("ONEDRIVE") or "/home/marian/Maja") .. "/Projects/notes"
-
------------------------------------------------------- [[ LSP AND TREESITTER ]]
--- Treesitter languages (automatic)
 M.treesitter_langs = {
   "bash",
   "cmake",
@@ -60,9 +60,10 @@ M.treesitter_langs = {
   "yaml",
 }
 
--- LSP servers
--- These will be installed and setup automatically.
--- For nice usage, some LSP servers require overrides (see below).
+----------------------------------------------------------------------[[ LSP ]]
+-- NOTE: these will be installed automatically
+-- TODO: Some LSP servers require personal overrides (see below).
+
 M.lsp_servers = {
   "cssls", -- css
   "html", -- html
@@ -75,8 +76,8 @@ M.lsp_servers = {
   "volar", -- vue
 }
 
--- Optional LSP setting overrides
--- Defaults here: https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+-- OVERRIDES
+-- SEE: https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 M.overrides = {
   Lua = {
     diagnostics = {
@@ -84,7 +85,7 @@ M.overrides = {
     },
     workspace = {
       library = vim.api.nvim_get_runtime_file("", true),
-      checkThirdParty = false,
+      checkThirdParty = false, -- HACK: is this a hack?
     },
   },
   cssls = { format = { enable = false } },
@@ -112,6 +113,31 @@ M.overrides = {
   -- Use take-over mode (if you don't use Vue, you don't need this)
   volar = {
     filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json" },
+  },
+}
+
+------------------------------------------------------------ [[ LAZY OPTIONS ]]
+M.lazy_opts = {
+  checker = {
+    enabled = true,
+    notify = false,
+  },
+  change_detection = {
+    notify = false,
+  },
+  performance = {
+    rtp = {
+      disabled_plugins = {
+        "gzip",
+        "matchit",
+        "matchparen",
+        "netrwPlugin",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
+      },
+    },
   },
 }
 

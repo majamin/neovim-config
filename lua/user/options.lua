@@ -5,16 +5,18 @@ local g = vim.g
 local user = require("user")
 
 g.mapleader = user.mapleader
+
 g.vimwiki_global_ext  = 0 -- Don't vimwiki every goddamn md file, please
 g.vimwiki_url_maxsave = 0 -- Don't shorten URL so you can plumb links
 g.vimwiki_list = { { path = user.primary_vimwiki_path } }
+
 o.backup = false -- creates a backup file
 o.breakindent = true
 o.background = user.background
 o.cmdheight = 1 -- space for displaying messages/commands
 o.completeopt = { "menu", "menuone", "noselect", "noinsert" } -- A comma separated list of options for Insert mode completion
 o.conceallevel = 0 -- so that `` is visible in markdown files
-o.cursorline = true -- highlight the current line
+o.cursorline = false -- highlight the current line
 o.dir = fn.stdpath("data") .. "/swp" -- swap file directory
 o.expandtab = true -- convert tabs to spaces
 o.fileencoding = "utf-8" -- the encoding written to a file
@@ -30,9 +32,10 @@ o.ignorecase = true -- ignore case in search patterns
 o.laststatus = 3 -- global statusline = 3
 o.lazyredraw = true -- do not redraw screen while running macros
 o.list = true
-o.mouse = "" -- I use tmux to grab text from the screen
+o.mouse = "" -- I use tmux to grab text from the scree
 o.number = true -- show line numbers (or only the current one)
-o.relativenumber = true -- line numbers
+o.relativenumber = true -- relative line numbers
+o.path = ".,**"
 o.scrolloff = 3 -- Minimal number of screen lines to keep above and below the cursor
 o.shiftwidth = 2 -- the number of spaces inserted for each indentation
 o.shortmess = o.shortmess + "c" -- prevent "pattern not found" messages
@@ -52,11 +55,6 @@ o.ttimeoutlen = 0 -- time in milliseconds to wait for a key code sequence to com
 o.undodir = fn.stdpath("data") .. "/undodir" -- set undo directory
 o.undofile = true -- enable/disable undo file creation
 o.updatetime = 250 -- faster completion
-o.wildignorecase = true -- When set case is ignored when completing file names and directories
+o.wildignorecase = true -- set case is ignored when completing file names and directories
 o.wildmode = "full"
 o.wrap = false
-
-vim.cmd(
-  [[ hi SpellBad guisp=yellow gui=undercurl guifg=yellow guibg=NONE ctermfg=NONE ctermbg=NONE term=undercurl cterm=undercurl ]]
-)
-

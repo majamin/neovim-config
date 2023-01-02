@@ -8,6 +8,7 @@ local M = {
 
 function M.config()
   require("noirbuddy").setup({
+    theme = "miami-nights",
     styles = {
       italic = true,
       bold = false,

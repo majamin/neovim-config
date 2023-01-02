@@ -2,6 +2,8 @@ local M = {
   "ellisonleao/gruvbox.nvim",
 }
 
+local user = require("user")
+
 function M.config()
   local gruvbox = require("gruvbox")
 
@@ -20,14 +22,14 @@ function M.config()
     palette_overrides = {},
     overrides = {},
     dim_inactive = false,
-    transparent_mode = false,
+    transparent_mode = user.bg_is_transparent,
   })
 end
 
 function M.init()
-  local theme = require("user").colorscheme
-  if theme == "gruvbox" then
-    vim.cmd("colorscheme " .. theme)
+  local colorscheme = require("user").colorscheme
+  if colorscheme == "gruvbox" then
+    vim.cmd("colorscheme " .. colorscheme)
   end
 end
 
