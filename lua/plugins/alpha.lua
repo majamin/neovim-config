@@ -150,7 +150,7 @@ function M.config()
       { type = "padding", val = 1 },
       dashboard.button("e", "  New File", ":ene <BAR> startinsert <CR>"),
       dashboard.button("f", "  Project Files", ":lua require('user/functions').project_files()<CR>"),
-      dashboard.button("w", "  File Browser", ":lua require('user/functions').compact_browser()<CR>"),
+      dashboard.button("w", "  File Browser", ":NeoTreeFloat<CR>"),
       dashboard.button("r", "  Grep Files", ":Telescope live_grep <CR>"),
       dashboard.button("g", "  Git (Fugitive)", ":Git <CR>"),
       dashboard.button("p", "  Manage Plugins", ":Lazy <CR>"),

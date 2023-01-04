@@ -5,6 +5,7 @@ local M = {
     "kyazdani42/nvim-web-devicons",
     "MunifTanjim/nui.nvim",
   },
+  cmd = { "NeoTree", "NeoTreeFloat" },
 }
 
 function M.config()
