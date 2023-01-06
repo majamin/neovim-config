@@ -12,7 +12,7 @@ local function on_attach(client, _) -- (client, bunfr)
   client.server_capabilities.documentRangeFormattingProvider = false
 end
 
-function M.init()
+function M.config()
   local nvim_lsp = require("lspconfig")
 
   -- Set up completion using nvim_cmp with LSP source
