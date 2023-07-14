@@ -5,6 +5,7 @@ local M = {
 function M.config()
   local lualine = require("lualine")
   local theme = require("user").lualine_theme
+  local lazy_status = require("lazy.status")
   lualine.setup({
     options = {
       icons_enabled = true,
@@ -15,8 +16,8 @@ function M.config()
       lualine_b = { { "branch", icon = "" }, "diff", "diagnostics" },
       lualine_x = {
         {
-          require("lazy.status").updates,
-          cond = require("lazy.status").has_updates,
+          lazy_status.updates,
+          cond = lazy_status.has_updates,
           color = { fg = "#ff9e64" },
         },
         "encoding",
