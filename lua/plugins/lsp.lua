@@ -16,6 +16,13 @@ M.config = function()
   local lspconfig = require("lspconfig")
   local mason_lspconfig = require("mason-lspconfig")
 
+  -- Turn off inline diagnostics
+  vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+    vim.lsp.diagnostic.on_publish_diagnostics, {
+      virtual_text = false
+    }
+  )
+
   mason_lspconfig.setup({
     ensure_installed = vim.tbl_keys(servers),
   })

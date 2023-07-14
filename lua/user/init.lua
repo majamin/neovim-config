@@ -63,6 +63,9 @@ M.on_attach = function(client, bufnr)
   nmap("K", vim.lsp.buf.hover, bufnr, "Hover Documentation")
   nmap("gD", vim.lsp.buf.declaration, bufnr, "[G]oto [D]eclaration")
 
+  nmap("<C-j>", "<cmd>lua vim.diagnostic.goto_next()<CR>", bufnr, "Next Diagnostic")
+  nmap("<C-k>", "<cmd>lua vim.diagnostic.goto_prev()<CR>", bufnr, "Prev Diagnostic")
+
   -- Create a command `:Format` local to the LSP buffer
   nmap(lsp_leader .. "f", format_code, bufnr, "[F]ormat buffer")
 end
