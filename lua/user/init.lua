@@ -2,10 +2,9 @@ local M = {}
 local lsp_leader = "<C-l>" -- For some functions only - see below
 local nmap = require("user/funs").nmap
 
-M.mapleader = ' '
-M.localmapleader = ' '
-
 M.autocmp = true
+
+M.colorscheme = "tokyonight"
 
 M.servers = {
   clangd = {},
