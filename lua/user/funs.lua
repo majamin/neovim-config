@@ -2,10 +2,10 @@ local M = {}
 
 M.nmap = function(keys, func, bufnr, desc)
   if desc then
-    desc = 'LSP: ' .. desc
+    desc = "LSP: " .. desc
   end
 
-  vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
+  vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
 end
 
 -- Use git files or fallback to normal find_files

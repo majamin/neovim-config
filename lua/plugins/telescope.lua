@@ -3,7 +3,7 @@ local M = {
   cmd = { "Telescope", "Tel" },
   dependencies = {
     { "nvim-lua/plenary.nvim" },
-    { "folke/trouble.nvim" },
+    { "folke/trouble.nvim", dependencies = "nvim-tree/nvim-web-devicons" },
     { "nvim-telescope/telescope-symbols.nvim" },
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
   },
@@ -86,13 +86,53 @@ function M.config()
 end
 
 M.keys = {
-  { ";f", require("user/funs").project_files, desc = "Find Tracked Project Files" },
-  { ";;", function() require("telescope.builtin").oldfiles({ only_cwd = true }) end, desc = "Old Files", },
-  { ";g", function() require("telescope.builtin").live_grep() end, desc = "Grep Files" },
-  { ";b", function() require("telescope.builtin").buffers() end, desc = "Find Buffers" },
-  { ";h", function() require("telescope.builtin").help_tags() end, desc = "Find Help Tags" },
-  { ";k", function() require("telescope.builtin").keymaps() end, desc = "Find Keymaps" },
-  { ";e", function() require("telescope.builtin").diagnostics() end, desc = "View LSP diagnostics" },
+  {
+    ";f",
+    require("user/funs").project_files,
+    desc = "Find Tracked Project Files",
+  },
+  {
+    ";;",
+    function()
+      require("telescope.builtin").oldfiles({ only_cwd = true })
+    end,
+    desc = "Old Files",
+  },
+  {
+    ";g",
+    function()
+      require("telescope.builtin").live_grep()
+    end,
+    desc = "Grep Files",
+  },
+  {
+    ";b",
+    function()
+      require("telescope.builtin").buffers()
+    end,
+    desc = "Find Buffers",
+  },
+  {
+    ";h",
+    function()
+      require("telescope.builtin").help_tags()
+    end,
+    desc = "Find Help Tags",
+  },
+  {
+    ";k",
+    function()
+      require("telescope.builtin").keymaps()
+    end,
+    desc = "Find Keymaps",
+  },
+  {
+    ";e",
+    function()
+      require("telescope.builtin").diagnostics()
+    end,
+    desc = "View LSP diagnostics",
+  },
 }
 
 return M

@@ -1,10 +1,10 @@
 local M = {
-  'hrsh7th/nvim-cmp',
+  "hrsh7th/nvim-cmp",
   dependencies = {
-    'L3MON4D3/LuaSnip',
-    'saadparwaiz1/cmp_luasnip',
-    'hrsh7th/cmp-nvim-lsp',
-    'rafamadriz/friendly-snippets',
+    "L3MON4D3/LuaSnip",
+    "saadparwaiz1/cmp_luasnip",
+    "hrsh7th/cmp-nvim-lsp",
+    "rafamadriz/friendly-snippets",
     "onsails/lspkind-nvim",
   },
 }
@@ -15,7 +15,8 @@ function M.config()
   cmp.setup({
     completion = {
       autocomplete = {
-        require("user").autocmp and require("cmp.types").cmp.TriggerEvent.TextChanged,
+        require("user").autocmp
+          and require("cmp.types").cmp.TriggerEvent.TextChanged,
       },
       -- completeopt = 'menu,menuone,noselect',
       -- keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]],
@@ -29,7 +30,9 @@ function M.config()
           cmp.complete()
         end
       end,
-      ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+      ["<C-p>"] = cmp.mapping.select_prev_item({
+        behavior = cmp.SelectBehavior.Insert,
+      }),
       ["<C-b>"] = cmp.mapping.scroll_docs(-4),
       ["<C-f>"] = cmp.mapping.scroll_docs(4),
       ["<C-e>"] = cmp.mapping.abort(),

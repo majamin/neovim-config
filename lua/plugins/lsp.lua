@@ -1,39 +1,52 @@
 local M = {
-  'neovim/nvim-lspconfig',
+  "neovim/nvim-lspconfig",
   dependencies = {
-    { 'williamboman/mason.nvim', config = true },
-    'williamboman/mason-lspconfig.nvim',
-    { 'j-hui/fidget.nvim',       tag = 'legacy', opts = {} },
-    { 'folke/neodev.nvim',       config = true },
+    { "williamboman/mason.nvim", config = true },
+    "williamboman/mason-lspconfig.nvim",
+    { "j-hui/fidget.nvim", tag = "legacy", opts = {} },
+    { "folke/neodev.nvim", config = true },
   },
 }
 
 M.config = function()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+  capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
   local servers = require("user").servers
   local lspconfig = require("lspconfig")
   local mason_lspconfig = require("mason-lspconfig")
 
-  mason_lspconfig.setup {
+  mason_lspconfig.setup({
     ensure_installed = vim.tbl_keys(servers),
-  }
+  })
 
-  mason_lspconfig.setup_handlers {
+  mason_lspconfig.setup_handlers({
     function(server_name)
-      require('lspconfig')[server_name].setup {
+      require("lspconfig")[server_name].setup({
         capabilities = capabilities,
         on_attach = require("user").on_attach,
         settings = servers[server_name],
-      }
+      })
     end,
-  }
+  })
 
   lspconfig.emmet_ls.setup({
     -- on_attach = on_attach,
     capabilities = capabilities,
-    filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "svelte", "pug", "typescriptreact", "vue" },
+    filetypes = {
+      "css",
+      "eruby",
+      "html",
+      "javascript",
+      "javascriptreact",
+      "less",
+      "sass",
+      "scss",
+      "svelte",
+      "pug",
+      "typescriptreact",
+      "vue",
+    },
     init_options = {
       html = {
         options = {
@@ -41,7 +54,7 @@ M.config = function()
           ["bem.enabled"] = true,
         },
       },
-    }
+    },
   })
 end
 

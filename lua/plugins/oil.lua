@@ -28,7 +28,13 @@ M.config = function()
 end
 
 M.keys = {
-  { "-", function() require("oil").open_float() end, { desc = "Open parent directory" } }
+  {
+    "-",
+    function()
+      require("oil").open_float()
+    end,
+    { desc = "Open parent directory" },
+  },
 }
 
 return M
