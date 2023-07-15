@@ -3,16 +3,23 @@ local M = {
   dependencies = { "nvim-tree/nvim-web-devicons" },
 }
 
-M.config = true
+M.config = function()
+  local wk = require("which-key")
 
-M.keys = {
-  { ";t", "<cmd>TroubleToggle<cr>", { silent = true, noremap = true } },
-  { ";T", "<cmd>TodoTrouble<cr>", { silent = true, noremap = true } },
-  --vim.keymap.set("n", ";xw", "<cmd>TroubleToggle workspace_diagnostics<cr>", {silent = true, noremap = true})
-  --vim.keymap.set("n", ";xd", "<cmd>TroubleToggle document_diagnostics<cr>", {silent = true, noremap = true})
-  --vim.keymap.set("n", ";xl", "<cmd>TroubleToggle loclist<cr>", {silent = true, noremap = true})
-  --vim.keymap.set("n", ";xq", "<cmd>TroubleToggle quickfix<cr>", {silent = true, noremap = true})
-  vim.keymap.set("n", "gR", "<cmd>TroubleToggle lsp_references<cr>", {silent = true, noremap = true})
-}
+  wk.register(
+    {
+      name = "Trouble",
+      t = { "<cmd>TroubleToggle<cr>", "Navigate diagnostics" },
+      -- T = { "<cmd>TodoTrouble<cr>", "Navigate todos" },
+      -- ["xw"] = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "" },
+      -- ["xd"] = { "<cmd>TroubleToggle document_diagnostics<cr>", "" },
+      -- ["xl"] = { "<cmd>TroubleToggle loclist<cr>", "" },
+      -- ["xq"] = { "<cmd>TroubleToggle quickfix<cr>", "" },
+    },
+    { prefix = ";" }
+  )
+end
+-- M.whichkeys = {
+-- }
 
 return M

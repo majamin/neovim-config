@@ -75,7 +75,8 @@ vim.keymap.set(
   { "n" },
   "<leader>i",
   ":r !find . -maxdepth 3 -print | file -if - | grep \"image/\" | cut -d':' -f1 | xargs sxiv -qto <CR><CR>",
-  opts
+  opts,
+  { desc = "Find images in current working directory using sxiv" }
 )
 
 -- Yank and paste to tmux clipboard
@@ -83,13 +84,15 @@ vim.keymap.set(
   "v",
   "<leader><leader>y",
   'y<cr>:call system("tmux load-buffer -", @0)<cr>gv',
-  opts
+  opts,
+  { desc = "Yank to the tmux clipboard" }
 )
 vim.keymap.set(
   "n",
   "<leader><leader>p",
   ':let @0 = system("tmux save-buffer -")<cr>"0p<cr>g;',
-  opts
+  opts,
+  { desc = "Paste from the tmux clipboard" }
 )
 
 -- Abbreviations

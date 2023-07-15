@@ -31,7 +31,7 @@ M.config = function()
     function(server_name)
       require("lspconfig")[server_name].setup({
         capabilities = capabilities,
-        on_attach = require("user").on_attach,
+        on_attach = require("user/funs").on_attach,
         settings = servers[server_name],
       })
     end,
