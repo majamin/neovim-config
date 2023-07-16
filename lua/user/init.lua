@@ -13,7 +13,8 @@ M.dev = {
   c = true,
   go = true,
   rust = true,
-  javascript = true, -- includes html, typescript, jsx, etc.
+  javascript = true,
+  web = true,
 }
 
 return M

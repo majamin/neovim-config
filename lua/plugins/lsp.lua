@@ -30,6 +30,24 @@ if user_wants_dev["javascript"] then
   servers["tsserver"] = {}
 end
 
+if user_wants_dev["web"] then
+  servers["tsserver"] = {}
+  servers["emmet_ls"] = {
+      filetypes = emmet_filetypes,
+      init_options = {
+        html = {
+          options = {
+            -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
+            ["bem.enabled"] = true,
+            ["jsx.enabled"] = true,
+          },
+        },
+      },
+  }
+  servers["cssls"] = {}
+  servers["tailwindcss"] = {}
+end
+
 if user_wants_dev["rust"] then
   servers["rust_analyzer"] = {}
 end
@@ -55,7 +73,6 @@ M.config = function()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
-  -- local servers = require("user").servers
   local lspconfig = require("lspconfig")
   local mason_lspconfig = require("mason-lspconfig")
 
@@ -79,23 +96,6 @@ M.config = function()
       })
     end,
   })
-
-  if require("user").dev["html"] then
-    lspconfig.emmet_ls.setup({
-      -- on_attach = on_attach,
-      capabilities = capabilities,
-      filetypes = emmet_filetypes,
-      init_options = {
-        html = {
-          options = {
-            -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
-            ["bem.enabled"] = true,
-            ["jsx.enabled"] = true,
-          },
-        },
-      },
-    })
-  end
 end
 
 return M
