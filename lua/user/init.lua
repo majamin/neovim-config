@@ -1,37 +1,19 @@
 local M = {}
 
+M.colorscheme = "tokyonight"
+
 M.autocmp = true
 
 M.whichkey = true
 
-M.colorscheme = "tokyonight"
-
-M.servers = {
-  clangd = {},
-  pyright = {},
-  rust_analyzer = {},
-  tsserver = {},
-  lua_ls = {
-    Lua = {
-      workspace = { checkThirdParty = false },
-      telemetry = { enable = false },
-    },
-  },
-}
-
-M.emmet_filetypes = {
-  "css",
-  "eruby",
-  "html",
-  "javascript",
-  "javascriptreact",
-  "less",
-  "sass",
-  "scss",
-  "svelte",
-  "pug",
-  "typescriptreact",
-  "vue",
+-- Enable which development environments?
+M.dev = {
+  lua = true,
+  python = true,
+  c = true,
+  go = true,
+  rust = true,
+  javascript = true, -- includes html, typescript, jsx, etc.
 }
 
 return M

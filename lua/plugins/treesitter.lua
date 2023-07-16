@@ -8,20 +8,38 @@ local M = {
   event = "VeryLazy",
 }
 
+local langs = {}
+local wants_dev = require("user").dev
+
+table.insert(langs, "vim")
+table.insert(langs, "vimdoc")
+
+if wants_dev["c"] then
+  table.insert(langs, "c")
+  table.insert(langs, "cpp")
+end
+
+if wants_dev["javascript"] then
+  table.insert(langs, "typescript")
+  table.insert(langs, "tsx")
+  table.insert(langs, "html")
+end
+
+if wants_dev["go"] then
+  table.insert(langs, "go")
+end
+
+if wants_dev["rust"] then
+  table.insert(langs, "rust")
+end
+
+if wants_dev["python"] then
+  table.insert(langs, "python")
+end
+
 M.config = function()
   require("nvim-treesitter.configs").setup({
-    ensure_installed = {
-      "c",
-      "cpp",
-      "go",
-      "lua",
-      "python",
-      "rust",
-      "tsx",
-      "typescript",
-      "vimdoc",
-      "vim",
-    },
+    ensure_installed = langs,
     auto_install = false,
     highlight = { enable = true },
     indent = { enable = true },
