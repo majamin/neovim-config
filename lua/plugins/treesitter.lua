@@ -14,33 +14,33 @@ local wants_dev = require("user").dev
 table.insert(langs, "vim")
 table.insert(langs, "vimdoc")
 
-if wants_dev["c"] then
+if wants_dev["c"] ~= nil then
   table.insert(langs, "c")
   table.insert(langs, "cpp")
 end
 
-if wants_dev["javascript"] then
+if wants_dev["javascript"] ~= nil then
   table.insert(langs, "typescript")
   table.insert(langs, "tsx")
   table.insert(langs, "html")
 end
 
-if wants_dev["go"] then
+if wants_dev["go"] ~= nil then
   table.insert(langs, "go")
 end
 
-if wants_dev["rust"] then
+if wants_dev["rust"] ~= nil then
   table.insert(langs, "rust")
 end
 
-if wants_dev["python"] then
+if wants_dev["python"] ~= nil then
   table.insert(langs, "python")
 end
 
 M.config = function()
   require("nvim-treesitter.configs").setup({
     ensure_installed = langs,
-    auto_install = false,
+    auto_install = true,
     highlight = { enable = true },
     indent = { enable = true },
     autotag = { enable = true },

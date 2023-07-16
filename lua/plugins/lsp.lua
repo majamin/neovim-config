@@ -26,11 +26,11 @@ local emmet_filetypes = {
 local servers = {}
 local user_wants_dev = require("user").dev
 
-if user_wants_dev["javascript"] then
+if user_wants_dev["javascript"] ~= nil then
   servers["tsserver"] = {}
 end
 
-if user_wants_dev["web"] then
+if user_wants_dev["web"] ~= nil then
   servers["tsserver"] = {}
   servers["emmet_ls"] = {
       filetypes = emmet_filetypes,
@@ -48,19 +48,19 @@ if user_wants_dev["web"] then
   servers["tailwindcss"] = {}
 end
 
-if user_wants_dev["rust"] then
+if user_wants_dev["rust"] ~= nil then
   servers["rust_analyzer"] = {}
 end
 
-if user_wants_dev["go"] then
+if user_wants_dev["go"] ~= nil then
   servers["gopls"] = {}
 end
 
-if user_wants_dev["c"] then
+if user_wants_dev["c"] ~= nil then
   servers["clangd"] = {}
 end
 
-if user_wants_dev["lua"] then
+if user_wants_dev["lua"] ~= nil then
   servers["lua_ls"] = {
     Lua = {
       workspace = { checkThirdParty = false },
