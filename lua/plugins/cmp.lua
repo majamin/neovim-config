@@ -7,6 +7,7 @@ local M = {
     "rafamadriz/friendly-snippets",
     "onsails/lspkind-nvim",
   },
+  event = "VeryLazy",
 }
 
 function M.config()

@@ -1,5 +1,6 @@
 local M = {
   "lewis6991/gitsigns.nvim",
+  event = "VeryLazy",
 }
 
 function M.config()

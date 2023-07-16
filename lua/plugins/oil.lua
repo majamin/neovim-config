@@ -1,6 +1,7 @@
 local M = {
   "stevearc/oil.nvim",
   cmd = { "Oil" },
+  event = "VeryLazy",
 }
 
 M.config = function()

@@ -20,6 +20,7 @@ M.abbrev = function(l, r)
   vim.cmd({ cmd = "abbrev", args = { l, r } })
 end
 
+-- Custom LSP on_attach function
 M.on_attach = function(client, bufnr)
   local wk = require("which-key")
 
@@ -65,7 +66,7 @@ M.on_attach = function(client, bufnr)
       "go to next diagnostic",
     },
     ["<C-k>"] = {
-      "<cmd>lua vim.diagnostic.goto_previous<CR>",
+      "<cmd>lua vim.diagnostic.goto_prev()<CR>",
       "go to previous diagnostic",
     },
   }, { buffer = bufnr })

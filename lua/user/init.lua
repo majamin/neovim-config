@@ -19,4 +19,19 @@ M.servers = {
   },
 }
 
+M.emmet_filetypes = {
+  "css",
+  "eruby",
+  "html",
+  "javascript",
+  "javascriptreact",
+  "less",
+  "sass",
+  "scss",
+  "svelte",
+  "pug",
+  "typescriptreact",
+  "vue",
+}
+
 return M
