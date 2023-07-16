@@ -11,6 +11,13 @@ local M = {
 }
 
 function M.config()
+  local luasnip = require("luasnip")
+  local vscode_loaders = require("luasnip.loaders.from_vscode")
+
+  luasnip.filetype_extend("typescript", { "javascript" })
+  luasnip.config.set_config({ history = true, updateevents = "TextChanged,TextChangedI" })
+  vscode_loaders.lazy_load()
+
   local lspkind = require("lspkind")
   local cmp = require("cmp")
   cmp.setup({
@@ -55,7 +62,7 @@ function M.config()
       { name = "nvim_lsp" },
       { name = "path" },
       { name = "luasnip" },
-      { name = "buffer", keyword_length = 5 },
+      { name = "buffer", keyword_length = 3 },
     },
     sorting = {
       comparators = {
@@ -88,9 +95,9 @@ function M.config()
       format = lspkind.cmp_format({
         with_text = false,
         menu = {
-          buffer = "[buf]",
-          nvim_lsp = "[LSP]",
-          nvim_lua = "[api]",
+          buffer = "[txt]",
+          nvim_lsp = "[lsp]",
+          nvim_lua = "[lua]",
           path = "[path]",
           luasnip = "[snip]",
         },

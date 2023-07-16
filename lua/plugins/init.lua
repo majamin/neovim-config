@@ -1,10 +1,11 @@
 return {
-  "tpope/vim-fugitive",
-  "tpope/vim-sleuth",
-  "tpope/vim-surround",
-  { "windwp/nvim-ts-autotag", config = true },
-  { "windwp/nvim-autopairs", config = true },
-  { "numToStr/Comment.nvim", opts = {} },
+  { "tpope/vim-fugitive",      event = "VeryLazy" },
+  { "tpope/vim-sleuth",        event = "VeryLazy" },
+  { "tpope/vim-surround",      event = "VeryLazy" },
+  { "windwp/nvim-ts-autotag",  config = true,     event = "VeryLazy" },
+  { "windwp/nvim-autopairs",   config = true,     event = "VeryLazy" },
+  { "numToStr/Comment.nvim",   config = true,     event = "VeryLazy" },
+  { "lewis6991/gitsigns.nvim", config = true,     event = "VeryLazy" },
   {
     "mbbill/undotree",
     keys = {
