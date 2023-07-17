@@ -1,4 +1,5 @@
 return {
+  lang = "en_ca", -- or en_us, etc.
   colorscheme = "tokyonight",
   autocmp = true,
   whichkey = true,

@@ -1,4 +1,4 @@
-# A lazy Neovim config
+# Yet Another Neovim Config
 
 Hi. This is my config for [Neovim](http://neovim.io).
 
@@ -6,8 +6,6 @@ Hi. This is my config for [Neovim](http://neovim.io).
 
 Slim! Only basics included, allowing anyone to extended and hack the config.
 
-* Sane defaults
-* Key hints
-* LSP and Completion
+* LSP, Completion, and WhichKey
 * A simple dark colorscheme
-* WhichKey ready
+* ~1000 SLOC config
