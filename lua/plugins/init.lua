@@ -1,5 +1,5 @@
 return {
-  { "tpope/vim-fugitive",      event = "VeryLazy" },
+  { "tpope/vim-fugitive",      cmd = { "Git" } },
   { "tpope/vim-sleuth",        event = "VeryLazy" },
   { "tpope/vim-surround",      event = "VeryLazy" },
   { "windwp/nvim-ts-autotag",  config = true,     event = "VeryLazy" },
@@ -8,6 +8,9 @@ return {
   { "lewis6991/gitsigns.nvim", config = true,     event = "VeryLazy" },
   {
     "mbbill/undotree",
+    config = function()
+      vim.cmd([[let g:undotree_WindowLayout = 4]])
+    end,
     keys = {
       {
         "U",
