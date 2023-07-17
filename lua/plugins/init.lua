@@ -6,7 +6,6 @@ return {
   { "windwp/nvim-autopairs",                  config = true,     event = "VeryLazy" },
   { "numToStr/Comment.nvim",                  config = true,     event = "VeryLazy" },
   { "lewis6991/gitsigns.nvim",                config = true,     event = "VeryLazy" },
-  { "roobert/tailwindcss-colorizer-cmp.nvim", config = true },
   {
     "mbbill/undotree",
     keys = {
