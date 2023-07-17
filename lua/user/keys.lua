@@ -13,7 +13,6 @@ vim.api.nvim_create_autocmd("FileType", {
     "lspsagafinder",
     "man",
     "qf",
-    "sagacodeaction",
     "startuptime",
     "lazy",
     "checkhealth",

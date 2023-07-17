@@ -9,6 +9,6 @@ return {
     "go",
     "rust",
     "javascript",
-    "web", -- configs for React, Vue, etc.
+    "web", -- Html, css, React, Vue, etc.
   },
 }

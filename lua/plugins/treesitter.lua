@@ -21,6 +21,9 @@ end
 
 if wants_dev["javascript"] ~= nil then
   table.insert(langs, "typescript")
+end
+
+if wants_dev["web"] ~= nil then
   table.insert(langs, "tsx")
   table.insert(langs, "html")
 end
