@@ -33,5 +33,6 @@
   "vim-fugitive": { "branch": "master", "commit": "43f18ab9155c853a84ded560c6104e6300ad41da" },
   "vim-sleuth": { "branch": "master", "commit": "1cc4557420f215d02c4d2645a748a816c220e99b" },
   "vim-surround": { "branch": "master", "commit": "3d188ed2113431cf8dac77be61b842acb64433d9" },
+  "vimwiki": { "branch": "dev", "commit": "09804c2a5f1009fde29e32c5f3a6093e4684433a" },
   "which-key.nvim": { "branch": "main", "commit": "38b990f6eabf62014018b4aae70a97d7a6c2eb88" }
 }

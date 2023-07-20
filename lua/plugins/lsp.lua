@@ -69,6 +69,10 @@ if user_wants_dev["lua"] ~= nil then
   }
 end
 
+if user_wants_dev["latex"] ~= nil then
+  servers["texlab"] = {}
+end
+
 M.config = function()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)

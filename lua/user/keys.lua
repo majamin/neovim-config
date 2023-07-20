@@ -57,7 +57,7 @@ vim.keymap.set(
 vim.keymap.set(
   { "n" },
   "<C-w>b",
-  ":Bdelete<CR>",
+  ":bd<CR>",
   opts,
   { desc = "Kill buffer" }
 )
