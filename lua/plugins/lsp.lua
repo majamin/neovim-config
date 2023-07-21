@@ -26,11 +26,21 @@ local emmet_filetypes = {
 local servers = {}
 local user_wants_dev = require("user").dev
 
-if user_wants_dev["javascript"] ~= nil then
+local function contains(table, element)
+    for _, value in ipairs(table) do
+        if value == element then
+            return true
+        end
+    end
+    return false
+end
+
+if contains(user_wants_dev, "javascript") then
+  vim.print("User wants javascript")
   servers["tsserver"] = {}
 end
 
-if user_wants_dev["web"] ~= nil then
+if contains(user_wants_dev, "web") then
   servers["tsserver"] = {}
   servers["emmet_ls"] = {
       filetypes = emmet_filetypes,
@@ -48,19 +58,19 @@ if user_wants_dev["web"] ~= nil then
   servers["tailwindcss"] = {}
 end
 
-if user_wants_dev["rust"] ~= nil then
+if contains(user_wants_dev, "rust") then
   servers["rust_analyzer"] = {}
 end
 
-if user_wants_dev["go"] ~= nil then
+if contains(user_wants_dev, "go") then
   servers["gopls"] = {}
 end
 
-if user_wants_dev["c"] ~= nil then
+if contains(user_wants_dev, "c") then
   servers["clangd"] = {}
 end
 
-if user_wants_dev["lua"] ~= nil then
+if contains(user_wants_dev, "lua") then
   servers["lua_ls"] = {
     Lua = {
       workspace = { checkThirdParty = false },
@@ -69,7 +79,7 @@ if user_wants_dev["lua"] ~= nil then
   }
 end
 
-if user_wants_dev["latex"] ~= nil then
+if contains(user_wants_dev, "latex") then
   servers["texlab"] = {}
 end
 
@@ -89,6 +99,7 @@ M.config = function()
 
   mason_lspconfig.setup({
     ensure_installed = vim.tbl_keys(servers),
+    automatic_installation = true,
   })
 
   mason_lspconfig.setup_handlers({

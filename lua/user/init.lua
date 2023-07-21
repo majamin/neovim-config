@@ -10,7 +10,7 @@ return {
     "go",
     "rust",
     "javascript",
-    "web", -- Html, css, React, Vue, etc.
+    "web", -- html, css, React, Vue, etc.
     "latex",
   },
   primary_vimwiki_path = "/home/marian/Maja/Projects/notes"

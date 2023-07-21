@@ -9,34 +9,34 @@ local M = {
 }
 
 local langs = {}
-local wants_dev = require("user").dev
+local user_wants_dev = require("user").dev
 
 table.insert(langs, "vim")
 table.insert(langs, "vimdoc")
 
-if wants_dev["c"] ~= nil then
+if user_wants_dev["c"] ~= nil then
   table.insert(langs, "c")
   table.insert(langs, "cpp")
 end
 
-if wants_dev["javascript"] ~= nil then
+if user_wants_dev["javascript"] ~= nil then
   table.insert(langs, "typescript")
 end
 
-if wants_dev["web"] ~= nil then
+if user_wants_dev["web"] ~= nil then
   table.insert(langs, "tsx")
   table.insert(langs, "html")
 end
 
-if wants_dev["go"] ~= nil then
+if user_wants_dev["go"] ~= nil then
   table.insert(langs, "go")
 end
 
-if wants_dev["rust"] ~= nil then
+if user_wants_dev["rust"] ~= nil then
   table.insert(langs, "rust")
 end
 
-if wants_dev["python"] ~= nil then
+if user_wants_dev["python"] ~= nil then
   table.insert(langs, "python")
 end
 
