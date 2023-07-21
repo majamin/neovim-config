@@ -46,18 +46,18 @@ vim.keymap.set(
   opts,
   { desc = "Jump to alternate buffer" }
 )
-vim.keymap.set({ "n" }, "<TAB>", ":tabN<CR>", opts, { desc = "Go to next tab" })
+vim.keymap.set({ "n" }, "<TAB>", ":bn<CR>", opts, { desc = "Go to next buffer" })
 vim.keymap.set(
   { "n" },
   "<S-TAB>",
-  ":tabp<CR>",
+  ":bp<CR>",
   opts,
-  { desc = "Go to next tab" }
+  { desc = "Go to previous buffer" }
 )
 vim.keymap.set(
   { "n" },
   "<C-w>b",
-  ":bd<CR>",
+  ":Bdelete<CR>",
   opts,
   { desc = "Kill buffer" }
 )
