@@ -1,3 +1,4 @@
+local M = {}
 local o = vim.opt
 local wo = vim.wo
 local g = vim.g
@@ -51,3 +52,20 @@ o.updatetime = 250 -- faster completion
 o.wildignorecase = true -- set case is ignored when completing file names and directories
 o.wildmode = "full"
 o.wrap = false
+
+M.emmet_filetypes = {
+  "css",
+  "eruby",
+  "html",
+  "javascript",
+  "javascriptreact",
+  "less",
+  "sass",
+  "scss",
+  "svelte",
+  "pug",
+  "typescriptreact",
+  "vue",
+}
+
+return M

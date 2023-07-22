@@ -51,3 +51,27 @@ vim.api.nvim_create_autocmd("User", {
     end
   end,
 })
+
+-- Use `<ESC>` to conveniently close special windows
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = {
+    "fugitive",
+    "help",
+    "lspinfo",
+    "lspsagafinder",
+    "man",
+    "qf",
+    "startuptime",
+    "lazy",
+    "checkhealth",
+  },
+  callback = function()
+    vim.keymap.set(
+      { "n" },
+      "<ESC>",
+      "<cmd>close<CR>",
+      { silent = true, buffer = true }
+    )
+  end,
+})
+

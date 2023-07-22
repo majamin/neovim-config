@@ -10,33 +10,34 @@ local M = {
 
 local langs = {}
 local user_wants_dev = require("user").dev
+local contains = require("user/funs").contains
 
 table.insert(langs, "vim")
 table.insert(langs, "vimdoc")
 
-if user_wants_dev["c"] ~= nil then
+if contains(user_wants_dev, "c") then
   table.insert(langs, "c")
   table.insert(langs, "cpp")
 end
 
-if user_wants_dev["javascript"] ~= nil then
+if contains(user_wants_dev, "javascript") then
   table.insert(langs, "typescript")
 end
 
-if user_wants_dev["web"] ~= nil then
+if contains(user_wants_dev, "web") then
   table.insert(langs, "tsx")
   table.insert(langs, "html")
 end
 
-if user_wants_dev["go"] ~= nil then
+if contains(user_wants_dev, "go") then
   table.insert(langs, "go")
 end
 
-if user_wants_dev["rust"] ~= nil then
+if contains(user_wants_dev, "rust") then
   table.insert(langs, "rust")
 end
 
-if user_wants_dev["python"] ~= nil then
+if contains(user_wants_dev, "python") then
   table.insert(langs, "python")
 end
 

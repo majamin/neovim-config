@@ -15,9 +15,14 @@ M.project_files = function()
   end
 end
 
--- Waiting for an API, like https://github.com/neovim/neovim/pull/19238
-M.abbrev = function(l, r)
-  vim.cmd({ cmd = "abbrev", args = { l, r } })
+-- does a table contain a particular value?
+function M.contains(table, element)
+    for _, value in ipairs(table) do
+        if value == element then
+            return true
+        end
+    end
+    return false
 end
 
 -- Custom LSP on_attach function

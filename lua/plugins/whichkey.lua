@@ -38,7 +38,7 @@ function M.config()
     },
   })
 
-  wk.register(require("plugins/trouble").whichkeys)
+  wk.register(require("user.keys").local_maps)
 
 end
 

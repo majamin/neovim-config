@@ -1,82 +1,27 @@
 -- NOTE: plugin specific maps contained in each plugin file lua/plugins/*
 
+local M = {}
 local opts = { silent = true }
 local expr_opts = { silent = true, expr = true }
-local abbrev = require("user/funs").abbrev
-
--- Use `<ESC>` to close windows
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = {
-    "fugitive",
-    "help",
-    "lspinfo",
-    "lspsagafinder",
-    "man",
-    "qf",
-    "startuptime",
-    "lazy",
-    "checkhealth",
-  },
-  callback = function()
-    vim.keymap.set(
-      { "n" },
-      "<ESC>",
-      "<cmd>close<CR>",
-      { silent = true, buffer = true }
-    )
-  end,
-})
 
 -- Sanity
-vim.keymap.set({ "n" }, "x", '"_x')
-vim.keymap.set({ "n" }, "<ESC>", ":noh<CR>", opts)
-vim.keymap.set(
-  { "n", "v" },
-  "<leader>p",
-  '"0p',
-  opts,
-  { desc = "Paste from yank register" }
-)
-vim.keymap.set({ "v" }, "<", "<gv", opts, { desc = "Indent lines out" })
-vim.keymap.set({ "v" }, ">", ">gv", opts, { desc = "Indent lines in" })
-vim.keymap.set(
-  { "n" },
-  "<BS>",
-  "<C-^>",
-  opts,
-  { desc = "Jump to alternate buffer" }
-)
-vim.keymap.set({ "n" }, "<TAB>", ":bn<CR>", opts, { desc = "Go to next buffer" })
-vim.keymap.set(
-  { "n" },
-  "<S-TAB>",
-  ":bp<CR>",
-  opts,
-  { desc = "Go to previous buffer" }
-)
-vim.keymap.set(
-  { "n" },
-  "<C-w>b",
-  ":Bdelete<CR>",
-  opts,
-  { desc = "Kill buffer" }
-)
-vim.keymap.set(
-  { "n" },
-  "<F3>",
-  ":setlocal spell!<CR>",
-  opts,
-  { desc = "Toggle spelling" }
-)
-vim.keymap.set({ "n" }, "k", "v:count == 0 ? 'gk' : 'k'", expr_opts)
-vim.keymap.set({ "n" }, "j", "v:count == 0 ? 'gj' : 'j'", expr_opts)
-vim.keymap.set(
-  { "n" },
-  "<leader>i",
-  ":r !find . -maxdepth 3 -print | file -if - | grep \"image/\" | cut -d':' -f1 | xargs sxiv -qto <CR><CR>",
-  opts,
-  { desc = "Find images in current working directory using sxiv" }
-)
+M.local_maps = {
+  x = { '"_x', "Remapped x - send char to blackhole register" },
+  -- vim.keymap.set({ "n", "v" }, "<leader>p", '"0p', opts, { desc = "Paste from yank register" })
+  ["<ESC>"] = { ":noh<CR>", "" },
+  ["<"] = { "<gv", "Indent lines out" },
+  [">"] = { ">gv", "Indent lines in" },
+  ["<BS>"] = { "<C-^>", "Jump to alternate buffer" },
+  ["<TAB>"] = { ":bn<CR>", "Go to next buffer" },
+  ["<S-TAB>"] = { ":bp<CR>", "Go to previous buffer" },
+  ["<C-w>b"] = { ":Bdelete<CR>", "Kill buffer" },
+  ["<F3>"] = { ":setlocal spell!<CR>", "Toggle spelling" },
+}
+
+-- ["k"] = { "v:count == 0 ? 'gk' : 'k'", expr_opts)
+-- ["j"] = {} "v:count == 0 ? 'gj' : 'j'", expr_opts)
+-- ["<leader>i"] = {} ":r !find . -maxdepth 3 -print | file -if - | grep \"image/\" | cut -d':' -f1 | xargs sxiv -qto <CR><CR>", opts, { desc = "Find images in current working directory using sxiv" })
+-- }
 
 -- Yank and paste to tmux clipboard
 vim.keymap.set(
@@ -94,8 +39,4 @@ vim.keymap.set(
   { desc = "Paste from the tmux clipboard" }
 )
 
--- Abbreviations
-abbrev(
-  "ssss",
-  "▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒"
-)
+return M
