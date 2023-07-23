@@ -25,9 +25,13 @@ M.config = function()
     filetype = {
       -- Formatter configurations for filetype "lua" go here
       -- and will be executed in order
+      html = { formatter_prettierd },
+      css = { formatter_prettierd },
       javascript = { formatter_prettierd },
       typescript = { formatter_prettierd },
+      javascriptreact = { formatter_prettierd },
       typescriptreact = { formatter_prettierd },
+      vue = { formatter_prettierd },
       lua = {
         -- "formatter.filetypes.lua" defines default configurations for the
         -- "lua" filetype
