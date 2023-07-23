@@ -16,11 +16,13 @@ M.local_maps = {
   ["<S-TAB>"] = { ":bp<CR>", "Go to previous buffer" },
   ["<C-w>b"] = { ":Bdelete<CR>", "Kill buffer" },
   ["<F3>"] = { ":setlocal spell!<CR>", "Toggle spelling" },
+  ["<leader>i"] = {
+    ":r !find . -maxdepth 3 -print | file -if - | grep \"image/\" | cut -d':' -f1 | xargs sxiv -qto <CR><CR>",
+    "Find images in current working directory using sxiv" }
 }
 
 -- ["k"] = { "v:count == 0 ? 'gk' : 'k'", expr_opts)
 -- ["j"] = {} "v:count == 0 ? 'gj' : 'j'", expr_opts)
--- ["<leader>i"] = {} ":r !find . -maxdepth 3 -print | file -if - | grep \"image/\" | cut -d':' -f1 | xargs sxiv -qto <CR><CR>", opts, { desc = "Find images in current working directory using sxiv" })
 -- }
 
 -- Yank and paste to tmux clipboard

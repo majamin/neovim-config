@@ -24,7 +24,7 @@ function M.config()
       mappings = {
         i = {
           ["<C-h>"] = actions.file_split,
-          ["<C-v>"] = actions.file_vsplit,
+          ["<C-s>"] = actions.file_vsplit,
           ["<C-t>"] = trouble.smart_open_with_trouble,
         },
       },

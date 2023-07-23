@@ -1,4 +1,5 @@
 return {
+  { "github/copilot.vim" },
   { "tpope/vim-fugitive",       cmd = { "Git" } },
   { "famiu/bufdelete.nvim",     cmd = { "Bdelete" } },
   { "tpope/vim-sleuth",         event = "VeryLazy" },
