@@ -24,6 +24,7 @@ M.config = function()
     },
     keymaps = {
       ["q"] = "actions.close",
+      ["<ESC>"] = "actions.close",
     },
   })
 end

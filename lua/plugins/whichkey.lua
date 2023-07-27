@@ -10,7 +10,6 @@ local M = {
 
 function M.config()
   local wk = require("which-key")
-  -- local options = { silent = true }
 
   wk.setup({
     layout = {

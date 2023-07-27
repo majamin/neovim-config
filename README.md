@@ -8,4 +8,4 @@ Slim! Only basics included, allowing anyone to extended and hack the config.
 
 * LSP, Completion, and WhichKey
 * A simple dark colorscheme
-* ~1000 SLOC config
+* Small(ish) config
