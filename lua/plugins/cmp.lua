@@ -53,6 +53,8 @@ function M.config()
       ["<C-p>"] = cmp.mapping.select_prev_item({
         behavior = cmp.SelectBehavior.Insert,
       }),
+      ["<C-u>"] = cmp.mapping.scroll_docs(-2),
+      ["<C-d>"] = cmp.mapping.scroll_docs(2),
       ["<Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_next_item()
