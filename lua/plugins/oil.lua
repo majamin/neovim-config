@@ -23,7 +23,6 @@ M.config = function()
       end,
     },
     keymaps = {
-      ["q"] = "actions.close",
       ["<ESC>"] = "actions.close",
     },
   })
@@ -33,7 +32,7 @@ M.keys = {
   {
     "-",
     function()
-      require("oil").open_float()
+      require("oil").open()
     end,
     { desc = "Open parent directory" },
   },
