@@ -36,7 +36,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   pattern = "*",
 })
 
--- [[ Alpha opens when last buffer closes ]]
+-- Alpha opens when last buffer closes
 vim.api.nvim_create_augroup("alpha_on_empty", { clear = true })
 vim.api.nvim_create_autocmd("User", {
   pattern = "BDeletePost*",
@@ -56,9 +56,7 @@ vim.api.nvim_create_autocmd("User", {
 vim.api.nvim_create_autocmd("FileType", {
   pattern = {
     "fugitive",
-    "help",
     "lspinfo",
-    "lspsagafinder",
     "man",
     "qf",
     "startuptime",
