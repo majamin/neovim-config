@@ -25,9 +25,21 @@ M.config = function()
     filetype = {
       -- Formatter configurations for filetype "lua" go here
       -- and will be executed in order
-      python = { function() return { exe = "black", args = { "-" }, stdin = true } end },
-      c = { function() return { exe = "clang-format", args = { "-" }, stdin = true } end },
-      cpp = { function() return { exe = "clang-format", args = { "-" }, stdin = true } end },
+      python = {
+        function()
+          return { exe = "black", args = { "-" }, stdin = true }
+        end,
+      },
+      c = {
+        function()
+          return { exe = "clang-format", args = { "-" }, stdin = true }
+        end,
+      },
+      cpp = {
+        function()
+          return { exe = "clang-format", args = { "-" }, stdin = true }
+        end,
+      },
       html = { formatter_prettierd },
       css = { formatter_prettierd },
       javascript = { formatter_prettierd },
@@ -71,9 +83,7 @@ M.config = function()
           }
         end,
       },
-
-      -- Use the special "*" filetype for defining formatter configurations on
-      -- any filetype
+      -- Fallback formatter
       ["*"] = {
         -- "formatter.filetypes.any" defines default configurations for any
         -- filetype

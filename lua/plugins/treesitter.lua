@@ -10,7 +10,7 @@ local M = {
 
 M.config = function()
   require("nvim-treesitter.configs").setup({
-    ensure_installed = require("user").treesitter_langs,
+    ensure_installed = require("user/data").treesitter_langs,
     auto_install = true,
     highlight = { enable = true },
     indent = { enable = true },
