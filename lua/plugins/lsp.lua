@@ -6,110 +6,53 @@ local M = {
     { "j-hui/fidget.nvim",       tag = "legacy", opts = {} },
     { "folke/neodev.nvim",       config = true },
   },
+  event = "VeryLazy",
 }
 
-local servers = {}
-local formatters = {}
-local emmet_filetypes = require("user/opts").emmet_filetypes
-local user_wants_dev = require("user").dev
 local contains = require("user/funs").contains
 
-if contains(user_wants_dev, "python") then
-  servers["pyright"] = {}
-  if not contains(formatters, "black") then
-    table.insert(formatters, "black")
-  end
-end
-
-if contains(user_wants_dev, "javascript") then
-  servers["tsserver"] = {}
-  if not contains(formatters, "prettierd") then
-    table.insert(formatters, "prettierd")
-  end
-end
-
-if contains(user_wants_dev, "web") then
-  servers["tsserver"] = {}
-  servers["emmet_ls"] = {
-    filetypes = emmet_filetypes,
-    init_options = {
-      html = {
-        options = {
-          -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
-          ["bem.enabled"] = true,
-          ["jsx.enabled"] = true,
-        },
-      },
-    },
-  }
-  servers["cssls"] = {}
-  servers["tailwindcss"] = {
-    { "aspnetcorerazor", "astro", "astro-markdown", "blade", "clojure", "django-html", "htmldjango", "edge", "eelixir",
-      "elixir", "ejs", "erb", "eruby", "gohtml", "haml", "handlebars", "hbs", "html", "html-eex", "heex", "jade", "leaf",
-      "liquid", "markdown", "mdx", "mustache", "njk", "nunjucks", "php", "razor", "slim", "twig", "css", "less",
-      "postcss", "sass", "scss", "stylus", "sugarss", "javascript", "javascriptreact", "reason", "rescript",
-      "typescript", "typescriptreact", "vue", "svelte" }
-  }
-  if not contains(formatters, "prettierd") then
-    table.insert(formatters, "prettierd")
-  end
-end
-
-if contains(user_wants_dev, "rust") then
-  servers["rust_analyzer"] = {}
-end
-
-if contains(user_wants_dev, "go") then
-  servers["gopls"] = {}
-end
-
-if contains(user_wants_dev, "c") then
-  servers["clangd"] = {}
-  if not contains(formatters, "clang-format") then
-    table.insert(formatters, "clang-format")
-  end
-end
-
-if contains(user_wants_dev, "lua") then
-  servers["lua_ls"] = {
-    Lua = {
-      workspace = { checkThirdParty = false },
-      telemetry = { enable = false },
-    },
-  }
-  if not contains(formatters, "stylua") then
-    table.insert(formatters, "stylua")
-  end
-end
-
-if contains(user_wants_dev, "latex") then
-  servers["texlab"] = {}
-  if not contains(formatters, "latexindent") then
-    table.insert(formatters, "latexindent")
-  end
-end
-
 M.config = function()
+  local formatters = {}
   local capabilities = require("cmp_nvim_lsp").default_capabilities(
     vim.lsp.protocol.make_client_capabilities()
   )
   local lspconfig = require("lspconfig")
   local mason_lspconfig = require("mason-lspconfig")
+  local mason_will_install = {}
+  local user_lsp_data = require("user").dev
+  local mason_ignore = require("user").mason_ignore
 
   -- Turn off inline diagnostics
-  vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-    vim.lsp.diagnostic.on_publish_diagnostics, {
-      virtual_text = false
-    }
-  )
+  vim.lsp.handlers["textDocument/publishDiagnostics"] =
+      vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+        virtual_text = false,
+      })
+
+  -- check to see if a server is in the dont_install list
+  for server_name, _ in pairs(user_lsp_data) do
+    if not contains(mason_ignore, server_name) then
+      table.insert(mason_will_install, server_name)
+    end
+  end
 
   mason_lspconfig.setup({
-    ensure_installed = vim.tbl_keys(servers),
-    automatic_installation = true,
+    ensure_installed = mason_will_install,
+    automatic_installation = { exclude = mason_ignore },
   })
 
+  local settings = {}
+  for server_name, data in pairs(user_lsp_data) do
+    settings[server_name] = data.settings
+    table.insert(formatters, data.formatter)
+  end
+
   for _, formatter in pairs(formatters) do
-    if not contains(require("mason-registry").get_installed_package_names(), formatter) then
+    if
+        not contains(
+          require("mason-registry").get_installed_package_names(),
+          formatter
+        )
+    then
       vim.cmd("MasonInstall " .. formatter)
     end
   end
@@ -119,10 +62,21 @@ M.config = function()
       lspconfig[server_name].setup({
         capabilities = capabilities,
         on_attach = require("user/funs").on_attach,
-        settings = servers[server_name],
+        settings = settings,
       })
     end,
   })
+
+  for _, server in ipairs(mason_ignore) do
+    if lspconfig[server] then
+      lspconfig[server].setup({
+        capabilities = capabilities,
+        on_attach = require("user/funs").on_attach,
+        settings = settings[server],
+      })
+    end
+  end
+
 end
 
 return M

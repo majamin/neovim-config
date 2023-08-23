@@ -40,6 +40,7 @@ end
 
 M.keys = {
   { ";f", function() require("user/funs").project_files() end,       desc = "Find Tracked Project Files" },
+  { ";o", function() require("telescope.builtin").oldfiles() end,    desc = "Recent (Old) Files" },
   { ";g", function() require("telescope.builtin").live_grep() end,   desc = "Grep Files" },
   { ";b", function() require("telescope.builtin").buffers() end,     desc = "Find Buffers" },
   { ";h", function() require("telescope.builtin").help_tags() end,   desc = "Find Help Tags" },

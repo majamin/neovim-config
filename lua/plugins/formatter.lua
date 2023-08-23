@@ -1,22 +1,22 @@
 local M = {
   "mhartington/formatter.nvim",
+  event = "VeryLazy",
 }
 
-local formatter_prettierd =
-    function()
-      return {
-        exe = "prettierd",
-        args = { vim.api.nvim_buf_get_name(0) },
-        stdin = true
-      }
-    end
+local formatter_prettierd = function()
+  return {
+    exe = "prettierd",
+    args = { vim.api.nvim_buf_get_name(0) },
+    stdin = true,
+  }
+end
 
 M.config = function()
   -- Utilities for creating configurations
-  local util = require "formatter.util"
+  local util = require("formatter.util")
 
   -- Provides the Format, FormatWrite, FormatLock, and FormatWriteLock commands
-  require("formatter").setup {
+  require("formatter").setup({
     -- Enable or disable logging
     logging = true,
     -- Set the log level
@@ -25,6 +25,9 @@ M.config = function()
     filetype = {
       -- Formatter configurations for filetype "lua" go here
       -- and will be executed in order
+      python = { function() return { exe = "black", args = { "-" }, stdin = true } end },
+      c = { function() return { exe = "clang-format", args = { "-" }, stdin = true } end },
+      cpp = { function() return { exe = "clang-format", args = { "-" }, stdin = true } end },
       html = { formatter_prettierd },
       css = { formatter_prettierd },
       javascript = { formatter_prettierd },
@@ -57,7 +60,16 @@ M.config = function()
             },
             stdin = true,
           }
-        end
+        end,
+      },
+      haskell = {
+        function()
+          return {
+            exe = "fourmolu",
+            args = { "-i", vim.api.nvim_buf_get_name(0) },
+            stdin = false,
+          }
+        end,
       },
 
       -- Use the special "*" filetype for defining formatter configurations on
@@ -65,10 +77,10 @@ M.config = function()
       ["*"] = {
         -- "formatter.filetypes.any" defines default configurations for any
         -- filetype
-        require("formatter.filetypes.any").remove_trailing_whitespace
-      }
-    }
-  }
+        require("formatter.filetypes.any").remove_trailing_whitespace,
+      },
+    },
+  })
 end
 
 return M

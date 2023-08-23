@@ -17,12 +17,12 @@ end
 
 -- does a table contain a particular value?
 function M.contains(table, element)
-    for _, value in ipairs(table) do
-        if value == element then
-            return true
-        end
+  for _, value in ipairs(table) do
+    if value == element then
+      return true
     end
-    return false
+  end
+  return false
 end
 
 -- Custom LSP on_attach function
@@ -31,12 +31,14 @@ M.on_attach = function(client, bufnr)
 
   local filetype = vim.api.nvim_buf_get_option(0, "filetype")
   local format_code
-  if client.supports_method("textDocument/formatting") then
+  if vim.tbl_contains({ "haskell" }, filetype) then
+    format_code = "<cmd>Format<CR>"
+  elseif vim.tbl_contains({ "go", "rust" }, filetype) then
+    format_code = "<cmd>lua vim.lsp.buf.formatting_sync()<CR>"
+  elseif client.supports_method("textDocument/formatting") then
     format_code = "<cmd>lua vim.lsp.buf.format()<CR>"
   elseif client.supports_method("textDocument/rangeFormatting") then
     format_code = "<cmd>lua vim.lsp.buf.range_formatting()<CR>"
-  elseif vim.tbl_contains({ "go", "rust" }, filetype) then
-    format_code = "<cmd>lua vim.lsp.buf.formatting_sync()<CR>"
   else
     format_code = "<cmd>Format<CR>"
   end
