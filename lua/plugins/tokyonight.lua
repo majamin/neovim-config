@@ -14,20 +14,19 @@ function M.config()
     lualine_bold = true, -- When `true`, section headers in the lualine theme will be bold
   })
 
-  local variants =  {
+  local variants = {
     "tokyonight",
     "tokyonight-day",
     "tokyonight-night",
     "tokyonight-moon",
-    "tokyonight-storm"
+    "tokyonight-storm",
   }
 
-  for _,v in pairs(variants) do
+  for _, v in pairs(variants) do
     if colorscheme == v then
       vim.cmd("colorscheme " .. colorscheme)
     end
   end
-
 end
 
 return M

@@ -1,6 +1,6 @@
 -- Remove trailing whitespace on save
 local TrimWhiteSpaceGrp =
-    vim.api.nvim_create_augroup("TrimWhiteSpaceGrp", { clear = true })
+  vim.api.nvim_create_augroup("TrimWhiteSpaceGrp", { clear = true })
 vim.api.nvim_create_autocmd("BufWritePre", {
   command = [[:%s/\s\+$//e]],
   group = TrimWhiteSpaceGrp,
@@ -26,7 +26,7 @@ vim.api.nvim_create_autocmd("InsertLeave", {
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
 local highlight_group =
-    vim.api.nvim_create_augroup("YankHighlight", { clear = true })
+  vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 
 vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function()

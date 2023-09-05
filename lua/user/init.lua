@@ -39,7 +39,7 @@ o.ignorecase = false -- ignore case in search patterns
 o.laststatus = 3 -- global statusline = 3
 o.lazyredraw = true -- do not redraw screen while running macros
 o.list = true
-o.mouse = "" -- I use tmux to grab text from the scree
+o.mouse = "" -- I use tmux to grab text from the screen
 o.number = true -- show line numbers (or only the current one)
 o.relativenumber = true -- relative line numbers
 o.path = ".,**"

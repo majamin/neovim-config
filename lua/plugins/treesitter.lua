@@ -4,6 +4,7 @@ local M = {
     "nvim-treesitter/nvim-treesitter-textobjects",
     "nvim-treesitter/playground",
   },
+  dependencies = { "windwp/nvim-ts-autotag", config = true },
   build = ":TSUpdate",
   event = "VeryLazy",
 }
@@ -11,7 +12,7 @@ local M = {
 M.config = function()
   require("nvim-treesitter.configs").setup({
     ensure_installed = require("user/data").treesitter_langs,
-    auto_install = true,
+    auto_install = false,
     highlight = { enable = true },
     indent = { enable = true },
     autotag = { enable = true },

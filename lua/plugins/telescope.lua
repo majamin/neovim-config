@@ -2,7 +2,10 @@ local M = {
   "nvim-telescope/telescope.nvim",
   dependencies = {
     { "nvim-lua/plenary.nvim" },
-    { "folke/trouble.nvim",                       dependencies = "nvim-tree/nvim-web-devicons" },
+    {
+      "folke/trouble.nvim",
+      dependencies = "nvim-tree/nvim-web-devicons",
+    },
     { "nvim-telescope/telescope-symbols.nvim" },
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
   },
@@ -39,14 +42,60 @@ function M.config()
 end
 
 M.keys = {
-  { ";f", function() require("user/funs").project_files() end,       desc = "Find Tracked Project Files" },
-  { ";o", function() require("telescope.builtin").oldfiles() end,    desc = "Recent (Old) Files" },
-  { ";g", function() require("telescope.builtin").live_grep() end,   desc = "Grep Files" },
-  { ";b", function() require("telescope.builtin").buffers() end,     desc = "Find Buffers" },
-  { ";h", function() require("telescope.builtin").help_tags() end,   desc = "Find Help Tags" },
-  { ";k", function() require("telescope.builtin").keymaps() end,     desc = "Find Keymaps" },
-  { ";e", function() require("telescope.builtin").diagnostics() end, desc = "View LSP diagnostics" },
-  { ";;", "<cmd>Telescope<CR>",                                      desc = "Open Telescope", },
+  {
+    ";f",
+    function()
+      require("user/funs").project_files()
+    end,
+    desc = "Find Tracked Project Files",
+  },
+  {
+    ";o",
+    function()
+      require("telescope.builtin").oldfiles()
+    end,
+    desc = "Recent (Old) Files",
+  },
+  {
+    ";g",
+    function()
+      require("telescope.builtin").live_grep()
+    end,
+    desc = "Grep Files",
+  },
+  {
+    ";b",
+    function()
+      require("telescope.builtin").buffers()
+    end,
+    desc = "Find Buffers",
+  },
+  {
+    ";h",
+    function()
+      require("telescope.builtin").help_tags()
+    end,
+    desc = "Find Help Tags",
+  },
+  {
+    ";k",
+    function()
+      require("telescope.builtin").keymaps()
+    end,
+    desc = "Find Keymaps",
+  },
+  {
+    ";e",
+    function()
+      require("telescope.builtin").diagnostics()
+    end,
+    desc = "View LSP diagnostics",
+  },
+  {
+    ";;",
+    "<cmd>Telescope<CR>",
+    desc = "Open Telescope",
+  },
 }
 
 return M

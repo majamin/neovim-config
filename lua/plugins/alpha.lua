@@ -43,7 +43,8 @@ function M.config()
     end
     ico_txt = ico .. "  "
 
-    local file_button_el = dashboard.button(sc, ico_txt .. short_fn, "<cmd>e " .. fn .. " <CR>")
+    local file_button_el =
+      dashboard.button(sc, ico_txt .. short_fn, "<cmd>e " .. fn .. " <CR>")
     local fn_start = short_fn:match(".*/")
     if fn_start ~= nil then
       table.insert(fb_hl, { "Comment", #ico_txt - 2, #fn_start + #ico_txt - 2 })
@@ -56,7 +57,8 @@ function M.config()
 
   local mru_opts = {
     ignore = function(path, ext)
-      return (string.find(path, "COMMIT_EDITMSG")) or (vim.tbl_contains(default_mru_ignore, ext))
+      return (string.find(path, "COMMIT_EDITMSG"))
+        or (vim.tbl_contains(default_mru_ignore, ext))
     end,
   }
 
@@ -146,11 +148,23 @@ function M.config()
   local buttons = {
     type = "group",
     val = {
-      { type = "text", val = "Menu", opts = { hl = "SpecialComment", position = "center" } },
+      {
+        type = "text",
+        val = "Menu",
+        opts = { hl = "SpecialComment", position = "center" },
+      },
       { type = "padding", val = 1 },
       dashboard.button("e", "  New File", ":ene <BAR> startinsert <CR>"),
-      dashboard.button("f", "  Project Files", ":lua require('user/funs').project_files()<CR>"),
-      dashboard.button("-", "  File Browser", ":lua require('oil').open_float()<CR>"),
+      dashboard.button(
+        "f",
+        "  Project Files",
+        ":lua require('user/funs').project_files()<CR>"
+      ),
+      dashboard.button(
+        "-",
+        "  File Browser",
+        ":lua require('oil').open_float()<CR>"
+      ),
       dashboard.button("r", "  Grep Files", ":Telescope live_grep <CR>"),
       dashboard.button("g", "  Git (Fugitive)", ":Git <CR>"),
       dashboard.button("p", "  Manage Plugins", ":Lazy <CR>"),

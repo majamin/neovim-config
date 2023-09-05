@@ -15,8 +15,8 @@ function M.config()
     layout = {
       height = { min = 4, max = 25 }, -- min and max height of the columns
       width = { min = 20, max = 50 }, -- min and max width of the columns
-      spacing = 2,                    -- spacing between columns
-      align = "center",               -- align columns left, center or right
+      spacing = 2, -- spacing between columns
+      align = "center", -- align columns left, center or right
     },
     hidden = {
       "<silent>",
@@ -38,7 +38,6 @@ function M.config()
   })
 
   wk.register(require("user.keys").local_maps)
-
 end
 
 return M
