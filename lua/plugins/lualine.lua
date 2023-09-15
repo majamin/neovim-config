@@ -29,6 +29,7 @@ function M.config()
       },
       lualine_z = { "progress", "location" },
     },
+    extensions = { "fugitive" },
   })
 end
 
