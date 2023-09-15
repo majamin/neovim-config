@@ -33,8 +33,6 @@ M.on_attach = function(client, bufnr)
   local format_code
   if vim.tbl_contains({ "haskell" }, filetype) then
     format_code = "<cmd>Format<CR>"
-  elseif vim.tbl_contains({ "rust" }, filetype) then
-    format_code = "<cmd>lua vim.lsp.buf.formatting_sync()<CR>"
   elseif client.supports_method("textDocument/formatting") then
     format_code = "<cmd>lua vim.lsp.buf.format()<CR>"
   elseif client.supports_method("textDocument/rangeFormatting") then
