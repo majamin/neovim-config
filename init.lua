@@ -1,5 +1,6 @@
 require("lazy_install")
 require("user")
+require("user/opts")
 require("user/keys")
 require("user/auto")
 require("lazy").setup("plugins", require("user").lazy_opts)

@@ -3,8 +3,8 @@ local M = {
   dependencies = {
     { "williamboman/mason.nvim", config = true },
     "williamboman/mason-lspconfig.nvim",
-    { "j-hui/fidget.nvim", tag = "legacy", opts = {} },
-    { "folke/neodev.nvim", config = true },
+    { "j-hui/fidget.nvim",       tag = "legacy", opts = {} },
+    { "folke/neodev.nvim",       config = true },
   },
   event = "VeryLazy",
   -- dependencies = "cmp",
@@ -25,20 +25,21 @@ M.config = function()
 
   -- Turn off inline diagnostics
   vim.lsp.handlers["textDocument/publishDiagnostics"] =
-    vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-      virtual_text = false,
-    })
+      vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+        virtual_text = false,
+      })
 
-  -- check to see if a server is in the dont_install list
+  -- Populate mason_will_install with all the servers that are not in mason_ignore
   for server_name, _ in pairs(user_lsp_data) do
     if not contains(mason_ignore, server_name) then
       table.insert(mason_will_install, server_name)
     end
   end
 
+  --
   mason_lspconfig.setup({
     ensure_installed = mason_will_install,
-    automatic_installation = { exclude = mason_ignore },
+    -- automatic_installation = { exclude = mason_ignore },
   })
 
   local settings = {}
@@ -47,17 +48,20 @@ M.config = function()
     table.insert(formatters, data.formatter)
   end
 
+  -- Install any formatters that are not in mason_ignore
   for _, formatter in pairs(formatters) do
     if
-      not contains(
-        require("mason-registry").get_installed_package_names(),
-        formatter
-      )
+        not contains(
+          require("mason-registry").get_installed_package_names(),
+          formatter
+        ) and
+        not contains(mason_ignore, formatter)
     then
       vim.cmd("MasonInstall " .. formatter)
     end
   end
 
+  -- Setup any LSP servers that are not in mason_ignore
   mason_lspconfig.setup_handlers({
     function(server_name)
       lspconfig[server_name].setup({
@@ -68,9 +72,11 @@ M.config = function()
     end,
   })
 
-  for _, server in ipairs(mason_ignore) do
-    if lspconfig[server] then
-      lspconfig[server].setup({
+  -- Setup any LSP servers that are in mason_ignore
+  for _, server_name in ipairs(mason_ignore) do
+    local server, err = pcall(require, "lspconfig '" .. server_name .. "'")
+    if not err then
+      lspconfig[server_name].setup({
         capabilities = capabilities,
         on_attach = require("user/funs").on_attach,
         settings = settings[server],

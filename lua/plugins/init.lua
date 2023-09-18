@@ -7,6 +7,7 @@ return {
   { "windwp/nvim-autopairs", config = true, event = "VeryLazy" },
   { "numToStr/Comment.nvim", config = true, event = "VeryLazy" },
   { "lewis6991/gitsigns.nvim", config = true, event = "VeryLazy" },
+  { "jpalardy/vim-slime", config = function() vim.cmd("let g:slime_target = 'tmux'") end },
   {
     "echasnovski/mini.tabline",
     config = true,
