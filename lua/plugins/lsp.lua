@@ -7,7 +7,6 @@ local M = {
     { "folke/neodev.nvim",       config = true },
   },
   event = "VeryLazy",
-  -- dependencies = "cmp",
 }
 
 local contains = require("user/funs").contains

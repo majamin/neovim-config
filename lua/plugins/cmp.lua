@@ -7,7 +7,7 @@ local M = {
     "rafamadriz/friendly-snippets",
     "onsails/lspkind-nvim",
   },
-  enabled = false,
+  enabled = true,
   event = "VeryLazy",
 }
 
@@ -28,10 +28,10 @@ function M.config()
     unpack = unpack or table.unpack
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
     return col ~= 0
-      and vim.api
-          .nvim_buf_get_lines(0, line - 1, line, true)[1]
-          :sub(col, col)
-          :match("%s")
+        and vim.api
+        .nvim_buf_get_lines(0, line - 1, line, true)[1]
+        :sub(col, col)
+        :match("%s")
         == nil
   end
 
@@ -43,23 +43,35 @@ function M.config()
     completion = {
       autocomplete = {
         require("user").autocmp
-          and require("cmp.types").cmp.TriggerEvent.TextChanged,
+        and require("cmp.types").cmp.TriggerEvent.TextChanged,
       },
       -- completeopt = 'menu,menuone,noselect',
       -- keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]],
       -- keyword_length = 1,
     },
     mapping = {
-      ["<C-n>"] = function()
+      ["<C-n>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
-          cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+          cmp.select_next_item()
+          -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
+          -- they way you will only jump inside the snippet region
+        elseif luasnip.expand_or_jumpable() then
+          luasnip.expand_or_jump()
+        elseif has_words_before() then
+          cmp.complete()
         else
           cmp.complete()
         end
-      end,
-      ["<C-p>"] = cmp.mapping.select_prev_item({
-        behavior = cmp.SelectBehavior.Insert,
-      }),
+      end, { "i", "s" }),
+      ["<C-p>"] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_prev_item()
+        elseif luasnip.jumpable(-1) then
+          luasnip.jump(-1)
+        else
+          fallback()
+        end
+      end, { "i", "s" }),
       ["<C-u>"] = cmp.mapping.scroll_docs(-2),
       ["<C-d>"] = cmp.mapping.scroll_docs(2),
       ["<CR>"] = cmp.mapping({
@@ -85,7 +97,7 @@ function M.config()
       { name = "nvim_lsp" },
       { name = "path" },
       { name = "luasnip" },
-      { name = "buffer", keyword_length = 3 },
+      { name = "buffer",  keyword_length = 3 },
     },
     sorting = {
       comparators = {
@@ -140,19 +152,19 @@ function M.config()
       { bg = "NONE", strikethrough = true, fg = "#808080" },
     },
     -- blue
-    { "CmpItemAbbrMatch", { bg = "NONE", fg = "#569CD6" } },
+    { "CmpItemAbbrMatch",      { bg = "NONE", fg = "#569CD6" } },
     { "CmpItemAbbrMatchFuzzy", { link = "CmpIntemAbbrMatch" } },
     -- light blue
-    { "CmpItemKindVariable", { bg = "NONE", fg = "#9CDCFE" } },
-    { "CmpItemKindInterface", { link = "CmpItemKindVariable" } },
-    { "CmpItemKindText", { link = "CmpItemKindVariable" } },
+    { "CmpItemKindVariable",   { bg = "NONE", fg = "#9CDCFE" } },
+    { "CmpItemKindInterface",  { link = "CmpItemKindVariable" } },
+    { "CmpItemKindText",       { link = "CmpItemKindVariable" } },
     -- pink
-    { "CmpItemKindFunction", { bg = "NONE", fg = "#C586C0" } },
-    { "CmpItemKindMethod", { link = "CmpItemKindFunction" } },
+    { "CmpItemKindFunction",   { bg = "NONE", fg = "#C586C0" } },
+    { "CmpItemKindMethod",     { link = "CmpItemKindFunction" } },
     -- front
-    { "CmpItemKindKeyword", { bg = "NONE", fg = "#D4D4D4" } },
-    { "CmpItemKindProperty", { link = "CmpItemKindKeyword" } },
-    { "CmpItemKindUnit", { link = "CmpItemKindKeyword" } },
+    { "CmpItemKindKeyword",    { bg = "NONE", fg = "#D4D4D4" } },
+    { "CmpItemKindProperty",   { link = "CmpItemKindKeyword" } },
+    { "CmpItemKindUnit",       { link = "CmpItemKindKeyword" } },
   }
 
   for _, v in ipairs(nice_cmp_colors) do
