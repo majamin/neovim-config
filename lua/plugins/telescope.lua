@@ -92,6 +92,11 @@ M.keys = {
     desc = "View LSP diagnostics",
   },
   {
+    ";c",
+    "<cmd>Telescope commands<CR>",
+    desc = "Run commands",
+  },
+  {
     ";;",
     "<cmd>Telescope<CR>",
     desc = "Open Telescope",
