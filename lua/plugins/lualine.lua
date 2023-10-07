@@ -15,13 +15,13 @@ function M.config()
     },
     sections = {
       lualine_b = { { "branch", icon = "" }, "diff", "diagnostics" },
+      lualine_c = { "filename" },
       lualine_x = {
         {
           lazy_status.updates,
           cond = lazy_status.has_updates,
-          color = { fg = "#ff9e64" },
         },
-        "encoding",
+        { "encoding" },
         { "fileformat", icons_enabled = false },
       },
       lualine_y = {
