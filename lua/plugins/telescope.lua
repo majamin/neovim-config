@@ -36,6 +36,13 @@ function M.config()
       colorscheme = {
         enable_preview = true,
       },
+      buffers = {
+        mappings = {
+          n = {
+            ["d"] = actions.delete_buffer
+          }
+        }
+      }
     },
   })
   telescope.load_extension("fzf")
