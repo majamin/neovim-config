@@ -49,7 +49,7 @@ vim.keymap.set(
   { "n" },
   "<F2>",
   function()
-    vim.cmd(':wa|mksession!<CR>')
+    vim.cmd(':wa|mksession!')
     vim.print("Session and files saved")
   end,
   opts -- { desc = "Make session and save files" }
