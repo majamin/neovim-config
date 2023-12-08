@@ -45,52 +45,39 @@ function M.config()
         require("user").autocmp
         and require("cmp.types").cmp.TriggerEvent.TextChanged,
       },
+      -- completeopt = 'menu,menuone,noinsert',
       -- completeopt = 'menu,menuone,noselect',
       -- keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]],
       -- keyword_length = 1,
     },
-    mapping = {
-      ["<C-n>"] = cmp.mapping(function(fallback)
+    mapping = cmp.mapping.preset.insert {
+      ['<C-n>'] = cmp.mapping.select_next_item(),
+      ['<C-p>'] = cmp.mapping.select_prev_item(),
+      ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<C-Space>'] = cmp.mapping.complete {},
+      ['<CR>'] = cmp.mapping.confirm {
+        behavior = cmp.ConfirmBehavior.Replace,
+        select = true,
+      },
+      ['<Tab>'] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_next_item()
-          -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
-          -- they way you will only jump inside the snippet region
-        elseif luasnip.expand_or_jumpable() then
+        elseif luasnip.expand_or_locally_jumpable() then
           luasnip.expand_or_jump()
-        elseif has_words_before() then
-          cmp.complete()
         else
-          cmp.complete()
+          fallback()
         end
-      end, { "i", "s" }),
-      ["<C-p>"] = cmp.mapping(function(fallback)
+      end, { 'i', 's' }),
+      ['<S-Tab>'] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_prev_item()
-        elseif luasnip.jumpable(-1) then
+        elseif luasnip.locally_jumpable(-1) then
           luasnip.jump(-1)
         else
           fallback()
         end
-      end, { "i", "s" }),
-      ["<C-u>"] = cmp.mapping.scroll_docs(-2),
-      ["<C-d>"] = cmp.mapping.scroll_docs(2),
-      ["<CR>"] = cmp.mapping({
-        i = function(fallback)
-          if cmp.visible() and cmp.get_active_entry() then
-            cmp.confirm({
-              behavior = cmp.ConfirmBehavior.Replace,
-              select = false,
-            })
-          else
-            fallback()
-          end
-        end,
-        s = cmp.mapping.confirm({ select = true }),
-        c = cmp.mapping.confirm({
-          behavior = cmp.ConfirmBehavior.Replace,
-          select = true,
-        }),
-      }),
+      end, { 'i', 's' }),
     },
     sources = {
       { name = "nvim_lua" },
