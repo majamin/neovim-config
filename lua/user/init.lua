@@ -2,7 +2,7 @@
 local M = {
   lang = "en_ca", -- or en_us, etc.
   colorscheme = "tokyonight",
-  autocmp = true,
+  autocmp = false,
   whichkey = true,
   primary_vimwiki_path = "/home/marian/Maja/Projects/notes",
   lazy_opts = {
@@ -16,7 +16,7 @@ local M = {
 -- DEVELOPMENT --
 
 -- These are already installed, Mason will ensure that they are loaded only
-M.mason_ignore = { "hls", "rustfmt" }
+M.mason_ignore = { "rustfmt" }
 
 -- Your dev settings for lspconfig and mason
 M.dev = {
@@ -82,13 +82,13 @@ M.dev = {
     },
     formatter = "prettierd",
   },
-  hls = {
-    settings = {
-      haskell = {
-        formattingProvider = "fourmolu",
-      },
-    },
-  },
+  -- hls = {
+  --   settings = {
+  --     haskell = {
+  --       formattingProvider = "fourmolu",
+  --     },
+  --   },
+  -- },
   tailwindcss = {
     settings = {
       filetypes = require("user/data").tailwindcss_filetypes,
@@ -104,6 +104,14 @@ M.dev = {
     },
     formatter = "gofumpt",
   },
+  texlab = {
+    settings = {},
+  },
+  prismals = {
+    settings = {
+      filetypes = { "prisma" }
+    },
+  }
 }
 
 return M

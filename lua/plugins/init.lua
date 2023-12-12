@@ -1,6 +1,5 @@
 return {
   { "github/copilot.vim" },
-  { "tpope/vim-fugitive",      cmd = { "Git" } },
   { "tpope/vim-sleuth",        event = "VeryLazy" },
   { "tpope/vim-surround",      event = "VeryLazy" },
   { "famiu/bufdelete.nvim",    cmd = { "Bdelete" },                                           event = "VeryLazy" },
@@ -9,6 +8,7 @@ return {
   { "lewis6991/gitsigns.nvim", config = true,                                                 event = "VeryLazy" },
   { "jpalardy/vim-slime",      config = function() vim.cmd("let g:slime_target = 'tmux'") end },
   { "norcalli/nvim-colorizer.lua", config = true },
+  { dir = "/home/marian/Projects/flashbang.nvim" },
   {
     "echasnovski/mini.tabline",
     config = true,

@@ -27,17 +27,11 @@ function M.config()
   local has_words_before = function()
     unpack = unpack or table.unpack
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-    return col ~= 0
-        and vim.api
-        .nvim_buf_get_lines(0, line - 1, line, true)[1]
-        :sub(col, col)
-        :match("%s")
-        == nil
+    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
   end
 
   local lspkind = require("lspkind")
   local cmp = require("cmp")
-
   cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
   cmp.setup({
     completion = {
@@ -45,39 +39,46 @@ function M.config()
         require("user").autocmp
         and require("cmp.types").cmp.TriggerEvent.TextChanged,
       },
-      -- completeopt = 'menu,menuone,noinsert',
       -- completeopt = 'menu,menuone,noselect',
       -- keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]],
       -- keyword_length = 1,
     },
-    mapping = cmp.mapping.preset.insert {
-      ['<C-n>'] = cmp.mapping.select_next_item(),
-      ['<C-p>'] = cmp.mapping.select_prev_item(),
-      ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-      ['<C-f>'] = cmp.mapping.scroll_docs(4),
-      ['<C-Space>'] = cmp.mapping.complete {},
-      ['<CR>'] = cmp.mapping.confirm {
-        behavior = cmp.ConfirmBehavior.Replace,
-        select = true,
-      },
-      ['<Tab>'] = cmp.mapping(function(fallback)
+    mapping = {
+      ["<C-n>"] = function()
         if cmp.visible() then
-          cmp.select_next_item()
-        elseif luasnip.expand_or_locally_jumpable() then
+          cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+        else
+          cmp.complete()
+        end
+      end,
+      ["<C-p>"] = cmp.mapping.select_prev_item({
+        behavior = cmp.SelectBehavior.Insert,
+      }),
+      ["<C-y>"] = cmp.mapping({
+        i = function(fallback)
+          if cmp.visible() and cmp.get_active_entry() then
+            cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+          else
+            fallback()
+          end
+        end,
+        s = cmp.mapping.confirm({ select = true }),
+        c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
+      }),
+      ["<Tab>"] = cmp.mapping(function(fallback)
+        if luasnip.expand_or_jumpable() then
           luasnip.expand_or_jump()
+        elseif not cmp.visible() and has_words_before() then
+          cmp.mapping.complete {}
         else
           fallback()
         end
-      end, { 'i', 's' }),
-      ['<S-Tab>'] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.select_prev_item()
-        elseif luasnip.locally_jumpable(-1) then
+      end, { "i", "s" }),
+      ["<S-Tab>"] = cmp.mapping(function(fallback)
+        if luasnip.jumpable(-1) then
           luasnip.jump(-1)
-        else
-          fallback()
         end
-      end, { 'i', 's' }),
+      end, { "i", "s" }),
     },
     sources = {
       { name = "nvim_lua" },
@@ -115,8 +116,7 @@ function M.config()
     },
     formatting = {
       format = lspkind.cmp_format({
-        mode = "symbol_text",
-        -- with_text = false,
+        with_text = false,
         menu = {
           buffer = "[txt]",
           nvim_lsp = "[lsp]",
@@ -131,33 +131,6 @@ function M.config()
       ghost_text = false,
     },
   })
-
-  local nice_cmp_colors = {
-    -- gray
-    {
-      "CmpItemAbbrDeprecated",
-      { bg = "NONE", strikethrough = true, fg = "#808080" },
-    },
-    -- blue
-    { "CmpItemAbbrMatch",      { bg = "NONE", fg = "#569CD6" } },
-    { "CmpItemAbbrMatchFuzzy", { link = "CmpIntemAbbrMatch" } },
-    -- light blue
-    { "CmpItemKindVariable",   { bg = "NONE", fg = "#9CDCFE" } },
-    { "CmpItemKindInterface",  { link = "CmpItemKindVariable" } },
-    { "CmpItemKindText",       { link = "CmpItemKindVariable" } },
-    -- pink
-    { "CmpItemKindFunction",   { bg = "NONE", fg = "#C586C0" } },
-    { "CmpItemKindMethod",     { link = "CmpItemKindFunction" } },
-    -- front
-    { "CmpItemKindKeyword",    { bg = "NONE", fg = "#D4D4D4" } },
-    { "CmpItemKindProperty",   { link = "CmpItemKindKeyword" } },
-    { "CmpItemKindUnit",       { link = "CmpItemKindKeyword" } },
-  }
-
-  for _, v in ipairs(nice_cmp_colors) do
-    local name, color = unpack(v)
-    vim.api.nvim_set_hl(0, name, color)
-  end
 end
 
 return M
