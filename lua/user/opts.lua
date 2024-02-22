@@ -10,6 +10,7 @@ g.vimwiki_url_maxsave = 0 -- Don't shorten URL so you can plumb links
 g.vimwiki_list = { { path = M.primary_vimwiki_path } }
 
 o.backup = false                                              -- creates a backup file
+o.bs = ""
 o.breakindent = true
 o.cmdheight = 1                                               -- space for displaying messages/commands
 o.completeopt = { "menu", "menuone", "noselect", "noinsert" } -- A comma separated list of options for Insert mode completion
