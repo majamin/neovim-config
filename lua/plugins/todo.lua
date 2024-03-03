@@ -1,21 +1,19 @@
 local M = {
-  "folke/trouble.nvim",
-  dependencies = { "nvim-tree/nvim-web-devicons" },
+  "folke/todo-comments.nvim",
+  dependencies = {
+    "nvim-tree/nvim-web-devicons",
+    "folke/trouble.nvim",
+  },
   event = "VeryLazy",
 }
 
-M.config = function()
-  local wk = require("which-key")
-
-  wk.register({
-    name = "Trouble",
-    t = { "<cmd>TroubleToggle<cr>", "Navigate diagnostics" },
+M.keys = {
+  {";t", "<cmd>TroubleToggle<cr>", desc = "Navigate diagnostics" },
     -- T = { "<cmd>TodoTrouble<cr>", "Navigate todos" },
     -- ["xw"] = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "" },
     -- ["xd"] = { "<cmd>TroubleToggle document_diagnostics<cr>", "" },
     -- ["xl"] = { "<cmd>TroubleToggle loclist<cr>", "" },
     -- ["xq"] = { "<cmd>TroubleToggle quickfix<cr>", "" },
-  }, { prefix = ";" })
-end
+  }
 
 return M

@@ -7,7 +7,6 @@ local M = {
     "rafamadriz/friendly-snippets",
     "onsails/lspkind-nvim",
   },
-  enabled = true,
   event = "VeryLazy",
 }
 
