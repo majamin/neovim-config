@@ -24,6 +24,14 @@ vim.keymap.set(
   opts
 )
 
+-- Selects a file with nsxiv, copies it to images folder, and pastes the path to the open buffer
+vim.keymap.set(
+  { "n" },
+  "<leader>s",
+  ":r !selected_file=$(fd -t f . -0 /mnt/c/Users/majam/Pictures/Screenshots | xargs -0 nsxiv -qto) && copied_file=$(basename \"$selected_file\" | tr ' ' '_') && copied_file_path=\"./images/$copied_file\" && cp \"$selected_file\" \"$copied_file_path\" && echo \"$copied_file_path\" <CR><CR> ",
+  opts
+)
+
 vim.keymap.set(
   { "n", "v" },
   "<leader><leader>y",
