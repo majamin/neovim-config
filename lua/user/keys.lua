@@ -20,7 +20,7 @@ vim.keymap.set({ "n" }, "<F3>", ":setlocal spell!<CR>", opts)
 vim.keymap.set(
   { "n" },
   "<leader>i",
-  ":r !find . -maxdepth 3 -print | file -if - | grep \"image/\" | cut -d':' -f1 | xargs sxiv -qto <CR><CR>",
+  ":r !fd -t f . -0 -e png -e jpg -e jpeg -e bmp -e svg | xargs -0 nsxiv -qto <CR><CR>",
   opts
 )
 
@@ -28,7 +28,7 @@ vim.keymap.set(
 vim.keymap.set(
   { "n" },
   "<leader>s",
-  ":r !selected_file=$(fd -t f . -0 /mnt/c/Users/majam/Pictures/Screenshots | xargs -0 nsxiv -qto) && copied_file=$(basename \"$selected_file\" | tr ' ' '_') && copied_file_path=\"./images/$copied_file\" && cp \"$selected_file\" \"$copied_file_path\" && echo \"$copied_file_path\" <CR><CR> ",
+  ":r !selected_file=$(fd -t f . -0 /mnt/c/Users/majam/Pictures/Screenshots | xargs -0 nsxiv -qto) && cropped_file=$(basename \"$selected_file\" | tr ' ' '_') && cropped_file_path=\"./images/$cropped_file\" && convert \"$selected_file\" -trim \"$cropped_file_path\" && echo \"$cropped_file_path\" <CR><CR> ",
   opts
 )
 
