@@ -1,7 +1,7 @@
 local M = {
   "stevearc/oil.nvim",
   cmd = { "Oil" },
-  event = "VeryLazy",
+  -- event = 'VeryLazy',
 }
 
 M.config = function()
@@ -31,9 +31,8 @@ end
 M.keys = {
   {
     "-",
-    function()
-      require("oil").open()
-    end,
+    "<cmd>:Oil<CR>",
+    { "n" },
     { desc = "Open parent directory" },
   },
 }

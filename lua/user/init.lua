@@ -1,117 +1,43 @@
 -- BASIC SETTINGS --
 local M = {
-  lang = "en_ca", -- or en_us, etc.
-  colorscheme = "tokyonight",
-  autocmp = false,
-  whichkey = true,
-  primary_vimwiki_path = "/home/marian/Maja/Projects/notes",
-  lazy_opts = {
-    change_detection = {
-      enabled = true,
-      notify = false,
-    },
-  },
+  lang = "en_ca", -- see :h locale-name
+  mapleader = ";",
+  maplocalleader = ";",
+  colorscheme = "tokyonight-moon",
+  has_nerd_font = true, -- does your font and terminal allow nerd fonts?
+  autocmp = false, -- autocompletion - when false, trigger manually with C-n
 }
 
--- DEVELOPMENT --
-
--- These are already installed, Mason will ensure that they are loaded only
-M.mason_ignore = { "rustfmt" }
-
--- Your dev settings for lspconfig and mason
-M.dev = {
+-- LSP Servers -- See lua/plugins/lsp.lua
+M.servers = {
+  clangd = {},
+  -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
   lua_ls = {
+    -- cmd = {...},         -- (table) override the default command
+    -- filetypes = {...},   -- (table) override the default list of associated filetypes
+    -- capabilities = {},   -- (table) override fields in capabilities
     settings = {
       Lua = {
-        workspace = { checkThirdParty = false },
-        telemetry = { enable = false },
-      },
-    },
-    formatter = "stylua",
-  },
-  pyright = {
-    settings = {
-      python = {
-        analysis = {
-          autoSearchPaths = true,
-          useLibraryCodeForTypes = true,
-          diagnosticMode = "workspace",
+        completion = {
+          callSnippet = "Replace",
         },
       },
     },
-    formatter = "black",
   },
-  tsserver = {
-    settings = {
-      documentFormatting = false,
-    },
-    formatter = "prettierd",
-    filetypes = {
-      "javascript",
-      "typescript",
-      "typescriptreact",
-      "typescript.tsx",
-    },
-  },
-  clangd = {
-    settings = {},
-    formatter = "clang-format",
-  },
-  rust_analyzer = {
-    settings = {
-      ["rust-analyzer"] = {
-        checkOnSave = {
-          command = "clippy",
-        },
-      },
-    },
-    formatter = "rustfmt",
-  },
-  emmet_ls = {
-    settings = {
-      filetypes = require("user/data").emmet_filetypes,
-      init_options = {
-        html = {
-          options = {
-            -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
-            ["bem.enabled"] = true,
-            ["jsx.enabled"] = true,
-          },
-        },
-      },
-    },
-    formatter = "prettierd",
-  },
-  -- hls = {
-  --   settings = {
-  --     haskell = {
-  --       formattingProvider = "fourmolu",
-  --     },
-  --   },
-  -- },
-  tailwindcss = {
-    settings = {
-      filetypes = require("user/data").tailwindcss_filetypes,
-    },
-  },
-  gopls = {
-    settings = {
-      analyses = {
-        unusedparams = true,
-      },
-      staticcheck = true,
-      gofumpt = true,
-    },
-    formatter = "gofumpt",
-  },
-  texlab = {
-    settings = {},
-  },
-  prismals = {
-    settings = {
-      filetypes = { "prisma" }
-    },
-  }
+  texlab = {},
+  tsserver = {},
+  rust_analyzer = {},
+  r_language_server = {},
+}
+
+-- Formatters (managing by conform) -- See lua/plugins/style.lua
+M.formatters_by_ft = {
+  lua = { "stylua" },
+  javascript = { { "prettierd", "prettier" } },
+  typescript = { { "prettierd", "prettier" } },
+  tex = { "latexindent" },
+  -- Run multiple formatters sequentially:
+  -- python = { "isort", "black" },
 }
 
 return M

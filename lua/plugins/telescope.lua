@@ -1,113 +1,45 @@
 local M = {
   "nvim-telescope/telescope.nvim",
+  branch = "0.1.x",
   dependencies = {
     { "nvim-lua/plenary.nvim" },
-    {
-      "folke/trouble.nvim",
-      dependencies = "nvim-tree/nvim-web-devicons",
-    },
-    { "nvim-telescope/telescope-symbols.nvim" },
-    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
   },
-  cmd = { "Tel", "Telescope" },
+  cmd = { "Telescope" },
+  VeryLazy = true,
 }
 
-function M.config()
-  local telescope = require("telescope")
-  local actions = require("telescope.actions")
-  local trouble = require("trouble.providers.telescope")
-
-  telescope.setup({
-    defaults = {
-      layout_strategy = "horizontal",
-      layout_config = {
-        prompt_position = "top",
-      },
-      sorting_strategy = "ascending",
-      mappings = {
-        i = {
-          ["<C-h>"] = actions.file_split,
-          ["<C-s>"] = actions.file_vsplit,
-          ["<C-t>"] = trouble.smart_open_with_trouble,
-        },
-      },
-    },
+M.config = function()
+  require("telescope").setup({
     pickers = {
       colorscheme = {
         enable_preview = true,
       },
-      buffers = {
-        mappings = {
-          n = {
-            ["d"] = actions.delete_buffer
-          }
-        }
-      }
     },
   })
-  telescope.load_extension("fzf")
-end
 
-M.keys = {
-  {
-    ";f",
-    function()
-      require("user/funs").project_files()
-    end,
-    desc = "Find Tracked Project Files",
-  },
-  {
-    ";o",
-    function()
-      require("telescope.builtin").oldfiles()
-    end,
-    desc = "Recent (Old) Files",
-  },
-  {
-    ";g",
-    function()
-      require("telescope.builtin").live_grep()
-    end,
-    desc = "Grep Files",
-  },
-  {
-    ";b",
-    function()
-      require("telescope.builtin").buffers()
-    end,
-    desc = "Find Buffers",
-  },
-  {
-    ";h",
-    function()
-      require("telescope.builtin").help_tags()
-    end,
-    desc = "Find Help Tags",
-  },
-  {
-    ";k",
-    function()
-      require("telescope.builtin").keymaps()
-    end,
-    desc = "Find Keymaps",
-  },
-  {
-    ";e",
-    function()
-      require("telescope.builtin").diagnostics()
-    end,
-    desc = "View LSP diagnostics",
-  },
-  {
-    ";c",
-    "<cmd>Telescope commands<CR>",
-    desc = "Run commands",
-  },
-  {
-    ";;",
-    "<cmd>Telescope<CR>",
-    desc = "Open Telescope",
-  },
-}
+  local wk = require("which-key")
+
+  -- Lazy loads on these mappings
+  wk.add({
+    {
+      "<leader>f",
+      ":Telescope find_files<CR>",
+      desc = "Telescope: find files",
+    },
+    {
+      "<leader>g",
+      ":Telescope live_grep<CR>",
+      desc = "Telescope: grep in file",
+    },
+    { "<leader>b", ":Telescope buffers<CR>", desc = "Telescope: find buffers" },
+    { "<leader>h", ":Telescope help_tags<CR>", desc = "Telescope: help tags" },
+    {
+      "<leader>o",
+      ":Telescope oldfiles<CR>",
+      desc = "Telescope: recent files",
+    },
+    { "<leader><leader>", ":Telescope<CR>", desc = "Telescope: menu" },
+  })
+end
 
 return M

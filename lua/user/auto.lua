@@ -12,30 +12,6 @@ vim.api.nvim_create_autocmd(
   { command = [[set formatoptions-=cro]] }
 )
 
--- Go to last location when opening a buffer
-vim.api.nvim_create_autocmd("BufReadPost", {
-  command = [[if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g`\"" | endif]],
-})
-
--- Turn off paste mode when leaving insert
-vim.api.nvim_create_autocmd("InsertLeave", {
-  pattern = "*",
-  command = "set nopaste",
-})
-
--- [[ Highlight on yank ]]
--- See `:help vim.highlight.on_yank()`
-local highlight_group =
-  vim.api.nvim_create_augroup("YankHighlight", { clear = true })
-
-vim.api.nvim_create_autocmd("TextYankPost", {
-  callback = function()
-    vim.highlight.on_yank({ higroup = "Constant", timeout = 400 })
-  end,
-  group = highlight_group,
-  pattern = "*",
-})
-
 -- Use `<ESC>` to conveniently close special windows
 vim.api.nvim_create_autocmd("FileType", {
   pattern = {
@@ -54,5 +30,15 @@ vim.api.nvim_create_autocmd("FileType", {
       "<cmd>close<CR>",
       { silent = true, buffer = true }
     )
+  end,
+})
+
+-- Set `>>` to `|>` in R and Rmd files
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "r", "rmd" },
+  callback = function()
+    vim.schedule(function()
+      vim.keymap.set("i", ">>", "|>", { buffer = true })
+    end)
   end,
 })
