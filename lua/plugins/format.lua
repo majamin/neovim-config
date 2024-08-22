@@ -1,6 +1,5 @@
 local M = { -- Autoformat
   "stevearc/conform.nvim",
-  branch = "nvim-0.9",
   lazy = false,
 }
 M.keys = {
