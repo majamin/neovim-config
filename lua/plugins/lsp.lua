@@ -38,17 +38,17 @@ M.config = function()
         "Type Definition"
       )
       map(
-        "<leader>ds",
+        "<leader>ld",
         require("telescope.builtin").lsp_document_symbols,
         "Document Symbols"
       )
       map(
-        "<leader>ws",
+        "<leader>lw",
         require("telescope.builtin").lsp_dynamic_workspace_symbols,
         "Workspace Symbols"
       )
-      map("<leader>rn", vim.lsp.buf.rename, "Rename")
-      map("<leader>ca", vim.lsp.buf.code_action, "Code Action")
+      map("<leader>lr", vim.lsp.buf.rename, "Rename")
+      map("<leader>la", vim.lsp.buf.code_action, "Code Action")
       map("K", vim.lsp.buf.hover, "Hover Documentation")
       map("gD", vim.lsp.buf.declaration, "Goto Declaration")
 
@@ -88,7 +88,7 @@ M.config = function()
         and client.server_capabilities.inlayHintProvider
         and vim.lsp.inlay_hint
       then
-        map("<leader>th", function()
+        map("<leader>lh", function()
           vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
         end, "[T]oggle Inlay [H]ints")
       end
