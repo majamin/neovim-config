@@ -4,6 +4,7 @@ local M = {
   mapleader = ";",
   maplocalleader = ";",
   colorscheme = "tokyonight-moon",
+  format_on_save = false, -- manually format with <leader>lf
   has_nerd_font = true, -- does your font and terminal allow nerd fonts?
   autocmp = false, -- autocompletion - when false, trigger manually with C-n
 }
@@ -28,6 +29,7 @@ M.servers = {
   tsserver = {},
   rust_analyzer = {},
   r_language_server = {},
+  marksman = {},
 }
 
 -- Formatters (managing by conform) -- See lua/plugins/style.lua
