@@ -20,10 +20,14 @@ M.opts = {
     -- have a well standardized coding style. You can add additional
     -- languages here or re-enable it for the disabled ones.
     local disable_filetypes = { c = true, cpp = true }
-    return {
-      timeout_ms = 500,
-      lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
-    }
+    if require("user").format_on_save then
+      return {
+        timeout_ms = 500,
+        lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
+      }
+    else
+      return
+    end
   end,
   formatters_by_ft = require("user").formatters_by_ft,
 }
