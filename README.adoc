@@ -8,8 +8,8 @@ Hi. This is my config for http://neovim.io[Neovim].
 
 == Get Started
 
-On icon:linux[] Linux (and *nix) Clone this repo as `nvim` to your `~/.config/` directory.
-On icon:windows[] Windows, clone to `%APPDATA%\nvim\`.
+On Linux (and *nix) Clone this repo as `nvim` to your `~/.config/` directory.
+On Windows, clone to `%APPDATA%\nvim\`.
 
 * Customize your setup in `lua/user/init.lua`.
 * Further options are in `lua/user/opts.lua`.
@@ -38,13 +38,13 @@ a| Fuzzy find files
 a| kbd:[{leader}]+kbd:[g]
 a| Fuzzy find keyword
 
-a| kbd:[{leader}l]+kbd:[f]
+a| kbd:[{leader}]+kbd:[l]+kbd:[f]
 a| Format Document
 
 a| kbd:[K]
 a| Hover Documentation
 
-a| kbd:[Ctrl]kbd:[n]
-a| LSP completion
+a| kbd:[Ctrl]+kbd:[n]
+a| LSP completion (insert mode)
 
 |===
