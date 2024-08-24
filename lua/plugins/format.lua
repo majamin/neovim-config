@@ -4,7 +4,7 @@ local M = { -- Autoformat
 }
 M.keys = {
   {
-    "<leader>F",
+    "<leader>lf",
     function()
       require("conform").format({ async = true, lsp_fallback = true })
     end,
