@@ -1,0 +1,50 @@
+= Yet Another Neovim Config
+:author: Marian Minar <majamin@gmail.com>
+:experimental:
+:icons: font
+:leader: ;
+
+Hi. This is my config for http://neovim.io[Neovim].
+
+== Get Started
+
+On icon:linux[] Linux (and *nix) Clone this repo as `nvim` to your `~/.config/` directory.
+On icon:windows[] Windows, clone to `%APPDATA%\nvim\`.
+
+* Customize your setup in `lua/user/init.lua`.
+* Further options are in `lua/user/opts.lua`.
+* Add plugins with simple configs to `lua/plugins/init.lua`,
+* otherwise in separate files in `lua/plugins/` directory.
+* `Which-key` pop-up delay is high to reduce flickering.
+* Notable keymaps (browse all with kbd:[{leader}]+kbd:[k] or `:W`):
+
+[cols="1,1",options="header"]
+|===
+| Binding
+| Description
+
+a| kbd:[-]
+a| Browse files
+
+a| kbd:[TAB]
+a| Open previous buffer
+
+a| kbd:[Shift]+kbd:[TAB]
+a| Open next buffer
+
+a| kbd:[{leader}]+kbd:[f]
+a| Fuzzy find files
+
+a| kbd:[{leader}]+kbd:[g]
+a| Fuzzy find keyword
+
+a| kbd:[{leader}l]+kbd:[f]
+a| Format Document
+
+a| kbd:[K]
+a| Hover Documentation
+
+a| kbd:[Ctrl]kbd:[n]
+a| LSP completion
+
+|===
