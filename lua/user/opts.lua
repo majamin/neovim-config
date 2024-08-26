@@ -8,8 +8,6 @@ local g = vim.g
 local lang = require("user").lang
 
 g.have_nerd_font = require("user").has_nerd_font
-g.vimwiki_global_ext = 0 -- Don't vimwiki every goddamn md file, please
-g.vimwiki_url_maxsave = 0 -- Don't shorten URL so you can plumb links
 
 o.backup = false -- creates a backup file
 o.bs = ""
