@@ -1,5 +1,5 @@
-local M = { -- Autoformat
-  "stevearc/conform.nvim",
+local M = {
+  "stevearc/conform.nvim", -- https://github.com/stevearc/conform.nvim/releases
   lazy = false,
 }
 M.keys = {
