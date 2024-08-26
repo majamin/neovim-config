@@ -5,8 +5,8 @@ local M = {
   maplocalleader = ";",
   colorscheme = "tokyonight-moon",
   format_on_save = false, -- manually format with <leader>lf
-  has_nerd_font = true, -- does your font and terminal allow nerd fonts?
-  autocmp = false, -- autocompletion - when false, trigger manually with C-n
+  has_nerd_font = true,   -- does your font and terminal allow nerd fonts?
+  autocmp = false,        -- autocompletion - trigger manually with C-n
 }
 
 -- LSP Servers -- See lua/plugins/lsp.lua
