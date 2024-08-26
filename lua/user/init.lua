@@ -22,6 +22,12 @@ M.servers = {
         completion = {
           callSnippet = "Replace",
         },
+        workspace = {
+          checkThirdParty = false,
+          library = {
+            vim.env.VIMRUNTIME,
+          },
+        },
       },
     },
   },
