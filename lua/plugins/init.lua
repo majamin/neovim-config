@@ -17,7 +17,10 @@ return {
   {
     "folke/trouble.nvim",
     cmd = "Trouble",
-    config = true,
+    opts = {
+      focus = true,
+      warn_no_results = false,
+    },
     keys = {
       {
         "<leader>t",
