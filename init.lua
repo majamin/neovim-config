@@ -44,4 +44,11 @@ require("lazy").setup({
   },
 })
 
-vim.cmd("colo " .. user.colorscheme)
+-- Attempt to load the colorscheme using pcall.
+-- If it fails, fall back to slate.
+local colorscheme = user.colorscheme
+local ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
+if not ok then
+  vim.cmd("colorscheme slate")
+  vim.print("Colorscheme not found: " .. colorscheme)
+end
