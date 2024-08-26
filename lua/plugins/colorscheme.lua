@@ -1,5 +1,5 @@
 local M = {
-  "folke/tokyonight.nvim",
+  "folke/tokyonight.nvim", -- https://github.com/folke/tokyonight.nvim/releases/latest
 }
 
 local user = require("user")
