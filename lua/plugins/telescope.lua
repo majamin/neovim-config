@@ -3,8 +3,9 @@ local M = {
   branch = "0.1.x",
   dependencies = {
     { "nvim-lua/plenary.nvim" },
+    { "debugloop/telescope-undo.nvim" },
+    { "folke/which-key.nvim" },
   },
-  cmd = { "Telescope" },
   VeryLazy = true,
 }
 
@@ -17,28 +18,31 @@ M.config = function()
     },
   })
 
+  require("telescope").load_extension("undo")
+  local extensions = require("telescope").extensions
+  local builtin = require("telescope.builtin")
   local wk = require("which-key")
 
   -- Lazy loads on these mappings
   wk.add({
     {
       "<leader>f",
-      ":Telescope find_files<CR>",
+      builtin.find_files,
       desc = "Telescope: find files",
     },
     {
       "<leader>g",
-      ":Telescope live_grep<CR>",
+      builtin.live_grep,
       desc = "Telescope: grep in file",
     },
-    { "<leader>b", ":Telescope buffers<CR>", desc = "Telescope: find buffers" },
-    { "<leader>h", ":Telescope help_tags<CR>", desc = "Telescope: help tags" },
+    { "<leader>h", builtin.help_tags, desc = "Telescope: help tags" },
     {
       "<leader>o",
-      ":Telescope oldfiles<CR>",
+      builtin.oldfiles,
       desc = "Telescope: recent files",
     },
-    { "<leader><leader>", ":Telescope<CR>", desc = "Telescope: menu" },
+    { "<leader><leader>", builtin.builtin, desc = "Telescope: menu" },
+    { "U", extensions.undo.undo, desc = "Telescope: undo list" },
   })
 end
 
