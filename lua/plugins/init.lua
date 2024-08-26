@@ -32,6 +32,10 @@ return {
     },
     VeryLazy = true,
   },
+  {
+    "folke/lazydev.nvim",
+    ft = "lua",
+  },
   { "numToStr/Comment.nvim", opts = {} },
   {
     "lewis6991/gitsigns.nvim",
