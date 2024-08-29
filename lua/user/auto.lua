@@ -33,12 +33,12 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- Set `>>` to `|>` in R and Rmd files
+-- Set `>>` to `%>%` in R and Rmd files
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "r", "rmd" },
   callback = function()
     vim.schedule(function()
-      vim.keymap.set("i", ">>", "|>", { buffer = true })
+      vim.keymap.set("i", ">>", "%>%", { buffer = true })
     end)
   end,
 })
