@@ -1,8 +1,8 @@
 return {
   { "tpope/vim-surround", event = "VeryLazy" }, -- https://github.com/tpope/vim-surround
-  { "tpope/vim-fugitive" },                     -- https://github.com/tpope/vim-fugitive
+  { "tpope/vim-fugitive" }, -- https://github.com/tpope/vim-fugitive
   {
-    "echasnovski/mini.tabline",                 -- https://github.com/echasnovski/mini.tabline
+    "echasnovski/mini.tabline", -- https://github.com/echasnovski/mini.tabline
     config = true,
     event = "VeryLazy",
     version = "*",
@@ -64,5 +64,8 @@ return {
       })
       vim.g.copilot_no_tab_map = true
     end,
+  },
+  {
+    "projekt0n/github-nvim-theme",
   },
 }

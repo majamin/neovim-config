@@ -4,11 +4,12 @@ local M = {}
 local o = vim.opt
 local wo = vim.wo
 local g = vim.g
+local user = require("user")
+local lang = user.lang
 
-local lang = require("user").lang
+g.have_nerd_font = user.has_nerd_font
 
-g.have_nerd_font = require("user").has_nerd_font
-
+o.background = user.background
 o.backup = false -- creates a backup file
 o.bs = ""
 o.breakindent = true

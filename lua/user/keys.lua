@@ -14,6 +14,7 @@ M.config = function()
     { "<leader>d", group = "[D]ocument" },
     { "<leader>r", group = "[R]ename" },
     { "<leader>w", group = "[W]orkspace" },
+    { "<leader>i", group = "Paste [I]mages" },
   })
 
   wk.add({
@@ -26,14 +27,19 @@ M.config = function()
     { "<C-w>b", ":bd<CR>", desc = "Delete current buffer" },
     { "<leader>p", '"0p', desc = "Paste from yank register" },
     {
-      "<leader>i",
+      "<leader>ip",
       ":r !fd -t f . -0 -e png -e jpg -e jpeg -e bmp -e svg | xargs -0 sxiv -qto <CR><CR>",
       desc = "Find and paste image paths",
     },
     {
-      "<leader>s",
-      ':r !selected_file=$(fd -t f . -0 /mnt/c/Users/majam/Pictures/Screenshots | xargs -0 sxiv -qto) && cropped_file=$(basename "$selected_file" | tr \' \' \'_\') && cropped_file_path="./images/$cropped_file" && convert "$selected_file" -trim "$cropped_file_path" && echo "$cropped_file_path" <CR><CR> ',
+      "<leader>is",
+      ':r !mkdir images 2>/dev/null; selected_file=$(fd -t f . -0 /mnt/c/Users/majam/Pictures/Screenshots | xargs -0 sxiv -qto) && cropped_file=$(basename "$selected_file" | tr \' \' \'_\') && cropped_file_path="./images/$cropped_file" && convert "$selected_file" -trim "$cropped_file_path" && echo "$cropped_file_path" <CR><CR> ',
       desc = "Copy sreenshots to current project",
+    },
+    {
+      "<leader>ic",
+      ':r !mkdir images 2>/dev/null; selected_file=$(fd -t f . -0 "$ONEDRIVE/Common/phone-pictures/Camera" | xargs -0 sxiv -qto) && cropped_file=$(basename "$selected_file" | tr \' \' \'_\') && cropped_file_path="./images/$cropped_file" && convert "$selected_file" -trim "$cropped_file_path" && echo "$cropped_file_path" <CR><CR> ',
+      desc = "Copy phone photos to current project",
     },
     -- { '<leader>y', mode = { 'n', 'v' }, 'y<cr>:call system("tmux load-buffer -", @0)<cr>gv', desc = 'Yank to tmux clipboard' },
     -- { '<leader>p', mode = { 'n', 'v' }, ':let @0 = system("tmux save-buffer -")<cr>"0p<cr>g;', desc = 'Paste from tmux clipboard' },

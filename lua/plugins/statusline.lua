@@ -1,16 +1,14 @@
 local M = {
-  "nvim-lualine/lualine.nvim",
+  "nvim-lualine/lualine.nvim", -- https://github.com/nvim-lualine/lualine.nvim
   event = "VeryLazy",
 }
 
 function M.config()
   local lualine = require("lualine")
-  local theme = require("user").lualine_theme
   local lazy_status = require("lazy.status")
   lualine.setup({
     options = {
       icons_enabled = true,
-      theme = theme,
       component_separators = { left = "", right = "" },
     },
     sections = {
