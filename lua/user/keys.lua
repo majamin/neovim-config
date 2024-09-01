@@ -33,12 +33,12 @@ M.config = function()
     },
     {
       "<leader>is",
-      ':r !mkdir images 2>/dev/null; selected_file=$(fd -t f . -0 /mnt/c/Users/majam/Pictures/Screenshots | xargs -0 sxiv -qto) && cropped_file=$(basename "$selected_file" | tr \' \' \'_\') && cropped_file_path="./images/$cropped_file" && convert "$selected_file" -trim "$cropped_file_path" && echo "$cropped_file_path" <CR><CR> ',
+      ':r!imaging.sh /mnt/c/Users/majam/Pictures/Screenshots <CR><CR> ',
       desc = "Copy sreenshots to current project",
     },
     {
       "<leader>ic",
-      ':r !mkdir images 2>/dev/null; selected_file=$(fd -t f . -0 "$ONEDRIVE/Common/phone-pictures/Camera" | xargs -0 sxiv -qto) && cropped_file=$(basename "$selected_file" | tr \' \' \'_\') && cropped_file_path="./images/$cropped_file" && convert "$selected_file" -trim "$cropped_file_path" && echo "$cropped_file_path" <CR><CR> ',
+      ':r!imaging.sh "$ONEDRIVE/Common/phone-pictures/Camera" <CR><CR> ',
       desc = "Copy phone photos to current project",
     },
     -- { '<leader>y', mode = { 'n', 'v' }, 'y<cr>:call system("tmux load-buffer -", @0)<cr>gv', desc = 'Yank to tmux clipboard' },
