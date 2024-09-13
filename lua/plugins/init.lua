@@ -71,7 +71,7 @@ return {
     priority = 1000,
     config = function()
       require("github-theme").setup({
-        options = { transparent = true },
+        -- options = { transparent = true },
       })
     end,
   },
