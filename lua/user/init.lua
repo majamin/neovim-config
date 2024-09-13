@@ -33,7 +33,7 @@ M.servers = {
     },
   },
   texlab = {},
-  tsserver = {},
+  ts_ls = {},
   rust_analyzer = {},
   r_language_server = {},
   marksman = {},
