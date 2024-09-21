@@ -4,25 +4,22 @@
 -- ├── ...
 -- └── lua/
 --     ├── plugins/               -- Put your plugins in here!
---     │   ├── init.lua           -- Loads plugins with simple specs
---     │   ├── oil.lua            -- Larger plugins have their own files
+--     │   ├── colorscheme.lua    -- Good example of a multispec plugin file
+--     │   ├── completion.lua     -- Good example of a single spec plugin file
 --     │   └── ...
 --     └── user/
---         ├── init.lua           -- The only file you should have to edit
---         ├── lazy.lua
---         ├── maps.lua
---         ├── opts.lua
+--         ├── auto.lua
+--         ├── boot.lua
+--         ├── funs.lua
+--         ├── keys.lua
+--         ├── opts.lua           -- TODO: go here first!
 --         └── ...
-
--- NOTE: go here first -> user/init.lua
-
--- Run :W to see a list of keymaps
--- Run :Mason to see installed LSPs, formatters, etc.
--- Run :Lazy to open the package manager
 
 -- HELPFUL BOOKMARKS
 -- https://lazy.folke.io/spec
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+
+-- WARN: Don't edit anything past this point unless you know what you're doing
 
 local opts = require("user.opts")
 require("user.boot") -- bootstraps lazy

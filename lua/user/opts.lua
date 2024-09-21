@@ -1,16 +1,13 @@
--- OPTIONS --
-local o = vim.opt
-local wo = vim.wo
-local g = vim.g
+-- NOTE: This should be the only file you need to edit in the config
 
--- BASIC SETTINGS --
+-- PREFERENCES --
 local M = {
   lang = "en_ca",               -- see :h locale-name
   mapleader = ";",
   maplocalleader = ";",
   colorscheme = "github_light", -- add more in plugins/colorscheme.lua
   bg_is_transparent = false,
-  format_on_save = false,       -- manually format with <leader>lf
+  format_on_save = false,       -- manually format with '\'
   autocmp = false,              -- autocompletion - trigger manually with C-n
   -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
   --  If you are experiencing weird indenting issues, add the language to
@@ -58,6 +55,11 @@ M.formatters_by_ft = {
   -- Run multiple formatters sequentially:
   -- python = { "isort", "black" },
 }
+
+-- VIM OPTIONS --
+local o = vim.opt
+local wo = vim.wo
+local g = vim.g
 
 g.have_nerd_font = true   -- set to false if you don't have a nerd font
 o.backspace = ""          -- influences the working of <BS>, etc. see `:h 'backspace'`
