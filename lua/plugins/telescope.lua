@@ -35,14 +35,26 @@ M.config = function()
       builtin.live_grep,
       desc = "Telescope: grep in file",
     },
-    { "<leader>h", builtin.help_tags, desc = "Telescope: help tags" },
+    {
+      "<leader>h",
+      builtin.help_tags,
+      desc = "Telescope: help tags"
+    },
     {
       "<leader>o",
       builtin.oldfiles,
       desc = "Telescope: recent files",
     },
-    { "<leader><leader>", builtin.builtin, desc = "Telescope: menu" },
-    { "U", extensions.undo.undo, desc = "Telescope: undo list" },
+    {
+      "<leader><leader>",
+      builtin.builtin,
+      desc = "Telescope: menu"
+    },
+    {
+      "U",
+      extensions.undo.undo,
+      desc = "Telescope: undo list"
+    },
   })
 end
 

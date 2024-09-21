@@ -5,11 +5,17 @@ local M = {
     "williamboman/mason-lspconfig.nvim",
     "WhoIsSethDaniel/mason-tool-installer.nvim",
     "folke/trouble.nvim",
+    {
+      "folke/lazydev.nvim",
+      ft = "lua",
+    },
   },
+  event = { "BufReadPost", "BufNewFile" },
+  cmd = { "LspInfo", "LspInstall", "LspUninstall" },
 }
 
 M.config = function()
-  local servers = require("user").servers
+  local servers = require("user.opts").servers
 
   vim.api.nvim_create_autocmd("LspAttach", {
     group = vim.api.nvim_create_augroup("user-lsp-attach", { clear = true }),

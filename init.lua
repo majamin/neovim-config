@@ -2,16 +2,17 @@
 -- .
 -- ├── init.lua                   -- This file
 -- ├── ...
--- └── lua
---     ├── plugins                -- Put your plugins in here!
+-- └── lua/
+--     ├── plugins/               -- Put your plugins in here!
 --     │   ├── init.lua           -- Loads plugins with simple specs
 --     │   ├── oil.lua            -- Larger plugins have their own files
 --     │   └── ...
---     └── user
+--     └── user/
 --         ├── init.lua           -- The only file you should have to edit
 --         ├── lazy.lua
 --         ├── maps.lua
---         └── opts.lua
+--         ├── opts.lua
+--         └── ...
 
 -- NOTE: go here first -> user/init.lua
 
@@ -23,13 +24,13 @@
 -- https://lazy.folke.io/spec
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 
-local user = require("user")
-require("user.lazy") -- bootstraps lazy
+local opts = require("user.opts")
+require("user.boot") -- bootstraps lazy
 require("user.auto") -- nice autocommands
 require("user.opts") -- loads options, colors, etc.
 
-vim.g.mapleader = user.mapleader
-vim.g.maplocalleader = user.maplocalleader
+vim.g.mapleader = opts.mapleader
+vim.g.maplocalleader = opts.maplocalleader
 
 -- Plugins
 require("lazy").setup({
@@ -46,7 +47,8 @@ require("lazy").setup({
 
 -- Attempt to load the colorscheme using pcall.
 -- If it fails, fall back to slate.
-local colorscheme = user.colorscheme
+local colorscheme = opts.colorscheme
+---@diagnostic disable-next-line
 local ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
 if not ok then
   vim.cmd("colorscheme slate")

@@ -1,24 +1,52 @@
-= Yet Another Neovim Config
+= Simpleman's Neovim Config
 :author: Marian Minar <majamin@gmail.com>
 :experimental:
 :icons: font
 :leader: ;
+:source-highlighter: rouge
 
 Hi. This is my config for http://neovim.io[Neovim].
 
+.Features
+[sidebar]
+--
+* No UI affects, loading screens, etc. to get in the way
+* `backspace` acts in the original way (`vi` behavior).
+* `Which-key` pop-up delay is high on purpose - that way it doesn't pop up constantly.
+* No debuggers implemented in this config (yet).
+* Two choices for colorschemes: Github and Tokyonight
+--
+
 == Get Started
 
-On Linux (and *nix) Clone this repo as `nvim` to your `~/.config/` directory.
-On Windows, clone to `%APPDATA%\nvim\`.
+. Clone the repo:
++
+.Linux, etc.
+[source,sh]
+----
+git clone https://github.com/majamin/neovim-config.git ~/.config/nvim
+----
++
+.Windows (PowerShell)
+[source,sh]
+----
+git clone https://github.com/majamin/neovim-config.git $env:LOCALAPPDATA/nvim
+----
+. Change language, leader, preferences and LSPs, etc. in `lua/user/opts.lua`.
+. Add your plugins as separate files in `lua/plugins/` directory footnote:[Examples: multispec (`plugins/colorscheme.lua`) and single spec (`plugins/format.lua`)]
+. Restart neovim and enjoy!
 
-* Customize your setup in `lua/user/init.lua`.
-* Further options are in `lua/user/opts.lua`.
-* Add plugins with simple configs to `lua/plugins/init.lua`,
-* otherwise in separate files in `lua/plugins/` directory.
-* `Which-key` pop-up delay is high to reduce flickering.
-* Notable keymaps (browse all with kbd:[{leader}]+kbd:[k] or `:W`):
+== Keys
 
-[cols="1,1",options="header"]
+[sidebar]
+--
+[TIP]
+* Browse all keymaps with Telescope `keymaps` in kbd:[{leader}{leader}] or `:WhichKey`
+* Run `:Copilot` to turn on Github copilot
+--
+
+.Notable key bindings
+[%autowidth,cols="1,1",options="header"]
 |===
 | Binding
 | Description
@@ -26,25 +54,50 @@ On Windows, clone to `%APPDATA%\nvim\`.
 a| kbd:[-]
 a| Browse files
 
-a| kbd:[TAB]
-a| Open previous buffer
+a| kbd:[F2]
+a| Save all open files and make session
 
-a| kbd:[Shift]+kbd:[TAB]
+a| kbd:[F3]
+a| Toggle spelling
+
+a| kbd:[Space]
+a| Initialize incremental treesitter selection, increment by repeating kbd:[Space] (ensure your Treesitter lang is installed)
+
+a| kbd:[TAB]
 a| Open next buffer
 
-a| kbd:[{leader}]+kbd:[f]
+a| kbd:[Shift + TAB]
+a| Open previous buffer
+
+a| kbd:[Backspace]
+a| Jump to previously opened buffer (kbd:[^])
+
+a| kbd:[{leader} + f]
 a| Fuzzy find files
 
-a| kbd:[{leader}]+kbd:[g]
-a| Fuzzy find keyword
+a| kbd:[{leader} + g]
+a| Fuzzy find text in files
 
-a| kbd:[{leader}]+kbd:[l]+kbd:[f]
-a| Format Document
+a| kbd:[{leader} + l]
+a| LSP menu
+
+a| kbd:[\ ]
+a| Format buffer (falls back to `conform` when LSP not available or does not support formatting)
+
+a| kbd:[{leader} + t]
+a| Opens Trouble (if LSP is capable)
 
 a| kbd:[K]
 a| Hover Documentation
 
-a| kbd:[Ctrl]+kbd:[n]
-a| LSP completion (insert mode)
+a| kbd:[Ctrl + n] (insert mode)
+a| LSP completion, but also navigate the menu with kbd:[Ctrl + n] and kbd:[Ctrl + p] when menu visible
 
 |===
+
+== Troubleshooting
+
+* Read `:mes` for any errors
+* Ensure `:checkhealth` looks ok
+* Install any missing LSP clients, formatters, via `:Mason` if `user/opts.lua` was not enough
+* Does your LSP need special handling?

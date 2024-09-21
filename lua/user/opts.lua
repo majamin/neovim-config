@@ -1,15 +1,65 @@
 -- OPTIONS --
-local M = {}
-
 local o = vim.opt
 local wo = vim.wo
 local g = vim.g
-local user = require("user")
-local lang = user.lang
 
-g.have_nerd_font = user.has_nerd_font
+-- BASIC SETTINGS --
+local M = {
+  lang = "en_ca",               -- see :h locale-name
+  mapleader = ";",
+  maplocalleader = ";",
+  colorscheme = "github_light", -- add more in plugins/colorscheme.lua
+  bg_is_transparent = false,
+  format_on_save = false,       -- manually format with <leader>lf
+  autocmp = false,              -- autocompletion - trigger manually with C-n
+  -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
+  --  If you are experiencing weird indenting issues, add the language to
+  --  the list of additional_vim_regex_highlighting and disabled languages for indent.
+  additional_vim_regex_highlighting = { "ruby" },
+}
 
-o.background = user.background
+-- LSP Servers -- See lua/plugins/lsp.lua
+M.servers = {
+  clangd = {},
+  -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
+  lua_ls = {
+    -- cmd = {...},         -- (table) override the default command
+    -- filetypes = {...},   -- (table) override the default list of associated filetypes
+    -- capabilities = {},   -- (table) override fields in capabilities
+    settings = {
+      Lua = {
+        completion = {
+          callSnippet = "Replace",
+        },
+        workspace = {
+          checkThirdParty = false,
+          library = {
+            vim.env.VIMRUNTIME,
+          },
+        },
+      },
+    },
+  },
+  texlab = {},
+  ts_ls = {},
+  rust_analyzer = {},
+  r_language_server = {},
+  marksman = {},
+}
+
+-- Formatters (managing by conform) -- See lua/plugins/style.lua
+M.formatters_by_ft = {
+  asciidoc = { "prettierd", "prettier" },
+  lua = { "stylua" },
+  javascript = { "prettierd", "prettier" },
+  typescript = { "prettierd", "prettier" },
+  tex = { "latexindent" },
+  markdown = { "prettierd", "prettier" },
+  -- Run multiple formatters sequentially:
+  -- python = { "isort", "black" },
+}
+
+g.have_nerd_font = true   -- set to false if you don't have a nerd font
 o.backspace = ""          -- influences the working of <BS>, etc. see `:h 'backspace'`
 o.backup = false          -- <true|false> make a backup before overwriting a file?
 o.breakindent = true      -- <true|false> Will every wrapped line continue visually indented?
@@ -40,7 +90,7 @@ o.sidescrolloff = 5       -- <number> the minimal number of columns to scroll ho
 o.signcolumn = "yes"      -- <string> in {auto, no, yes, 1-9} - "yes" prevents gutter opening and closing spastically
 o.smartcase = true        -- <boolean> override the 'ignorecase' option if the search pattern contains upper case characters?
 o.smartindent = true      -- <boolean> make indenting smarter again?
-o.spelllang = lang or "en_us" -- <string> language(s) to use for spell checking
+o.spelllang = M.lang or "en_us" -- <string> language(s) to use for spell checking
 o.splitbelow = true       -- <boolean> force all horizontal splits to go below current window?
 o.splitright = true       -- <boolean> force all vertical splits to go to the right of current window?
 o.swapfile = true         -- <boolean> enable/disable swap file creation?

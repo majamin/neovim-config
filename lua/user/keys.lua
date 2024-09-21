@@ -34,7 +34,7 @@ M.config = function()
     {
       "<leader>is",
       ':r!imaging.sh /mnt/c/Users/majam/Pictures/Screenshots <CR><CR> ',
-      desc = "Copy sreenshots to current project",
+      desc = "Copy screenshots to current project",
     },
     {
       "<leader>ic",

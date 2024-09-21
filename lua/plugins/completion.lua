@@ -54,7 +54,7 @@ M.config = function()
       completeopt = "menu,menuone,noinsert",
       autocomplete = {
         ---@diagnostic disable-next-line
-        autocmp(require("user").autocmp),
+        autocmp(require("user.opts").autocmp),
       },
     },
     mapping = cmp.mapping.preset.insert({

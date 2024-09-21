@@ -1,6 +1,4 @@
 return {
-  { "tpope/vim-surround", event = "VeryLazy" }, -- https://github.com/tpope/vim-surround
-  { "tpope/vim-fugitive" }, -- https://github.com/tpope/vim-fugitive
   {
     "echasnovski/mini.tabline", -- https://github.com/echasnovski/mini.tabline
     config = true,
@@ -33,11 +31,6 @@ return {
     VeryLazy = true,
   },
   {
-    "folke/lazydev.nvim",
-    ft = "lua",
-  },
-  { "numToStr/Comment.nvim", opts = {} },
-  {
     "lewis6991/gitsigns.nvim",
     opts = {
       signs = {
@@ -48,31 +41,5 @@ return {
         changedelete = { text = "~" },
       },
     },
-  },
-  {
-    "jpalardy/vim-slime",
-    config = function()
-      vim.cmd("let g:slime_target = 'tmux'")
-    end,
-  },
-  {
-    "github/copilot.vim",
-    config = function()
-      vim.keymap.set("i", "<C-J>", 'copilot#Accept("\\<CR>")', {
-        expr = true,
-        replace_keycodes = false,
-      })
-      vim.g.copilot_no_tab_map = true
-    end,
-  },
-  {
-    "projekt0n/github-nvim-theme",
-    lazy = false,
-    priority = 1000,
-    config = function()
-      require("github-theme").setup({
-        -- options = { transparent = true },
-      })
-    end,
   },
 }
