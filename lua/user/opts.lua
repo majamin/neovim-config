@@ -15,7 +15,12 @@ local M = {
   additional_vim_regex_highlighting = { "ruby" },
 }
 
--- LSP Servers -- See lua/plugins/lsp.lua
+-- LSP servers that are already installed and only need to be setup
+M.servers_setup_only = {
+  hls = {}
+}
+
+-- LSP servers that will be installed and setup by mason-tool-installer
 M.servers = {
   clangd = {},
   -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs

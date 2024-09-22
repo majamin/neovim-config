@@ -16,6 +16,7 @@ local M = {
 
 M.config = function()
   local servers = require("user.opts").servers
+  local servers_already_installed = require("user.opts").servers_already_installed
 
   vim.api.nvim_create_autocmd("LspAttach", {
     group = vim.api.nvim_create_augroup("user-lsp-attach", { clear = true }),
@@ -145,6 +146,25 @@ M.config = function()
       end,
     },
   })
+
+  -- These servers have not been installed by mason-tool-installer.
+  -- Here we set them up manually.
+  local servers_setup_only = require("user.opts").servers_setup_only
+  for _, server_name in ipairs(vim.tbl_keys(servers_setup_only)) do
+    vim.print("Setting up server: " .. server_name)
+    local server = servers_setup_only[server_name] or {}
+    server.capabilities = vim.tbl_deep_extend(
+      "force",
+      {},
+      capabilities,
+      server.capabilities or {}
+    )
+    server.handlers =
+      vim.tbl_deep_extend("force", {}, handlers, server.handlers or {})
+    require("lspconfig")[server_name].setup(server)
+  end
+
+
 end
 
 return M
