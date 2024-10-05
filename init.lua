@@ -41,13 +41,3 @@ require("lazy").setup({
     notify = true, -- get a notification when changes are found
   },
 })
-
--- Attempt to load the colorscheme using pcall.
--- If it fails, fall back to slate.
-local colorscheme = opts.colorscheme
----@diagnostic disable-next-line
-local ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
-if not ok then
-  vim.cmd("colorscheme slate")
-  vim.print("Colorscheme not found: " .. colorscheme)
-end
