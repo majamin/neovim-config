@@ -28,17 +28,17 @@ M.config = function()
     { "<leader>p", '"0p', desc = "Paste from yank register" },
     {
       "<leader>ip",
-      ":r !fd -t f . -0 -e png -e jpg -e jpeg -e bmp -e svg | xargs -0 sxiv -qto <CR><CR>",
+      ":r !fd -t f . -0 -e png -e jpg -e jpeg -e bmp -e svg | xargs -0 nsxiv -qto <CR><CR>",
       desc = "Find and paste image paths",
     },
     {
       "<leader>is",
-      ':r!imaging.sh /mnt/c/Users/majam/Pictures/Screenshots <CR><CR> ',
+      ":r!imaging.sh $HOME/Pictures/Screenshots <CR><CR> ",
       desc = "Copy screenshots to current project",
     },
     {
       "<leader>ic",
-      ':r!imaging.sh "$ONEDRIVE/Common/phone-pictures/Camera" <CR><CR> ',
+      ':r!imaging.sh "$HOME/Pictures/sm-s901w_kbmv-photos/" <CR><CR> ',
       desc = "Copy phone photos to current project",
     },
     -- { '<leader>y', mode = { 'n', 'v' }, 'y<cr>:call system("tmux load-buffer -", @0)<cr>gv', desc = 'Yank to tmux clipboard' },
