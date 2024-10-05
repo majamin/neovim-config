@@ -152,20 +152,13 @@ M.config = function()
   -- Here we set them up manually.
   local servers_setup_only = require("user.opts").servers_setup_only
   for _, server_name in ipairs(vim.tbl_keys(servers_setup_only)) do
-    vim.print("Setting up server: " .. server_name)
     local server = servers_setup_only[server_name] or {}
-    server.capabilities = vim.tbl_deep_extend(
-      "force",
-      {},
-      capabilities,
-      server.capabilities or {}
-    )
+    server.capabilities =
+      vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
     server.handlers =
       vim.tbl_deep_extend("force", {}, handlers, server.handlers or {})
     require("lspconfig")[server_name].setup(server)
   end
-
-
 end
 
 return M
