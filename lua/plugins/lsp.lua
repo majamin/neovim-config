@@ -16,7 +16,8 @@ local M = {
 
 M.config = function()
   local servers = require("user.opts").servers
-  local servers_already_installed = require("user.opts").servers_already_installed
+  local servers_already_installed =
+    require("user.opts").servers_already_installed
 
   vim.api.nvim_create_autocmd("LspAttach", {
     group = vim.api.nvim_create_augroup("user-lsp-attach", { clear = true }),
