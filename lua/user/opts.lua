@@ -8,9 +8,9 @@ local M = {
   colorscheme_if_dark = "tokyonight-moon", -- add more in plugins/colorscheme.lua
   colorscheme_if_light = "github_light",
   colorscheme_fallback = "slate",
-  bg_is_transparent = false,
+  bg_is_transparent = true,
   format_on_save = true, -- manually format with '\'
-  autocmp = false,       -- autocompletion - trigger manually with C-n
+  autocmp = false, -- autocompletion - trigger manually with C-n
   -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
   --  If you are experiencing weird indenting issues, add the language to
   --  the list of additional_vim_regex_highlighting and disabled languages for indent.
@@ -26,7 +26,7 @@ M.servers_setup_only = {
 -- LSP servers that will be installed and setup by mason-tool-installer
 M.servers = {
   clangd = {},
-  -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
+  gopls = {},
   lua_ls = {
     -- cmd = {...},         -- (table) override the default command
     -- filetypes = {...},   -- (table) override the default list of associated filetypes
@@ -45,10 +45,27 @@ M.servers = {
       },
     },
   },
-  texlab = {},
-  ts_ls = {},
-  rust_analyzer = {},
   marksman = {},
+  pyright = {},
+  rust_analyzer = {},
+  texlab = {},
+  ts_ls = {
+    init_options = {
+      plugins = {
+        {
+          name = "@vue/typescript-plugin",
+          location = "./node_modules/@vue/typescript-plugin",
+          languages = { "javascript", "typescript", "vue" },
+        },
+      },
+    },
+    filetypes = {
+      "javascript",
+      "typescript",
+      "vue",
+    },
+  },
+  volar = {},
 }
 
 -- Formatters (managing by conform) -- See lua/plugins/style.lua
@@ -61,15 +78,29 @@ M.formatters_by_ft = {
   markdown = { "markdownlint", "prettierd", "prettier" },
   ["*"] = { "codespell" }, -- always run
   ["_"] = { "trim_whitespace" },
-  -- Run multiple formatters sequentially:
-  -- python = { "isort", "black" },
+  python = { "isort", "black" },
+  bash = { "shellcheck", "shfmt" },
+  zsh = { "shellcheck", "shfmt" },
+  sh = { "shellcheck", "shfmt" },
 }
+
+-- Get all unique formatters from M.formatters_by_ft
+-- Exclude "codespell" and "trim_whitespace"
+M.formatters = {}
+for _, v in pairs(M.formatters_by_ft) do
+  for _, f in pairs(v) do
+    if f ~= "codespell" and f ~= "trim_whitespace" then
+      table.insert(M.formatters, f)
+    end
+  end
+end
 
 -- Used in lua/plugins/treesitter.lua
 -- Automatically installs:
 M.treesitter_ensure_installed = {
   "bash",
   "c",
+  "css",
   "diff",
   "dockerfile",
   "html",

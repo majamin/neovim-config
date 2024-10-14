@@ -10,14 +10,10 @@ local M = {
       ft = "lua",
     },
   },
-  event = { "BufReadPost", "BufNewFile" },
-  cmd = { "LspInfo", "LspInstall", "LspUninstall" },
 }
 
 M.config = function()
   local servers = require("user.opts").servers
-  local servers_already_installed =
-    require("user.opts").servers_already_installed
 
   vim.api.nvim_create_autocmd("LspAttach", {
     group = vim.api.nvim_create_augroup("user-lsp-attach", { clear = true }),
@@ -111,9 +107,8 @@ M.config = function()
   require("mason").setup()
 
   local ensure_installed = vim.tbl_keys(servers or {})
-  vim.list_extend(ensure_installed, {
-    "stylua", -- Used to format Lua code
-  })
+  local formatters = require("user.opts").formatters
+  vim.list_extend(ensure_installed, formatters)
   require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
   -- LSP settings (for overriding per client)
@@ -150,15 +145,15 @@ M.config = function()
 
   -- These servers have not been installed by mason-tool-installer.
   -- Here we set them up manually.
-  local servers_setup_only = require("user.opts").servers_setup_only
-  for _, server_name in ipairs(vim.tbl_keys(servers_setup_only)) do
-    local server = servers_setup_only[server_name] or {}
-    server.capabilities =
-      vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-    server.handlers =
-      vim.tbl_deep_extend("force", {}, handlers, server.handlers or {})
-    require("lspconfig")[server_name].setup(server)
-  end
+  -- local servers_setup_only = require("user.opts").servers_setup_only
+  -- for _, server_name in ipairs(vim.tbl_keys(servers_setup_only)) do
+  --   local server = servers_setup_only[server_name] or {}
+  --   server.capabilities =
+  --     vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+  --   server.handlers =
+  --     vim.tbl_deep_extend("force", {}, handlers, server.handlers or {})
+  --   require("lspconfig")[server_name].setup(server)
+  -- end
 end
 
 return M
