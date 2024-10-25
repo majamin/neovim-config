@@ -41,6 +41,7 @@ M.config = function()
     { "<BS>", "<C-^>", desc = "Return to previous buffer" },
     { "<C-w>b", ":bd<CR>", desc = "Delete current buffer" },
     { "<leader>p", '"0p', desc = "Paste from yank register" },
+    { "<leader>c", ":ColorizerToggle<CR>", desc = "Toggle colorizer" },
     {
       "<leader>ip",
       ":r !fd -t f . -0 -e png -e jpg -e jpeg -e bmp -e svg | xargs -0 nsxiv -qto <CR><CR>",

@@ -36,8 +36,13 @@ require("lazy").setup({
     { import = "user.keys" }, -- uses WhichKey, your keymaps
   },
   change_detection = {
-    -- automatically check for config file changes and reload the ui
     enabled = false,
-    notify = true, -- get a notification when changes are found
+    notify = true,
+  },
+  install = {
+    missing = true,
+    colorscheme = { "habamax" },
   },
 })
+
+require("user.funs").set_colorscheme(opts.colorscheme)

@@ -5,10 +5,9 @@ local M = {
   lang = "en_ca", -- see :h locale-name
   mapleader = ";",
   maplocalleader = ";",
-  colorscheme_if_dark = "tokyonight-moon", -- add more in plugins/colorscheme.lua
-  colorscheme_if_light = "github_light",
-  colorscheme_fallback = "slate",
-  bg_is_transparent = true,
+  colorscheme = "rose-pine-moon", -- add more in plugins/colorscheme.lua
+  colorscheme_fallback = "habamax",
+  bg_is_transparent = false,
   format_on_save = true, -- manually format with '\'
   autocmp = false, -- autocompletion - trigger manually with C-n
   -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
@@ -47,7 +46,8 @@ M.servers = {
   },
   marksman = {},
   pyright = {},
-  rust_analyzer = {},
+  -- rust_analyzer = {}, -- NOTE: using "mrcjkb/rustaceanvim"
+  tailwindcss = {},
   texlab = {},
   ts_ls = {
     init_options = {
@@ -70,18 +70,19 @@ M.servers = {
 
 -- Formatters (managing by conform) -- See lua/plugins/style.lua
 M.formatters_by_ft = {
-  lua = { "stylua" },
-  json = { "prettierd", "prettier" },
+  bash = { "shellcheck", "shfmt" },
+  css = { "prettierd", "prettier" },
   javascript = { "prettierd", "prettier" },
-  typescript = { "prettierd", "prettier" },
-  tex = { "latexindent" },
+  json = { "prettierd", "prettier" },
+  lua = { "stylua" },
   markdown = { "markdownlint", "prettierd", "prettier" },
+  python = { "isort", "black" },
+  sh = { "shellcheck", "shfmt" },
+  tex = { "latexindent" },
+  typescript = { "prettierd", "prettier" },
+  zsh = { "shellcheck", "shfmt" },
   ["*"] = { "codespell" }, -- always run
   ["_"] = { "trim_whitespace" },
-  python = { "isort", "black" },
-  bash = { "shellcheck", "shfmt" },
-  zsh = { "shellcheck", "shfmt" },
-  sh = { "shellcheck", "shfmt" },
 }
 
 -- Get all unique formatters from M.formatters_by_ft
@@ -94,6 +95,34 @@ for _, v in pairs(M.formatters_by_ft) do
     end
   end
 end
+
+local lspkind_icons = {
+  Text = "",
+  Method = "",
+  Function = "",
+  Constructor = "",
+  Field = "",
+  Variable = "",
+  Class = "ﴯ",
+  Interface = "",
+  Module = "",
+  Property = "ﰠ",
+  Unit = "",
+  Value = "",
+  Enum = "",
+  Keyword = "",
+  Snippet = "",
+  Color = "",
+  File = "",
+  Reference = "",
+  Folder = "",
+  EnumMember = "",
+  Constant = "",
+  Struct = "",
+  Event = "",
+  Operator = "",
+  TypeParameter = "",
+}
 
 -- Used in lua/plugins/treesitter.lua
 -- Automatically installs:
@@ -140,7 +169,7 @@ o.breakindent = true                                          -- <true|false> Wi
 o.cmdheight = 1                                               -- <int> space for displaying messages/commands?
 o.completeopt = { "menu", "menuone", "noselect", "noinsert" } -- options for Insert mode completion
 o.conceallevel = 3                                            -- {0,1,2,3} Determine how text with "conceal" is shown
-o.cursorline = false                                          -- <true|false> highlight the current line?
+o.cursorline = true                                          -- <true|false> highlight the current line?
 o.expandtab = true                                            -- <true | false> convert tabs to spaces?
 o.fileencoding = "utf-8"                                      -- <fileencodings> file-content encoding for the current buffer
 o.foldcolumn = "1"                                            -- <string> 'auto' or number of columns to use for the fold column

@@ -1,4 +1,5 @@
 return {
+  { "tpope/vim-sleuth", event = "VeryLazy" }, -- https://github.com/tpope/vim-sleuth
   { "tpope/vim-surround", event = "VeryLazy" }, -- https://github.com/tpope/vim-surround
   { "tpope/vim-fugitive" }, -- https://github.com/tpope/vim-fugitive
   { "numToStr/Comment.nvim", opts = {} },

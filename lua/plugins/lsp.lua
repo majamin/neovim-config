@@ -9,6 +9,11 @@ local M = {
       "folke/lazydev.nvim",
       ft = "lua",
     },
+    {
+      "mrcjkb/rustaceanvim",
+      version = "^5", -- Recommended
+      lazy = false, -- This plugin is already lazy
+    },
   },
 }
 
@@ -26,6 +31,8 @@ M.config = function()
           { buffer = event.buf, desc = "LSP: " .. desc }
         )
       end
+
+      vim.diagnostic.config({ virtual_text = false })
 
       map("gd", require("telescope.builtin").lsp_definitions, "Goto Definition")
       map("gr", require("telescope.builtin").lsp_references, "Goto References")
@@ -145,15 +152,15 @@ M.config = function()
 
   -- These servers have not been installed by mason-tool-installer.
   -- Here we set them up manually.
-  -- local servers_setup_only = require("user.opts").servers_setup_only
-  -- for _, server_name in ipairs(vim.tbl_keys(servers_setup_only)) do
-  --   local server = servers_setup_only[server_name] or {}
-  --   server.capabilities =
-  --     vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-  --   server.handlers =
-  --     vim.tbl_deep_extend("force", {}, handlers, server.handlers or {})
-  --   require("lspconfig")[server_name].setup(server)
-  -- end
+  local servers_setup_only = require("user.opts").servers_setup_only
+  for _, server_name in ipairs(vim.tbl_keys(servers_setup_only)) do
+    local server = servers_setup_only[server_name] or {}
+    server.capabilities =
+      vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+    server.handlers =
+      vim.tbl_deep_extend("force", {}, handlers, server.handlers or {})
+    require("lspconfig")[server_name].setup(server)
+  end
 end
 
 return M
