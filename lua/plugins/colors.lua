@@ -4,7 +4,7 @@ return {
   -- Colorizer - colorize colorcodes (<leader>-c to toggle)
   {
     "norcalli/nvim-colorizer.lua",
-    config = true,
+    opts = {},
     VeryLazy = true,
     cmd = { "ColorizerAttachToBuffer", "ColorizerToggle" },
   },

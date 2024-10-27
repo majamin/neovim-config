@@ -20,4 +20,9 @@ return {
     end,
     cmd = "Copilot",
   },
+  {
+    "mrcjkb/rustaceanvim",
+    version = "^5",
+    lazy = false, -- It's already lazy
+  },
 }

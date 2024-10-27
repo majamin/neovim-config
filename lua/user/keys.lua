@@ -14,7 +14,8 @@ M.config = function()
     { "<leader>d", group = "[D]ocument" },
     { "<leader>r", group = "[R]ename" },
     { "<leader>w", group = "[W]orkspace" },
-    { "<leader>i", group = "Paste [I]mages" },
+    { "<leader>i", group = "[I]mage Handler" },
+    { "<leader>l", group = "[L]SP" },
   })
 
   wk.add({
@@ -35,6 +36,11 @@ M.config = function()
       desc = "Load session",
     },
     { "<F4>", ":setlocal spell!<CR>", desc = "Toggle spellcheck" },
+    {
+      mode = { "v" },
+      { "<", "<gv", desc = "Outdent visually selected region" },
+      { ">", ">gv", desc = "Indent visually selected region" },
+    },
     { "<TAB>", ":bn<CR>", desc = "Go to next buffer" },
     { "<S-TAB>", ":bp<CR>", desc = "Go to previous buffer" },
     { "<ESC>", ":noh<CR>", desc = "Turn off search highlight" },
@@ -43,7 +49,7 @@ M.config = function()
     { "<leader>p", '"0p', desc = "Paste from yank register" },
     { "<leader>c", ":ColorizerToggle<CR>", desc = "Toggle colorizer" },
     {
-      "<leader>ip",
+      "<leader>ii",
       ":r !fd -t f . -0 -e png -e jpg -e jpeg -e bmp -e svg | xargs -0 nsxiv -qto <CR><CR>",
       desc = "Find and paste image paths",
     },
@@ -53,12 +59,10 @@ M.config = function()
       desc = "Copy screenshots to current project",
     },
     {
-      "<leader>ic",
+      "<leader>ip",
       ':r!imaging.sh "$ONEDRIVE/Common/phone-pictures/" <CR><CR> ',
       desc = "Copy phone photos to current project",
     },
-    -- { '<leader>y', mode = { 'n', 'v' }, 'y<cr>:call system("tmux load-buffer -", @0)<cr>gv', desc = 'Yank to tmux clipboard' },
-    -- { '<leader>p', mode = { 'n', 'v' }, ':let @0 = system("tmux save-buffer -")<cr>"0p<cr>g;', desc = 'Paste from tmux clipboard' },
   })
 end
 

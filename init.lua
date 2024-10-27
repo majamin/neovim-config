@@ -17,7 +17,7 @@
 
 -- HELPFUL BOOKMARKS
 -- https://lazy.folke.io/spec
--- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
 
 -- WARN: Don't edit anything past this point unless you know what you're doing
 

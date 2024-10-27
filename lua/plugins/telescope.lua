@@ -38,22 +38,24 @@ M.config = function()
     {
       "<leader>h",
       builtin.help_tags,
-      desc = "Telescope: help tags"
+      desc = "Telescope: help tags",
     },
     {
       "<leader>o",
-      builtin.oldfiles,
+      function()
+        builtin.oldfiles({ only_cwd = true })
+      end,
       desc = "Telescope: recent files",
     },
     {
       "<leader><leader>",
       builtin.builtin,
-      desc = "Telescope: menu"
+      desc = "Telescope: menu",
     },
     {
       "U",
       extensions.undo.undo,
-      desc = "Telescope: undo list"
+      desc = "Telescope: undo list",
     },
   })
 end

@@ -1,19 +1,31 @@
 return {
   {
     "echasnovski/mini.tabline", -- https://github.com/echasnovski/mini.tabline
-    config = true,
+    opts = {},
     event = "VeryLazy",
     version = "*",
   },
   {
-    "folke/todo-comments.nvim",
-    config = true,
+    "echasnovski/mini.statusline",
+    config = function()
+      local statusline = require("mini.statusline")
+      statusline.setup({ use_icons = vim.g.have_nerd_font })
+      ---@diagnostic disable-next-line: duplicate-set-field
+      statusline.section_location = function()
+        return "%2l:%-2v"
+      end
+    end,
+  },
+  {
+    "folke/todo-comments.nvim", -- https://github.com/folke/todo-comments.nvim/releases
+    opts = { highlight = { keyword = "fg", after = "" } }, -- TODO: jkaskdjhkhasdkh
     dependencies = {
       "nvim-tree/nvim-web-devicons",
+      "nvim-lua/plenary.nvim",
     },
   },
   {
-    "folke/trouble.nvim",
+    "folke/trouble.nvim", -- https://github.com/folke/trouble.nvim/releases
     cmd = "Trouble",
     opts = {
       focus = true,
@@ -32,7 +44,7 @@ return {
     VeryLazy = true,
   },
   {
-    "lewis6991/gitsigns.nvim",
+    "lewis6991/gitsigns.nvim", -- https://github.com/lewis6991/gitsigns.nvim/releases
     opts = {
       signs = {
         add = { text = "+" },
@@ -42,16 +54,5 @@ return {
         changedelete = { text = "~" },
       },
     },
-  },
-  {
-    "echasnovski/mini.nvim",
-    config = function()
-      local statusline = require("mini.statusline")
-      statusline.setup({ use_icons = vim.g.have_nerd_font })
-      ---@diagnostic disable-next-line: duplicate-set-field
-      statusline.section_location = function()
-        return "%2l:%-2v"
-      end
-    end,
   },
 }
