@@ -7,6 +7,11 @@ M.config = function()
   require("oil").setup({
     default_file_explorer = true,
     skip_confirm_for_simple_edits = true,
+    columns = {
+      "permissions",
+      "size",
+      "mtime",
+    },
     float = {
       -- Padding around the floating window
       max_width = 60,
