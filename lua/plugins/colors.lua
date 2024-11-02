@@ -13,7 +13,15 @@ return {
     "folke/tokyonight.nvim", -- https://github.com/folke/tokyonight.nvim/releases/latest
     opts = {
       transparent = useropts.bg_is_transparent,
-      sidebars = { "qf", "help", "harpoon", "TelescopePrompt" }, -- filetype windows with darker background
+      styles = {
+        comments = { italic = false },
+        keywords = { italic = false },
+        functions = {},
+        variables = {},
+        -- Background styles. Can be "dark", "transparent" or "normal"
+        sidebars = "dark", -- style for sidebars, see below
+        floats = "dark", -- style for floating windows
+      },
       day_brightness = 0.3, -- only used if `day` is set
       lualine_bold = true, -- When `true`, section headers in the lualine theme will be bold
     },
@@ -23,8 +31,12 @@ return {
     "rose-pine/neovim", -- https://github.com/rose-pine/neovim/releases/latest
     name = "rose-pine",
     opts = {
+      styles = {
+        bold = true,
+        italic = false,
+        transparency = useropts.bg_is_transparent,
+      },
       dim_inactive_windows = true,
-      styles = { transparency = useropts.bg_is_transparent },
     },
   },
 }

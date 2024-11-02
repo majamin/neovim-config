@@ -14,7 +14,7 @@ Hi. This is my config for http://neovim.io[Neovim].
 * `backspace` acts in the original way (`vi` behavior).
 * `Which-key` pop-up delay is high on purpose - that way it doesn't pop up constantly.
 * No debuggers implemented in this config (yet).
-* Two choices for colorschemes: Github and Tokyonight
+* Two choices for colorschemes: Rosepine and Tokyonight
 --
 
 == Get Started
@@ -100,4 +100,8 @@ a| LSP completion, but also navigate the menu with kbd:[Ctrl + n] and kbd:[Ctrl 
 * Read `:mes` for any errors
 * Ensure `:checkhealth` looks ok
 * Install any missing LSP clients, formatters, via `:Mason` if `user/opts.lua` was not enough
+* If you already have an LSP installed, tell Mason to ignore install by adding
+  it to `user.opts.servers_setup_only`. This is useful for LSPs that require
+  special handling or, for example, can't be installed by the usual Mason
+  methods.
 * Does your LSP need special handling?
