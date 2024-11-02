@@ -130,9 +130,13 @@ o.conceallevel = 3              -- {0,1,2,3} Determine how text with "conceal" i
 o.cursorline = true             -- <true|false> highlight the current line?
 o.expandtab = true              -- <true | false> convert tabs to spaces?
 o.fileencoding = "utf-8"        -- <fileencodings> file-content encoding for the current buffer
-o.foldcolumn = "1"              -- <string> 'auto' or number of columns to use for the fold column
+o.foldcolumn = "0"              -- <string> 'auto' or number of columns to use for the fold column
 o.foldenable = false            -- <true|false> all folds closed on buffer open? (zi to toggle)
-o.foldlevelstart = 99           -- <int> using ufo provider need a large value, feel free to decrease the value
+o.foldtext = "v:lua.myfolds()"  -- see lua/user/funs.lua
+wo.foldexpr =
+"nvim_treesitter#foldexpr()"    -- foldexpr for treesitter. See `:h fold-expr` and `:h nvim_treesitter#foldexpr()`
+wo.foldmethod = "expr"          -- <string> foldmethod to use. See `:h foldmethod`
+o.fillchars = { fold = "" }    -- see `:h 'fillchars'`
 o.history = 500                 -- <number> a history of ":" and search commands (max 10000)
 o.hlsearch = true               -- <boolean> highlight all matches on previous search pattern
 o.ignorecase = false            -- <boolean> ignore case in search patterns
@@ -164,9 +168,6 @@ o.updatetime = 1000             -- <number> if nothing is typed after this many 
 o.wildignorecase = true         -- <boolean> ignore setcase when completing file names and directories?
 o.wildmode = "full"             -- <string> how to complete file names and directories
 o.wrap = false                  -- <boolean> wrap lines at the screen edge?
-wo.foldexpr =
-"nvim_treesitter#foldexpr()"    -- foldexpr for treesitter. See `:h fold-expr` and `:h nvim_treesitter#foldexpr()`
-wo.foldmethod = "expr"          -- <string> foldmethod to use. See `:h foldmethod`
 -- stylua: ignore end
 
 return M

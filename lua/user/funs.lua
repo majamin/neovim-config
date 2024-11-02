@@ -28,6 +28,13 @@ M.list_formatters = function(formatters)
   return list
 end
 
+-- Custom folds
+function _G.myfolds()
+  local line = vim.fn.getline(vim.v.foldstart)
+  local line_count = vim.v.foldend - vim.v.foldstart + 1
+  return line .. "  " .. line_count .. " lines "
+end
+
 -- LSP callback function
 M.lsp_callback = function(event)
   local builtin = require("telescope.builtin")
@@ -40,8 +47,8 @@ M.lsp_callback = function(event)
     )
   end
 
-  -- Turn off inline diagnostic virtual text - we're already using Trouble
-  vim.diagnostic.config({ virtual_text = false })
+  -- OPTIONAL Turn off inline diagnostic virtual text - we're already using Trouble
+  -- vim.diagnostic.config({ virtual_text = false })
 
   -- stylua: ignore start
   map("gd",         builtin.lsp_definitions,      "Goto Definition")
