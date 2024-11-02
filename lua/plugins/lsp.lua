@@ -37,12 +37,23 @@ M.config = function()
   )
 
   local servers = require("user.opts").servers
+
   local ensure_installed = vim.tbl_keys(servers or {})
+
+  -- Ensure formatters are installed
   local formatters =
-    require("user.funs").list_formatters(require("user.opts").formatters_by_ft)
+    require("user.funs").list_aux_tools(require("user.opts").formatters_by_ft)
   vim.list_extend(ensure_installed, formatters)
+
+  -- Ensure linters are installed
+  local linters =
+    require("user.funs").list_aux_tools(require("user.opts").linters_by_ft)
+  vim.list_extend(ensure_installed, linters)
+
+  -- Install all
   require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
+  -- Setup mason
   require("mason").setup()
   require("mason-lspconfig").setup({
     handlers = {

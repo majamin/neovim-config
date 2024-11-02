@@ -14,11 +14,11 @@ M.set_colorscheme = function(colorscheme)
   end
 end
 
--- Get all unique formatters from formatters_by_ft
--- Exclude "codespell" and "trim_whitespace"
-M.list_formatters = function(formatters)
+-- Get all unique auxiliary tools
+-- e.g. exclude "codespell" and "trim_whitespace"
+M.list_aux_tools = function(tools)
   local list = {}
-  for _, v in pairs(formatters) do
+  for _, v in pairs(tools) do
     for _, f in pairs(v) do
       if f ~= "codespell" and f ~= "trim_whitespace" then
         table.insert(list, f)

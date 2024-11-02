@@ -64,14 +64,15 @@ M.servers = {
   volar = {},
 }
 
--- Formatters (managing by conform) -- See lua/plugins/style.lua
+-- Formatters and Linters
+-- See lua/plugins/conform.lua and lua/plugins/lint.lua
 M.formatters_by_ft = {
   bash = { "shellcheck", "shfmt" },
   css = { "prettierd", "prettier" },
   javascript = { "prettierd", "prettier" },
   json = { "prettierd", "prettier" },
   lua = { "stylua" },
-  markdown = { "markdownlint", "prettierd", "prettier" },
+  markdown = { "prettierd", "prettier" },
   python = { "isort", "black" },
   sh = { "shellcheck", "shfmt" },
   tex = { "latexindent" },
@@ -79,6 +80,20 @@ M.formatters_by_ft = {
   zsh = { "shellcheck", "shfmt" },
   ["*"] = { "codespell" }, -- always run
   ["_"] = { "trim_whitespace" },
+}
+
+M.linters_by_ft = {
+  -- markdown = { "markdownlint" },
+  -- clojure = { "clj-kondo" },
+  -- dockerfile = { "hadolint" },
+  -- inko = { "inko" },
+  -- janet = { "janet" },
+  json = { "jsonlint" },
+  markdown = { "vale" },
+  -- rst = { "vale" },
+  -- ruby = { "ruby" },
+  -- terraform = { "tflint" },
+  text = { "vale" },
 }
 
 -- Used in lua/plugins/treesitter.lua
