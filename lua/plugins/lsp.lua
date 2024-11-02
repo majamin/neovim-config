@@ -6,7 +6,6 @@ M.dependencies = {
   { "williamboman/mason.nvim", opt = {} }, -- NOTE: Must be loaded before dependants
   { "williamboman/mason-lspconfig.nvim" },
   { "WhoIsSethDaniel/mason-tool-installer.nvim" },
-  { "folke/trouble.nvim" },
   { "folke/lazydev.nvim", ft = "lua" },
 }
 
