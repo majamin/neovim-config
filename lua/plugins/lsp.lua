@@ -1,12 +1,12 @@
 local M = {
-  "neovim/nvim-lspconfig",
+  "neovim/nvim-lspconfig", -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
 }
 
 M.dependencies = {
-  { "williamboman/mason.nvim", opt = {} }, -- NOTE: Must be loaded before dependants
-  { "williamboman/mason-lspconfig.nvim" },
-  { "WhoIsSethDaniel/mason-tool-installer.nvim" },
-  { "folke/lazydev.nvim", ft = "lua" },
+  { "williamboman/mason.nvim", opt = {} }, -- https://github.com/williamboman/mason.nvim/releases
+  { "williamboman/mason-lspconfig.nvim" }, -- https://github.com/williamboman/mason-lspconfig.nvim/releases
+  { "WhoIsSethDaniel/mason-tool-installer.nvim" }, -- https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim
+  { "folke/lazydev.nvim", ft = "lua" }, -- https://github.com/folke/lazydev.nvim/releases
 }
 
 M.config = function()
