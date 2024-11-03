@@ -81,6 +81,9 @@ a| Fuzzy find text in files
 a| kbd:[{leader} + l]
 a| LSP menu
 
+a| kbd:[{leader} + z]
+a| Toggle ZenMode
+
 a| kbd:[\ ]
 a| Format buffer (falls back to `conform` when LSP not available or does not support formatting)
 
