@@ -35,6 +35,7 @@ M.servers = {
           checkThirdParty = false,
           library = {
             vim.env.VIMRUNTIME,
+            "${3rd}/love2d/library",
           },
         },
       },
@@ -97,6 +98,7 @@ M.linters_by_ft = {
   -- inko = { "inko" },
   -- janet = { "janet" },
   json = { "jsonlint" },
+  lua = { "luacheck" },
   markdown = { "vale" },
   -- rst = { "vale" },
   -- ruby = { "ruby" },
