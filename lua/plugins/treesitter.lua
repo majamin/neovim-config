@@ -22,7 +22,7 @@ M.config = function()
         init_selection = " ",
         node_incremental = " ",
         scope_incremental = "gi",
-        node_decremental = "gd",
+        node_decremental = "g ",
       },
     },
     ensure_installed = require("user.opts").treesitter_ensure_installed,
