@@ -3,14 +3,6 @@ local M = {
   event = "InsertEnter",
 }
 
--- local function autocmp(val)
---   if val then
---     return "TextChanged"
---   else
---     return false
---   end
--- end
-
 local has_words_before = function()
   unpack = unpack or table.unpack
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -61,12 +53,6 @@ M.config = function()
         selection_order = "near_cursor",
       },
     },
-    -- completion = {
-    --   autocomplete = {
-    --     ---@diagnostic disable-next-line
-    --     autocmp(require("user.opts").autocmp),
-    --   },
-    -- },
     enabled = function()
       local context = require("cmp.config.context")
 
