@@ -5,8 +5,18 @@ M.keymap = function(keys, func, desc)
 end
 
 -- Safely set colorscheme
-M.set_colorscheme = function(colorscheme)
-  ---@diagnostic disable-next-line
+M.set_colorscheme = function()
+  local colorscheme
+  local colorscheme_table = require("user.opts").colorscheme
+  local f = io.open("$HOME/.config/zsh/set-light-theme", "r")
+  if f ~= nil then
+    io.close(f)
+    colorscheme = colorscheme_table["light"]
+  else
+    colorscheme = colorscheme_table["dark"]
+  end
+
+  -- ---@diagnostic disable-next-line
   local ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
   if not ok then
     vim.cmd("colorscheme habamax")
@@ -32,7 +42,7 @@ end
 function _G.myfolds()
   local line = vim.fn.getline(vim.v.foldstart)
   local line_count = vim.v.foldend - vim.v.foldstart + 1
-  return line .. "  " .. line_count .. " lines "
+  return line .. " ---------- " .. line_count .. " lines "
 end
 
 -- LSP callback function

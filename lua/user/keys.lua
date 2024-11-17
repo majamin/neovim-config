@@ -51,17 +51,17 @@ M.config = function()
     { "<leader>z", ":ZenMode<CR>", desc = "Toggle ZenMode" },
     {
       "<leader>ii",
-      ":r !fd -t f . -0 -e png -e jpg -e jpeg -e bmp -e svg | xargs -0 nsxiv -qto <CR><CR>",
+      ':r!imaging.sh $(pwd)" <CR><CR>',
       desc = "Find and paste image paths",
     },
     {
       "<leader>is",
-      ":r!imaging.sh $HOME/Images/Screenshots <CR><CR> ",
+      ':r!imaging.sh "${SCREENSHOT_DIR:-$HOME/Pictures}" <CR><CR>',
       desc = "Copy screenshots to current project",
     },
     {
       "<leader>ip",
-      ':r!imaging.sh "$ONEDRIVE/Common/phone-pictures/" <CR><CR> ',
+      ':r!imaging.sh "$ONEDRIVE/Common/phone-pictures"   <CR><CR>',
       desc = "Copy phone photos to current project",
     },
   })

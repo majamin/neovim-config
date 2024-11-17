@@ -5,10 +5,9 @@ local M = {
   lang = "en_ca", -- :h locale-name
   mapleader = ";",
   maplocalleader = ";",
-  colorscheme = "rose-pine-moon", -- lua/plugins/colors.lua
+  colorscheme = { light = "lunaperche", dark = "rose-pine-moon" }, -- lua/plugins/colors.lua
   bg_is_transparent = false,
   format_on_save = true, -- manually format with '\'
-  autocmp = false, -- autocompletion - trigger manually with C-n
   additional_vim_regex_highlighting = { "ruby" },
 }
 
