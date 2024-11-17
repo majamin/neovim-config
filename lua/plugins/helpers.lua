@@ -2,6 +2,11 @@ return {
   { "tpope/vim-sleuth" }, -- https://github.com/tpope/vim-sleuth
   { "tpope/vim-surround", event = "VeryLazy" }, -- https://github.com/tpope/vim-surround
   { "tpope/vim-fugitive" }, -- https://github.com/tpope/vim-fugitive
+  {
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+    config = true,
+  },
   { "numToStr/Comment.nvim", opts = {} },
   {
     "jpalardy/vim-slime",
