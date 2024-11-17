@@ -3,13 +3,13 @@ local M = {
   event = "InsertEnter",
 }
 
-local function autocmp(val)
-  if val then
-    return "TextChanged"
-  else
-    return false
-  end
-end
+-- local function autocmp(val)
+--   if val then
+--     return "TextChanged"
+--   else
+--     return false
+--   end
+-- end
 
 local has_words_before = function()
   unpack = unpack or table.unpack
@@ -61,12 +61,12 @@ M.config = function()
         selection_order = "near_cursor",
       },
     },
-    completion = {
-      autocomplete = {
-        ---@diagnostic disable-next-line
-        autocmp(require("user.opts").autocmp),
-      },
-    },
+    -- completion = {
+    --   autocomplete = {
+    --     ---@diagnostic disable-next-line
+    --     autocmp(require("user.opts").autocmp),
+    --   },
+    -- },
     enabled = function()
       local context = require("cmp.config.context")
 
@@ -80,9 +80,9 @@ M.config = function()
     preselect = cmp.PreselectMode.Item,
     sorting = {
       comparators = {
-        cmp.config.compare.offset,
         cmp.config.compare.exact,
         cmp.config.compare.score,
+        cmp.config.compare.offset,
         cmp.config.compare.kind,
         cmp.config.compare.sort_text,
         cmp.config.compare.length,
@@ -115,33 +115,6 @@ M.config = function()
     mapping = cmp.mapping.preset.insert({
       ["<C-b>"] = cmp.mapping.scroll_docs(-4),
       ["<C-f>"] = cmp.mapping.scroll_docs(4),
-      ["<C-n>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          if #cmp.get_entries() == 1 then
-            cmp.confirm({ select = true })
-          else
-            cmp.select_next_item()
-          end
-        elseif luasnip.locally_jumpable(1) then
-          luasnip.jump(1)
-        elseif has_words_before() then
-          cmp.complete()
-          if #cmp.get_entries() == 1 then
-            cmp.confirm({ select = true })
-          end
-        else
-          cmp.complete()
-        end
-      end, { "i", "s" }),
-      ["<C-p>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.select_prev_item()
-        elseif luasnip.locally_jumpable(-1) then
-          luasnip.jump(-1)
-        else
-          fallback()
-        end
-      end, { "i", "s" }),
       ["<C-y>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           if luasnip.expandable() then
@@ -155,7 +128,28 @@ M.config = function()
           fallback()
         end
       end),
-      ["<ESC>"] = cmp.mapping.abort(),
+      ["<Tab>"] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.confirm({
+            select = true,
+          })
+        elseif has_words_before() then
+          cmp.complete()
+          cmp.confirm({ select = true })
+        else
+          fallback()
+        end
+      end, { "i", "s" }),
+      ["<S-Tab>"] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_prev_item()
+        elseif luasnip.locally_jumpable(-1) then
+          luasnip.jump(-1)
+        else
+          fallback()
+        end
+      end, { "i", "s" }),
+      -- ["<ESC>"] = cmp.mapping.abort(),
       -- <c-l> will move you to the right of each of the expansion locations.
       -- <c-h> is similar, except moving you backwards.
       ["<C-l>"] = cmp.mapping(function()
@@ -208,6 +202,12 @@ M.dependencies = {
         end,
       },
     },
+    config = function()
+      require("luasnip").setup({ enable_autosnippets = true })
+      require("luasnip.loaders.from_lua").load({
+        paths = "~/.config/nvim/lua/user/snip",
+      })
+    end,
   },
   "hrsh7th/cmp-cmdline",
   "hrsh7th/cmp-nvim-lsp",

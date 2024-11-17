@@ -131,6 +131,7 @@ M.treesitter_ensure_installed = {
   "regex",
   "toml",
   "tsx",
+  "latex",
   "typescript",
   "vim",
   "vimdoc",
@@ -145,6 +146,7 @@ local g = vim.g
 
 -- stylua: ignore start
 g.have_nerd_font = true         -- set to false if you don't have a nerd font
+g.vimtex_mappings_prefix = "<localleader>v"
 o.backspace = ""                -- influences the working of <BS>, etc. see `:h 'backspace'`
 o.backup = false                -- <true|false> make a backup before overwriting a file?
 o.breakindent = true            -- <true|false> Will every wrapped line continue visually indented?

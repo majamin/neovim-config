@@ -45,4 +45,4 @@ require("lazy").setup({
   },
 })
 
-require("user.funs").set_colorscheme(opts.colorscheme)
+require("user.funs").set_colorscheme()
