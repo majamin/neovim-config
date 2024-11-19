@@ -7,16 +7,6 @@
 
 Hi. This is my config for http://neovim.io[Neovim].
 
-.Features
-[sidebar]
---
-* No UI affects, loading screens, etc. to get in the way
-* `backspace` acts in the original way (`vi` behavior).
-* `Which-key` pop-up delay is high on purpose - that way it doesn't pop up constantly.
-* No debuggers implemented in this config (yet).
-* Two choices for colorschemes: Rosepine and Tokyonight
---
-
 == Get Started
 
 . Clone the repo:
@@ -32,79 +22,111 @@ git clone https://github.com/majamin/neovim-config.git ~/.config/nvim
 ----
 git clone https://github.com/majamin/neovim-config.git $env:LOCALAPPDATA/nvim
 ----
-. Change language, leader, preferences and LSPs, etc. in `lua/user/opts.lua`.
-. Add your plugins as separate files in `lua/plugins/` directory footnote:[Examples: multispec (`plugins/colorscheme.lua`) and single spec (`plugins/format.lua`)]
+. Edit `lua/user/opts.lua` to specify LSPs, formatters, and other options.
+. Review `:checkhealth`
+. Optional: add plugins as separate (`lazy-spec`) files in the `lua/plugins/` directory.
 . Restart neovim and enjoy!
 
-== Keys
+== Notable key bindings
 
-[sidebar]
---
-[TIP]
-* Browse all keymaps with Telescope `keymaps` in kbd:[{leader}{leader}] or `:WhichKey`
-* Run `:Copilot` to turn on Github copilot
---
-
-.Notable key bindings
-[%autowidth,cols="1,1",options="header"]
+[%autowidth,cols="2*a",options="header"]
 |===
 | Binding
 | Description
 
-a| kbd:[-]
-a| Browse files
+| kbd:[{leader}]
+| Leader key
 
-a| kbd:[F2]
-a| Save all open files and make session
+| kbd:[-]
+| Browse files
 
-a| kbd:[F3]
-a| Toggle spelling
+| kbd:[F2]
+| Save all open files and make session
 
-a| kbd:[Space]
-a| Initialize incremental treesitter selection, increment by repeating kbd:[Space] (ensure your Treesitter lang is installed)
+| kbd:[F3]
+| Load session saved with kbd:[F2] (if it exists)
 
-a| kbd:[TAB]
-a| Open next buffer
+| kbd:[F4]
+| Toggle spelling
 
-a| kbd:[Shift + TAB]
-a| Open previous buffer
+| kbd:[Space]
+| Incrementally select using Treesitter (if your lang supports it)
 
-a| kbd:[Backspace]
-a| Jump to previously opened buffer (kbd:[^])
+| kbd:[TAB]
+| Open next buffer
 
-a| kbd:[{leader} + f]
-a| Fuzzy find files
+| kbd:[Shift + TAB]
+| Open previous buffer
 
-a| kbd:[{leader} + g]
-a| Fuzzy find text in files
+| kbd:[Backspace]
+| Jump to previously opened buffer (kbd:[^])
 
-a| kbd:[{leader} + l]
-a| LSP menu
+| kbd:[{leader} + f]
+| Fuzzy find files
 
-a| kbd:[{leader} + z]
-a| Toggle ZenMode
+| kbd:[{leader} + g]
+| Fuzzy find text in files
 
-a| kbd:[\ ]
-a| Format buffer (falls back to `conform` when LSP not available or does not support formatting)
+| kbd:[{leader} + l]
+| LSP menu
 
-a| kbd:[{leader} + t]
-a| Opens Trouble (if LSP is capable)
+| kbd:[{leader} + z]
+| Toggle ZenMode
 
-a| kbd:[K]
-a| Hover Documentation
+| kbd:[\ ]
+|
+Format buffer - uses LSP or `conform` with the specified formatter (see
+`lua/user/opts.lua`)
 
-a| kbd:[Ctrl + n] (insert mode)
-a| LSP completion, but also navigate the menu with kbd:[Ctrl + n] and kbd:[Ctrl + p] when menu visible
+| kbd:[{leader} + t]
+| Opens diagnostics using trouble (by cascading severity)
+
+| kbd:[K]
+| Hover Documentation
+
+| kbd:[Ctrl + n]
+|
+(Insert Mode) Manual LSP completion, kbd:[TAB] to accept, navigate the menu with
+kbd:[Ctrl + n] and kbd:[Ctrl + p] when menu visible
 
 |===
+
+.Tips
+[sidebar]
+--
+* Browse all keymaps with `:Telescope keymaps` or `:WhichKey`
+* Run `:Copilot` to turn on Github copilot
+--
+
+.Features
+[sidebar]
+--
+* No UI affects, loading screens, etc. to get in the way
+* `backspace` acts in the original way (`vi` behavior).
+* `Which-key` pop-up delay is high on purpose - that way it doesn't pop up constantly.
+* No debuggers implemented in this config (yet).
+* Two choices for colorschemes: Rosepine and Tokyonight
+--
+
+.What I use
+[sidebar]
+--
+* https://github.com/majamin/dotfiles/tree/master/.config/wezterm[wezterm]
+  using _Fira Code Nerd Font_
+* https://github.com/majamin/dotfiles/tree/master/.config/tmux[tmux])
+* https://github.com/majamin/dotfiles/tree/master/.config/zsh[zsh])
+* https://github.com/majamin/dwm[dwm] with a simple `bar.sh` xsetroot
+  https://github.com/majamin/dotfiles/blob/master/.local/bin/statusbar/bar.sh[script]
+--
 
 == Troubleshooting
 
 * Read `:mes` for any errors
-* Ensure `:checkhealth` looks ok
+* Ensure `:checkhealth` looks ok. As a bare minimum, we should have a clipboard
+  and `npm` in path.
 * Install any missing LSP clients, formatters, via `:Mason` if `user/opts.lua` was not enough
-* If you already have an LSP installed, tell Mason to ignore install by adding
-  it to `user.opts.servers_setup_only`. This is useful for LSPs that require
-  special handling or, for example, can't be installed by the usual Mason
-  methods.
-* Does your LSP need special handling?
+* Does your LSP need special handling? E.g. If you already have an LSP installed,
+  tell Mason to ignore install by adding it to `user.opts.servers_setup_only`.
+  This is useful for LSPs that require special handling or, for example, can't
+  be installed by the usual Mason methods.
+* (CAUTION) Clear share and state: `rm -rf ~/.local/{share,state}/nvim`
