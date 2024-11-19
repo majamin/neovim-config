@@ -8,7 +8,7 @@ end
 M.set_colorscheme = function()
   local colorscheme
   local colorscheme_table = require("user.opts").colorscheme
-  local f = io.open("$HOME/.config/zsh/set-light-theme", "r")
+  local f = io.open(os.getenv("HOME") .. "/.config/zsh/set-light-theme", "r")
   if f ~= nil then
     io.close(f)
     colorscheme = colorscheme_table["light"]
