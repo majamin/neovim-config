@@ -9,19 +9,25 @@ local M = {
   bg_is_transparent = false,
   format_on_save = true, -- manually format with '\'
   additional_vim_regex_highlighting = { "ruby" },
+  diagnostic_symbols = {
+    Error = "󰅙",
+    Info = "󰋼",
+    Hint = "󰌵",
+    Warn = "",
+  },
 }
 
 -- Servers that are already installed and need setup only
 M.servers_setup_only = {
   r_language_server = {},
   hls = {},
+  gopls = {},
 }
 
 -- Servers that will be installed and setup
 M.servers = {
   clangd = {},
   cssls = {},
-  gopls = {},
   lua_ls = {
     -- cmd = {...},         -- (table) override the default command
     -- filetypes = {...},   -- (table) override the default list of associated filetypes

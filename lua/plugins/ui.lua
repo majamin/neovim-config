@@ -62,6 +62,23 @@ return {
     },
     VeryLazy = true,
   },
+  {
+    "RaafatTurki/corn.nvim",
+    config = function()
+      local symbols = require("user.opts").diagnostic_symbols
+      require("corn").setup({
+        icons = {
+          error = symbols.Error,
+          info = symbols.Info,
+          hint = symbols.Hint,
+          warn = symbols.Warn,
+        },
+        item_preprocess_func = function(item)
+          return item
+        end,
+      })
+    end,
+  },
   -- Lua
   {
     "folke/zen-mode.nvim",

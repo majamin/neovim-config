@@ -8,7 +8,7 @@ end
 M.set_colorscheme = function()
   local colorscheme
   local colorscheme_table = require("user.opts").colorscheme
-  local f = io.open(os.getenv("HOME") .. "/.config/zsh/set-light-theme", "r")
+  local f = io.open("$HOME/.config/zsh/set-light-theme", "r")
   if f ~= nil then
     io.close(f)
     colorscheme = colorscheme_table["light"]
@@ -57,8 +57,12 @@ M.lsp_callback = function(event)
     )
   end
 
-  -- OPTIONAL Turn off inline diagnostic virtual text - we're already using Trouble
-  -- vim.diagnostic.config({ virtual_text = false })
+  -- NOTE: OPTIONAL Turn off inline diagnostic virtual text
+  vim.diagnostic.config({ virtual_text = false })
+  for name, icon in pairs(require("user.opts").diagnostic_symbols) do
+    local hl = "DiagnosticSign" .. name
+    vim.fn.sign_define(hl, { text = icon, numhl = hl, texthl = hl })
+  end
 
   -- stylua: ignore start
   map("gd",         builtin.lsp_definitions,      "Goto Definition")
