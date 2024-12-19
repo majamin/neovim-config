@@ -7,6 +7,7 @@ M.dependencies = {
   { "williamboman/mason-lspconfig.nvim" }, -- https://github.com/williamboman/mason-lspconfig.nvim/releases
   { "WhoIsSethDaniel/mason-tool-installer.nvim" }, -- https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim
   { "folke/lazydev.nvim", ft = "lua" }, -- https://github.com/folke/lazydev.nvim/releases
+  { "saghen/blink.cmp" },
 }
 
 M.config = function()
@@ -29,12 +30,7 @@ M.config = function()
     callback = callback,
   })
 
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities = vim.tbl_deep_extend(
-    "force",
-    capabilities,
-    require("cmp_nvim_lsp").default_capabilities()
-  )
+  local capabilities = require("blink.cmp").get_lsp_capabilities()
 
   local servers = require("user.opts").servers
 
