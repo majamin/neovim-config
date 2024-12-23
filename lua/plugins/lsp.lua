@@ -1,5 +1,7 @@
 local M = {
   "neovim/nvim-lspconfig", -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
+  event = { "BufReadPost", "BufNewFile" },
+  cmd = { "LspInfo", "LspInstall", "LspUninstall" },
 }
 
 M.dependencies = {
