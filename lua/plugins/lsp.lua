@@ -8,7 +8,6 @@ M.dependencies = {
   { "williamboman/mason.nvim", opt = {} }, -- https://github.com/williamboman/mason.nvim/releases
   { "williamboman/mason-lspconfig.nvim" }, -- https://github.com/williamboman/mason-lspconfig.nvim/releases
   { "WhoIsSethDaniel/mason-tool-installer.nvim" }, -- https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim
-  { "folke/lazydev.nvim", ft = "lua" }, -- https://github.com/folke/lazydev.nvim/releases
   { "saghen/blink.cmp" },
 }
 
