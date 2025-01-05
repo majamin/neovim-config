@@ -223,8 +223,8 @@ require("lazy").setup({
           preset = "super-tab",
           ["<C-n>"] = { "show", "select_next", "fallback" },
           cmdline = {
-            preset = "super-tab",
-            ["<C-y>"] = { "accept", "fallback" }, -- accept but no confirm
+            preset = "default",
+            ["<C-n>"] = { "show", "select_next", "fallback" },
             ["<TAB>"] = { -- accepts and confirms
               function(cmp)
                 cmp.accept({
