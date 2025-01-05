@@ -211,6 +211,7 @@ require("lazy").setup({
           ghost_text = { enabled = true },
           menu = {
             border = "single",
+            draw = { treesitter = { "lsp" } },
             auto_show = function(ctx) -- don't auto show except for cmdline and path
               return ctx.mode == "cmdline" or ctx.mode == "path"
             end,
