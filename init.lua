@@ -76,8 +76,7 @@ local non_plugin_maps = {
   { "<F2>", function() vim.cmd(":wa|mksession!") end, desc = "Save session and files", },
   { "<F3>", function() vim.cmd(":so Session.vim") end, desc = "Load session", },
   { "<F4>", ":setlocal spell!<CR>", desc = "Toggle spellcheck" },
-  { "<TAB>", "<cmd>bn<CR>" },
-  { "<S-TAB>", "<cmd>bp<CR>" },
+  { "-", "<cmd>Oil<CR>", desc = "Browse files with Oil" },
   { "<C-w>b", "<cmd>bdelete<CR>", desc = "Close buffer" },
   { "<leader>h", ":help ", desc = "Help topics", icon = "󰞋", silent = false },
   { "<leader>b", ":buffer ", desc = "Buffers", icon = "", silent = false },
@@ -155,20 +154,18 @@ require("lazy").setup({
         vim.cmd("colorscheme tokyonight")
       end,
     },
-    { --- https://github.com/echasnovski/mini.statusline
-      "echasnovski/mini.statusline",
-      config = function()
-        local statusline = require("mini.statusline")
-        statusline.setup({ use_icons = vim.g.have_nerd_font })
-        statusline.section_location = function()
-          return "%2l:%-2v"
-        end
-      end,
+    {
+      "majamin/buffy.nvim",
+      opts = {},
     },
     {
-      "echasnovski/mini.tabline", -- https://github.com/echasnovski/mini.tabline
+      "stevearc/oil.nvim", -- https://github.com/stevearc/oil.nvim/releases
+      cmd = { "Oil" },
       opts = {},
-      event = "VeryLazy",
+    },
+    { --- https://github.com/echasnovski/mini.statusline
+      "echasnovski/mini.statusline",
+      opts = {},
       version = "*",
     },
     { --- https://github.com/echasnovski/mini.indentscope
@@ -211,9 +208,8 @@ require("lazy").setup({
           ghost_text = { enabled = true },
           menu = {
             border = "single",
-            draw = { treesitter = { "lsp" } },
             auto_show = function(ctx) -- don't auto show except for cmdline and path
-              return ctx.mode == "cmdline" or ctx.mode == "path"
+              return (ctx.mode == "cmdline") or (ctx.mode == "path")
             end,
           },
           documentation = { auto_show = true, window = { border = "single" } },
@@ -223,23 +219,12 @@ require("lazy").setup({
           preset = "super-tab",
           ["<C-n>"] = { "show", "select_next", "fallback" },
           cmdline = {
-            preset = "default",
+            preset = "super-tab",
+            ["<Up>"] = { "fallback" },
+            ["<Down>"] = { "fallback" },
             ["<C-n>"] = { "show", "select_next", "fallback" },
-            ["<TAB>"] = { -- accepts and confirms
-              function(cmp)
-                cmp.accept({
-                  callback = function()
-                    vim.api.nvim_feedkeys("\n", "n", true)
-                  end,
-                })
-              end,
-              "fallback",
-            },
+            ["<C-p>"] = { "show", "select_prev", "fallback" },
           },
-        },
-        appearance = {
-          -- use_nvim_cmp_as_default = true, -- will deprecate in future releases
-          nerd_font_variant = "mono",
         },
         sources = {
           default = { "lazydev", "lsp", "path", "snippets", "buffer" },
