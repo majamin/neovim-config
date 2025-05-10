@@ -22,10 +22,11 @@ git clone https://github.com/majamin/neovim-config.git ~/.config/nvim
 ----
 git clone https://github.com/majamin/neovim-config.git $env:LOCALAPPDATA/nvim
 ----
-. Edit `lua/user/opts.lua` to specify LSPs, formatters, and other options.
-. Review `:checkhealth`
-. Optional: add plugins as separate (`lazy-spec`) files in the `lua/plugins/` directory.
-. Restart neovim and enjoy!
+. Edit `lua/opts.lua` to specify neovim options.
+. Add plugins to `lua/plug.lua`
+. Change non-plugin keys in `lua/keys.lua`
+. Add LSP specs to `lsp/name-of-your-lsp.lua`
+. Add formatters to `lua/opts.lua`
 
 == Notable key bindings
 
@@ -44,7 +45,7 @@ git clone https://github.com/majamin/neovim-config.git $env:LOCALAPPDATA/nvim
 | Save all open files and make session
 
 | kbd:[F3]
-| Load session saved with kbd:[F2] (if it exists)
+| Load saved session (if it exists)
 
 | kbd:[F4]
 | Toggle spelling
@@ -58,55 +59,29 @@ git clone https://github.com/majamin/neovim-config.git $env:LOCALAPPDATA/nvim
 | kbd:[Shift + TAB]
 | Open previous buffer
 
-| kbd:[Backspace]
-| Jump to previously opened buffer (kbd:[^])
-
 | kbd:[{leader} + f]
 | Fuzzy find files
 
 | kbd:[{leader} + g]
 | Fuzzy find text in files
 
-| kbd:[{leader} + l]
-| LSP menu
+| kbd:[{leader}{leader}]
+| Format buffer - uses LSP or `conform` see `lua/opts.lua` to define formatters
 
-| kbd:[{leader} + z]
-| Toggle ZenMode
+| kbd:[{leader} + k]
+| Browse known keymaps
 
-| kbd:[\ ]
-|
-Format buffer - uses LSP or `conform` with the specified formatter (see
-`lua/user/opts.lua`)
-
-| kbd:[{leader} + t]
-| Opens diagnostics using trouble (by cascading severity)
+| kbd:[{leader} + q]
+| Opens diagnostics for LSP-enabled buffers
 
 | kbd:[K]
 | Hover Documentation
 
 | kbd:[Ctrl + n]
 |
-(Insert Mode) Manual LSP completion, kbd:[TAB] to accept, navigate the menu with
-kbd:[Ctrl + n] and kbd:[Ctrl + p] when menu visible
+(Insert Mode) Manual LSP completion
 
 |===
-
-.Tips
-[sidebar]
---
-* Browse all keymaps with `:Telescope keymaps` or `:WhichKey`
-* Run `:Copilot` to turn on Github copilot
---
-
-.Features
-[sidebar]
---
-* No UI affects, loading screens, etc. to get in the way
-* `backspace` acts in the original way (`vi` behavior).
-* `Which-key` pop-up delay is high on purpose - that way it doesn't pop up constantly.
-* No debuggers implemented in this config (yet).
-* Two choices for colorschemes: Rosepine and Tokyonight
---
 
 .What I use
 [sidebar]
@@ -115,18 +90,10 @@ kbd:[Ctrl + n] and kbd:[Ctrl + p] when menu visible
   using _Fira Code Nerd Font_
 * https://github.com/majamin/dotfiles/tree/master/.config/tmux[tmux])
 * https://github.com/majamin/dotfiles/tree/master/.config/zsh[zsh])
-* https://github.com/majamin/dwm[dwm] with a simple `bar.sh` xsetroot
-  https://github.com/majamin/dotfiles/blob/master/.local/bin/statusbar/bar.sh[script]
 --
 
 == Troubleshooting
 
 * Read `:mes` for any errors
-* Ensure `:checkhealth` looks ok. As a bare minimum, we should have a clipboard
-  and `npm` in path.
-* Install any missing LSP clients, formatters, via `:Mason` if `user/opts.lua` was not enough
-* Does your LSP need special handling? E.g. If you already have an LSP installed,
-  tell Mason to ignore install by adding it to `user.opts.servers_setup_only`.
-  This is useful for LSPs that require special handling or, for example, can't
-  be installed by the usual Mason methods.
+* Ensure `:checkhealth` looks ok.
 * (CAUTION) Clear share and state: `rm -rf ~/.local/{share,state}/nvim`
