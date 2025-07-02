@@ -140,7 +140,8 @@ return {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     main = "nvim-treesitter.configs", -- set main module
-    branch = "main",
+    branch = "master", -- TODO: switch to main soon
+    lazy = false,
     opts = {
       ensure_installed = {
         "bash",
