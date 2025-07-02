@@ -97,10 +97,13 @@ return {
             module = "lazydev.integrations.blink",
             score_offset = 100,
           },
-          path = { opts = { show_hidden_files_by_default = true } },
         },
       },
       fuzzy = { implementation = "prefer_rust_with_warning" },
+      cmdline = {
+        keymap = { preset = "inherit" },
+        completion = { menu = { auto_show = false } },
+      },
     },
     opts_extend = { "sources.default" },
   },
@@ -183,7 +186,7 @@ return {
           lsp_format = "fallback",
         },
         formatters_by_ft = formatters_by_ft,
-        format_on_save = { timeout_ms = 200 },
+        format_on_save = { timeout_ms = 500 },
         formatters = {
           shfmt = {
             prepend_args = { "-i", "2" },
@@ -204,9 +207,59 @@ return {
     end,
   },
   { --- https://github.com/stevearc/oil.nvim
-    "stevearc/oil.nvim",
+    "stevearc/oil.nvim", -- https://github.com/stevearc/oil.nvim/releases
     cmd = { "Oil" },
-    opts = {},
+    config = function()
+      -- https://github.com/stevearc/oil.nvim/pull/240
+      local permission_hlgroups = {
+        ["-"] = "NonText",
+        ["r"] = "DiagnosticSignWarn",
+        ["w"] = "DiagnosticSignError",
+        ["x"] = "DiagnosticSignOk",
+      }
+      require("oil").setup({
+        columns = {
+          {
+            "permissions",
+            highlight = function(permission_str)
+              local hls = {}
+              for i = 1, #permission_str do
+                local char = permission_str:sub(i, i)
+                table.insert(hls, { permission_hlgroups[char], i - 1, i })
+              end
+              return hls
+            end,
+          },
+          { "size", highlight = "Special" },
+          { "mtime", highlight = "Number" },
+          {
+            "icon",
+            default_file = "",
+            directory = "",
+            add_padding = false,
+          },
+        },
+        skip_confirm_for_simple_edits = true,
+        win_options = {
+          number = false,
+          relativenumber = false,
+          signcolumn = "no",
+          foldcolumn = "0",
+          statuscolumn = "",
+        },
+        keymaps = {
+          ["<ESC>"] = "actions.close",
+        },
+      })
+    end,
+    keys = {
+      {
+        "-",
+        "<cmd>:Oil<CR>",
+        { "n" },
+        { desc = "Open parent directory" },
+      },
+    },
   },
   { --- https://github.com/majamin/buffy.nvim
     -- dir = "~/.local/src/buffy.nvim",
