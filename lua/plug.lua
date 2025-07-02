@@ -3,20 +3,90 @@ local has_words_before = require("funs").has_words_before
 local formatters_by_ft = require("opts").formatters_by_ft
 
 return {
+  { --- https://github.com/neovim/nvim-lspconfig
+    "neovim/nvim-lspconfig",
+    dependencies = {
+      "saghen/blink.cmp",
+    },
+    config = function()
+      local wk = require("which-key")
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
+        callback = function(event)
+          local map = function(keys, func, desc, mode)
+            mode = mode or "n"
+            vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
+          end
+
+          -- stylua: ignore start
+          ---@module "snacks"
+          wk.add({"gr", group = "LSP references"})
+          map( "gD",  function () Snacks.picker.lsp_declarations() end,      "Goto Declaration")
+          map( "gI",  function () Snacks.picker.lsp_implementations() end,   "Goto Implementation")
+          map( "gS",  function () Snacks.picker.lsp_workspace_symbols() end, "Workspace Symbols")
+          map( "gd",  function () Snacks.picker.lsp_definitions() end,       "Goto Definition" )
+          map( "gs",  function () Snacks.picker.lsp_symbols() end,           "Symbols")
+          map( "gt",  function () Snacks.picker.lsp_type_definitions() end,  "Goto Type Definition")
+          map( "gra", function () vim.lsp.buf.code_action() end,             "Code actions")
+          map( "gri", function () vim.lsp.buf.implementation() end,          "Implementations")
+          map( "grn", function () vim.lsp.buf.rename() end,                  "Rename")
+          map( "grr", function () Snacks.picker.lsp_references() end,        "References")
+          -- stylua: ignore end
+
+          -- Toggle inlay hints in your
+          local client = vim.lsp.get_client_by_id(event.data.client_id)
+          if client and client:supports_method(client, vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
+            map("<leader>lh", function()
+              vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
+            end, "Toggle Inlay Hints")
+          end
+        end,
+      })
+
+      local capabilities = require("blink.cmp").get_lsp_capabilities()
+      vim.lsp.config("*", {
+        capabilities = capabilities,
+      })
+
+      -- scan lsp/ and enable servers by named configs
+      local contents = vim.uv.fs_scandir(vim.fn.stdpath("config") .. "/lsp")
+      while contents do
+        local file = select(1, vim.uv.fs_scandir_next(contents))
+        if not file then
+          break
+        end
+        if file:sub(-4) == ".lua" then
+          vim.lsp.enable(file:sub(1, -5))
+        end
+      end
+    end,
+  },
   { --- https://cmp.saghen.dev
     "saghen/blink.cmp",
-    dependencies = { "rafamadriz/friendly-snippets" },
-    version = "1.*",
+    dependencies = { "rafamadriz/friendly-snippets", "saghen/blink.cmp" },
+    event = "VimEnter",
+    version = "*",
     opts = {
       keymap = { -- https://main.cmp.saghen.dev/recipes#emacs-behavior
-        preset = "super-tab",
-        -- ["<CR>"] = { "accept", "fallback" },
+        preset = "none",
+        ["<Tab>"] = {
+          function(cmp)
+            if has_words_before() then
+              return cmp.insert_next()
+            end
+          end,
+          "fallback",
+        },
+        ["<S-Tab>"] = { "insert_prev" },
         ["<C-n>"] = { "select_next", "show", "fallback" },
         ["<C-p>"] = { "select_prev", "fallback" },
+        ["<C-y>"] = { "accept", "fallback" },
+        ["<ESC>"] = { "cancel", "fallback" },
       },
       completion = {
-        ghost_text = { enabled = true, show_with_menu = false },
-        menu = { auto_show = false },
+        -- ghost_text = { enabled = true, show_with_menu = false },
+        menu = { enabled = true, auto_show = false },
+        list = { selection = { preselect = false }, cycle = { from_top = false } },
       },
       appearance = { nerd_font_variant = "Nerd Font Mono" },
       sources = {
@@ -59,47 +129,45 @@ return {
     opts = {
       library = {
         { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+        { path = "snacks.nvim", words = { "Snacks" } },
       },
     },
   },
-  { --- https://github.com/nvim-treesitter/nvim-treesitter
+  {
     "nvim-treesitter/nvim-treesitter",
-    cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
     build = ":TSUpdate",
-    event = {
-      "BufReadPost",
-      "BufNewFile",
+    main = "nvim-treesitter.configs", -- set main module
+    branch = "main",
+    opts = {
+      ensure_installed = {
+        "bash",
+        "c",
+        "diff",
+        "html",
+        "lua",
+        "luadoc",
+        "markdown",
+        "markdown_inline",
+        "query",
+        "vim",
+        "vimdoc",
+      },
+      auto_install = true,
+      highlight = {
+        enable = true,
+        additional_vim_regex_highlighting = { "ruby" }, -- depends on vim's regex
+      },
+      indent = { enable = true, disable = { "ruby" } },
+      incremental_selection = {
+        enable = true,
+        keymaps = {
+          init_selection = " ",
+          node_incremental = " ",
+          scope_incremental = "gi",
+          node_decremental = "g ",
+        },
+      },
     },
-    config = function()
-      vim.filetype.add({
-        extension = { rasi = "rasi" },
-        pattern = {
-          [".*/waybar/config"] = "jsonc",
-          [".*/mako/config"] = "dosini",
-          [".*/kitty/*.conf"] = "bash",
-          [".*/hypr/.*%.conf"] = "hyprlang",
-        },
-      })
-
-      require("nvim-treesitter.install").prefer_git = true
-      require("nvim-treesitter.configs").setup({
-        incremental_selection = {
-          enable = true,
-          keymaps = {
-            init_selection = " ",
-            node_incremental = " ",
-            scope_incremental = "gi",
-            node_decremental = "g ",
-          },
-        },
-        auto_install = true,
-        highlight = {
-          enable = true,
-          additional_vim_regex_highlighting = { "ruby" },
-        },
-        indent = { enable = true, disable = { "ruby" } },
-      })
-    end,
   },
   { --- https://github.com/stevearc/conform.nvim
     "stevearc/conform.nvim",
@@ -158,13 +226,14 @@ return {
       enable_check_bracket_line = false, -- helps lisp-like langs
     },
   },
-  { --- https://github.com/stevearc/oil.nvim
+  { --- https://github.com/folke/snacks.nvim
     "folke/snacks.nvim",
     ---@type snacks.Config
     opts = {
       picker = {},
       explorer = {},
     },
+    ---@module "snacks"
     keys = {
       -- stylua: ignore start
       { "<leader>f",  function () Snacks.picker.smart() end,                desc = "Smart Find Files", },
@@ -174,17 +243,15 @@ return {
       { "<leader>h",  function () Snacks.picker.help() end,                 desc = "Help Pages", },
       { "<leader>k",  function () Snacks.picker.keymaps() end,              desc = "Keymaps", },
       { "<leader>l",  function () Snacks.picker.loclist() end,              desc = "Location List", },
-      { "gd",         function () Snacks.picker.lsp_definitions() end,      desc = "Goto Definition", },
-      { "gD",         function () Snacks.picker.lsp_declarations() end,     desc = "Goto Declaration", },
-      { "gr",         function () Snacks.picker.lsp_references() end,       desc = "References",             nowait = true, },
-      { "gI",         function () Snacks.picker.lsp_implementations() end,  desc = "Goto Implementation", },
-      { "gy",         function () Snacks.picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition", },
-      { "<leader>ss", function () Snacks.picker.lsp_symbols() end,          desc = "LSP Symbols", },
-      { "<leader>sS", function () Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols", },
       -- stylua: ignore end
     },
   },
   "tpope/vim-sleuth", --- https://github.com/tpope/vim-sleuth
   "tpope/vim-fugitive", --- https://github.com/tpope/vim-fugitive
   "tpope/vim-surround", --- https://github.com/tpope/vim-surround
+  {
+    "bngarren/checkmate.nvim",
+    ft = "markdown", -- Lazy loads for Markdown files matching patterns in 'files'
+    opts = {},
+  },
 }
