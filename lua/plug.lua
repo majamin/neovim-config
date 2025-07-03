@@ -249,7 +249,8 @@ return {
           statuscolumn = "",
         },
         keymaps = {
-          ["<ESC>"] = "actions.close",
+          ["-"] = { "actions.close", mode = "n" },
+          ["<BS>"] = { "actions.parent", mode = "n" },
         },
       })
     end,
