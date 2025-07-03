@@ -1,5 +1,4 @@
 local non_plugin_maps = require("keys").non_plugin_maps
-local has_words_before = require("funs").has_words_before
 local formatters_by_ft = require("opts").formatters_by_ft
 
 return {
@@ -13,29 +12,29 @@ return {
       vim.api.nvim_create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
         callback = function(event)
+          local Snacks = require("snacks")
           local map = function(keys, func, desc, mode)
             mode = mode or "n"
             vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
           end
 
           -- stylua: ignore start
-          ---@module "snacks"
-          wk.add({"gr", group = "LSP references"})
-          map( "gD",  function () Snacks.picker.lsp_declarations() end,      "Goto Declaration")
-          map( "gI",  function () Snacks.picker.lsp_implementations() end,   "Goto Implementation")
-          map( "gS",  function () Snacks.picker.lsp_workspace_symbols() end, "Workspace Symbols")
-          map( "gd",  function () Snacks.picker.lsp_definitions() end,       "Goto Definition" )
-          map( "gs",  function () Snacks.picker.lsp_symbols() end,           "Symbols")
-          map( "gt",  function () Snacks.picker.lsp_type_definitions() end,  "Goto Type Definition")
-          map( "gra", function () vim.lsp.buf.code_action() end,             "Code actions")
-          map( "gri", function () vim.lsp.buf.implementation() end,          "Implementations")
-          map( "grn", function () vim.lsp.buf.rename() end,                  "Rename")
-          map( "grr", function () Snacks.picker.lsp_references() end,        "References")
+          wk.add({ "gr", group = "LSP references" })
+          map("gD", function () Snacks.picker.lsp_declarations() end, "Goto Declaration")
+          map("gI", function () Snacks.picker.lsp_implementations() end, "Goto Implementation")
+          map("gS", function () Snacks.picker.lsp_workspace_symbols() end, "Workspace Symbols")
+          map("gd", function () Snacks.picker.lsp_definitions() end, "Goto Definition")
+          map("gs", function () Snacks.picker.lsp_symbols() end, "Symbols")
+          map("gt", function () Snacks.picker.lsp_type_definitions() end, "Goto Type Definition")
+          map("gra", function () vim.lsp.buf.code_action() end, "Code actions")
+          map("gri", function () vim.lsp.buf.implementation() end, "Implementations")
+          map("grn", function () vim.lsp.buf.rename() end, "Rename")
+          map("grr", function () Snacks.picker.lsp_references() end, "References")
           -- stylua: ignore end
 
-          -- Toggle inlay hints in your
+          -- Toggle inlay hints
           local client = vim.lsp.get_client_by_id(event.data.client_id)
-          if client and client:supports_method(client, vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
+          if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
             map("<leader>lh", function()
               vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
             end, "Toggle Inlay Hints")
@@ -68,25 +67,17 @@ return {
     version = "*",
     opts = {
       keymap = { -- https://main.cmp.saghen.dev/recipes#emacs-behavior
-        preset = "none",
-        ["<Tab>"] = {
-          function(cmp)
-            if has_words_before() then
-              return cmp.insert_next()
-            end
-          end,
-          "fallback",
-        },
-        ["<S-Tab>"] = { "insert_prev" },
-        ["<C-n>"] = { "select_next", "show", "fallback" },
+        preset = "super-tab",
+        ["<C-n>"] = { "show", "select_next", "fallback" },
         ["<C-p>"] = { "select_prev", "fallback" },
         ["<C-y>"] = { "accept", "fallback" },
-        ["<ESC>"] = { "cancel", "fallback" },
+      },
+      cmdline = {
+        preset = "cmdline",
       },
       completion = {
-        -- ghost_text = { enabled = true, show_with_menu = false },
-        menu = { enabled = true, auto_show = false },
-        list = { selection = { preselect = false }, cycle = { from_top = false } },
+        ghost_text = { enabled = true, show_with_menu = false },
+        menu = { auto_show = false },
       },
       appearance = { nerd_font_variant = "Nerd Font Mono" },
       sources = {
@@ -100,10 +91,7 @@ return {
         },
       },
       fuzzy = { implementation = "prefer_rust_with_warning" },
-      cmdline = {
-        keymap = { preset = "inherit" },
-        completion = { menu = { auto_show = false } },
-      },
+      signature = { enabled = true, trigger = { show_on_insert = false } },
     },
     opts_extend = { "sources.default" },
   },
@@ -113,7 +101,10 @@ return {
     priority = 1000,
     opts = {},
   },
-  { "projekt0n/github-nvim-theme", name = "github-theme" },
+  { --- https://github.com/projekt0n/github-nvim-theme
+    "projekt0n/github-nvim-theme",
+    name = "github-theme",
+  },
   { --- https://github.com/folke/which-key.nvim
     "folke/which-key.nvim",
     config = function()
@@ -127,7 +118,6 @@ return {
   },
   { --- https://github.com/folke/lazydev.nvim
     "folke/lazydev.nvim",
-    event = { "BufReadPost", "BufNewFile" },
     ft = "lua", -- only load on lua files
     opts = {
       library = {
@@ -175,37 +165,36 @@ return {
   },
   { --- https://github.com/stevearc/conform.nvim
     "stevearc/conform.nvim",
-    event = { "BufReadPost", "BufWritePre" },
-    cmd = { "Format", "ConformInfo" },
-    config = function()
-      local conform = require("conform")
-      ---@module "conform"
-      ---@type conform.setupOpts
-      local opts = {
-        async = true,
-        default_format_opts = {
-          lsp_format = "fallback",
-        },
-        formatters_by_ft = formatters_by_ft,
-        format_on_save = { timeout_ms = 500 },
-        formatters = {
-          shfmt = {
-            prepend_args = { "-i", "2" },
-          },
-        },
-      }
-
-      local wk = require("which-key")
-      wk.add({
-        {
-          "<leader><leader>",
-          conform.format,
-          desc = "Format buffer",
-          icon = "",
-        },
-      })
-      conform.setup(opts)
-    end,
+    event = { "BufWritePre" },
+    cmd = { "ConformInfo" },
+    keys = {
+      {
+        "<leader><leader>",
+        function()
+          require("conform").format({ async = true, lsp_format = "fallback" })
+        end,
+        mode = "",
+        desc = "Format buffer",
+      },
+    },
+    opts = {
+      notify_on_error = false,
+      format_on_save = function(bufnr)
+        -- Disable "format_on_save lsp_fallback" for languages that don't
+        -- have a well standardized coding style. You can add additional
+        -- languages here or re-enable it for the disabled ones.
+        local disable_filetypes = { c = true, cpp = true }
+        if disable_filetypes[vim.bo[bufnr].filetype] then
+          return nil
+        else
+          return {
+            timeout_ms = 500,
+            lsp_format = "fallback",
+          }
+        end
+      end,
+      formatters_by_ft = formatters_by_ft,
+    },
   },
   { --- https://github.com/stevearc/oil.nvim
     "stevearc/oil.nvim", -- https://github.com/stevearc/oil.nvim/releases
@@ -283,21 +272,22 @@ return {
   },
   { --- https://github.com/folke/snacks.nvim
     "folke/snacks.nvim",
+    lazy = false,
+    priority = 1000,
     ---@type snacks.Config
     opts = {
       picker = {},
       explorer = {},
     },
-    ---@module "snacks"
     keys = {
       -- stylua: ignore start
-      { "<leader>f",  function () Snacks.picker.smart() end,                desc = "Smart Find Files", },
-      { "<leader>g",  function () Snacks.picker.grep() end,                 desc = "Grep Files", },
-      { "<leader>:",  function () Snacks.picker.command_history() end,      desc = "Command History", },
-      { "<leader>o",  function () Snacks.picker.recent() end,               desc = "Recent", },
-      { "<leader>h",  function () Snacks.picker.help() end,                 desc = "Help Pages", },
-      { "<leader>k",  function () Snacks.picker.keymaps() end,              desc = "Keymaps", },
-      { "<leader>l",  function () Snacks.picker.loclist() end,              desc = "Location List", },
+      { "<leader>f", function () Snacks.picker.smart() end,           desc = "Smart Find Files", },
+      { "<leader>g", function () Snacks.picker.grep() end,            desc = "Grep Files", },
+      { "<leader>:", function () Snacks.picker.command_history() end, desc = "Command History", },
+      { "<leader>o", function () Snacks.picker.recent() end,          desc = "Recent", },
+      { "<leader>h", function () Snacks.picker.help() end,            desc = "Help Pages", },
+      { "<leader>k", function () Snacks.picker.keymaps() end,         desc = "Keymaps", },
+      { "<leader>l", function () Snacks.picker.loclist() end,         desc = "Location List", },
       -- stylua: ignore end
     },
   },
