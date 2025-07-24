@@ -19,7 +19,7 @@ M.non_plugin_maps = {
     end
     , desc = "Toggle diagnostics", icon = "", },
   { "<leader><leader>", vim.lsp.buf.format, desc = "Format the buffer", icon = "󰉩" },
-  { "<leader>e", "<cmd>!dolphin . &>/dev/null &<CR>", desc = "Open file explorer", icon = "󱢴" },
+  { "<leader>e", "<cmd>!dolphin . &>/dev/null &<CR><CR>", desc = "Open file explorer", icon = "󱢴" },
   { "<leader>i", icon = "", group = "Paste images" },
   { "<leader>ii", ':r!imaging.sh . <CR><CR>', desc = "Find and paste image paths", },
   { "<leader>is", ':r!imaging.sh "${SCREENSHOT_DIR:-$HOME/Pictures}" <CR><CR>', desc = "Screenshot images", },
