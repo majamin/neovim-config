@@ -1,6 +1,5 @@
 -- The Simpleman's Neovim Config --
 
-local opts = require("opts")
 require("boot") -- bootstraps lazy
 require("auto") -- nice autocommands
 require("opts") -- loads options, colors, etc.
