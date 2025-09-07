@@ -1,5 +1,6 @@
 local non_plugin_maps = require("keys").non_plugin_maps
 local formatters_by_ft = require("opts").formatters_by_ft
+local disable_formatter_filetypes = require("opts").disable_formatter_filetypes
 
 return {
   { --- https://github.com/neovim/nvim-lspconfig
@@ -15,7 +16,12 @@ return {
           local Snacks = require("snacks")
           local map = function(keys, func, desc, mode)
             mode = mode or "n"
-            vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
+            vim.keymap.set(
+              mode,
+              keys,
+              func,
+              { buffer = event.buf, desc = "LSP: " .. desc }
+            )
           end
 
           -- stylua: ignore start
@@ -34,9 +40,17 @@ return {
 
           -- Toggle inlay hints
           local client = vim.lsp.get_client_by_id(event.data.client_id)
-          if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
+          if
+            client
+            and client:supports_method(
+              vim.lsp.protocol.Methods.textDocument_inlayHint,
+              event.buf
+            )
+          then
             map("<leader>lh", function()
-              vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
+              vim.lsp.inlay_hint.enable(
+                not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf })
+              )
             end, "Toggle Inlay Hints")
           end
         end,
@@ -64,44 +78,49 @@ return {
     "saghen/blink.cmp",
     dependencies = { "rafamadriz/friendly-snippets", "saghen/blink.cmp" },
     event = "BufRead",
-    version = "*",
-    opts = {},
-    -- opts = {
-    --   keymap = { -- https://main.cmp.saghen.dev/recipes#emacs-behavior
-    --     preset = "super-tab",
-    --     ["<C-n>"] = { "show", "select_next", "fallback" },
-    --     ["<C-p>"] = { "select_prev", "fallback" },
-    --     ["<C-y>"] = { "accept", "fallback" },
-    --   },
-    --   completion = {
-    --     ghost_text = { enabled = true, show_with_menu = false },
-    --     menu = { auto_show = false },
-    --   },
-    --   appearance = { nerd_font_variant = "Nerd Font Mono" },
-    --   sources = {
-    --     default = { "lazydev", "lsp", "path", "snippets", "buffer" },
-    --     providers = {
-    --       lazydev = {
-    --         name = "LazyDev",
-    --         module = "lazydev.integrations.blink",
-    --         score_offset = 100,
-    --       },
-    --     },
-    --   },
-    --   fuzzy = { implementation = "prefer_rust_with_warning" },
-    --   signature = { enabled = true, trigger = { show_on_insert = false } },
-    -- },
-    -- opts_extend = { "sources.default" },
+    build = "cargo build --release",
+    -- version = "*",
+    opts = {
+      keymap = {
+        preset = "super-tab",
+        ["<C-n>"] = { "show", "select_next", "fallback" },
+        ["<C-p>"] = { "select_prev", "fallback" },
+        ["<C-y>"] = { "accept", "fallback" },
+      },
+      completion = {
+        ghost_text = { enabled = true, show_with_menu = false },
+        menu = { auto_show = false },
+      },
+      appearance = { nerd_font_variant = "Nerd Font Mono" },
+      sources = {
+        default = { "lazydev", "lsp", "path", "snippets", "buffer" },
+        providers = {
+          lazydev = {
+            name = "LazyDev",
+            module = "lazydev.integrations.blink",
+            score_offset = 100,
+          },
+        },
+      },
+      fuzzy = { implementation = "prefer_rust_with_warning" },
+      signature = { enabled = true, trigger = { show_on_insert = false } },
+    },
+    opts_extend = { "sources.default" },
   },
   { --- https://github.com/folke/tokyonight.nvim
     "folke/tokyonight.nvim",
     lazy = false,
     priority = 1000,
-    opts = {},
+    opts = { transparent = true },
   },
   { --- https://github.com/projekt0n/github-nvim-theme
     "projekt0n/github-nvim-theme",
     name = "github-theme",
+    opts = {
+      options = {
+        -- transparent = true,
+      },
+    },
   },
   { --- https://github.com/folke/which-key.nvim
     "folke/which-key.nvim",
@@ -124,42 +143,44 @@ return {
       },
     },
   },
-  {
+  { --- https://github.com/nvim-treesitter/nvim-treesitter
     "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
-    main = "nvim-treesitter.configs", -- set main module
-    branch = "master", -- TODO: switch to main soon
     lazy = false,
-    opts = {
-      ensure_installed = {
-        "bash",
-        "c",
-        "diff",
-        "html",
-        "lua",
-        "luadoc",
-        "markdown",
-        "markdown_inline",
-        "query",
-        "vim",
-        "vimdoc",
-      },
-      auto_install = true,
-      highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = { "ruby" }, -- depends on vim's regex
-      },
-      indent = { enable = true, disable = { "ruby" } },
-      incremental_selection = {
-        enable = true,
-        keymaps = {
-          init_selection = " ",
-          node_incremental = " ",
-          scope_incremental = "gi",
-          node_decremental = "g ",
-        },
-      },
-    },
+    branch = "main",
+    build = ":TSUpdate",
+    config = function()
+      local ts = require("nvim-treesitter")
+      local treesitter_ensure_installed =
+        require("opts").treesitter_ensure_installed
+      ts.install(treesitter_ensure_installed)
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = { "*" },
+        callback = function(ev)
+          local treesitter_was_started, _ = pcall(vim.treesitter.start) -- enable for all files, but quietly on error
+          if not treesitter_was_started then
+            pcall(ts.install, vim.bo[ev.buf].filetype)
+          end
+        end,
+      })
+    end,
+    -- REINTRODUCE INTO CONFIG WHEN BRANCH MAIN CATHES UP:
+    -- opts = {
+    --   auto_install = true, -- TODO: done (above)
+    --   highlight = {
+    --     enable = true,
+    --     additional_vim_regex_highlighting = { "ruby" }, -- depends on vim's regex
+    --   },
+    --   indent = { enable = true, disable = { "ruby" } },
+    --   incremental_selection = {
+    --     enable = true,
+    --     keymaps = {
+    --       init_selection = " ",
+    --       node_incremental = " ",
+    --       scope_incremental = "gi",
+    --       node_decremental = "g ",
+    --     },
+    --   },
+    -- },
   },
   { --- https://github.com/stevearc/conform.nvim
     "stevearc/conform.nvim",
@@ -178,11 +199,7 @@ return {
     opts = {
       notify_on_error = false,
       format_on_save = function(bufnr)
-        -- Disable "format_on_save lsp_fallback" for languages that don't
-        -- have a well standardized coding style. You can add additional
-        -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true }
-        if disable_filetypes[vim.bo[bufnr].filetype] then
+        if disable_formatter_filetypes[vim.bo[bufnr].filetype] then
           return nil
         else
           return {
@@ -236,8 +253,8 @@ return {
           statuscolumn = "",
         },
         keymaps = {
-          ["-"] = { "actions.close", mode = "n" },
-          ["<BS>"] = { "actions.parent", mode = "n" },
+          ["q"] = { "actions.close", mode = "n" },
+          ["-"] = { "actions.parent", mode = "n" },
         },
       })
     end,
@@ -292,9 +309,10 @@ return {
   "tpope/vim-sleuth", --- https://github.com/tpope/vim-sleuth
   "tpope/vim-fugitive", --- https://github.com/tpope/vim-fugitive
   "tpope/vim-surround", --- https://github.com/tpope/vim-surround
-  {
+  { --- https://github.com/bngarren/checkmate.nvim
     "bngarren/checkmate.nvim",
     ft = "markdown", -- Lazy loads for Markdown files matching patterns in 'files'
     opts = {},
   },
+  { "lervag/vimtex", ft = { "tex", "sty" } },
 }

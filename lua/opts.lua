@@ -107,4 +107,18 @@ M.formatters_by_ft = {
   ["_"] = { "trim_whitespace" },
 }
 
+M.treesitter_ensure_installed = {
+  "bash",
+  "c",
+  "diff",
+  "html",
+  "lua",
+  "luadoc",
+  "markdown",
+  "markdown_inline",
+  "query",
+  "vim",
+  "vimdoc",
+}
+
 return M
