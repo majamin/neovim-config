@@ -63,37 +63,35 @@ return {
   { --- https://cmp.saghen.dev
     "saghen/blink.cmp",
     dependencies = { "rafamadriz/friendly-snippets", "saghen/blink.cmp" },
-    event = "VimEnter",
+    event = "BufRead",
     version = "*",
-    opts = {
-      keymap = { -- https://main.cmp.saghen.dev/recipes#emacs-behavior
-        preset = "super-tab",
-        ["<C-n>"] = { "show", "select_next", "fallback" },
-        ["<C-p>"] = { "select_prev", "fallback" },
-        ["<C-y>"] = { "accept", "fallback" },
-      },
-      cmdline = {
-        preset = "cmdline",
-      },
-      completion = {
-        ghost_text = { enabled = true, show_with_menu = false },
-        menu = { auto_show = false },
-      },
-      appearance = { nerd_font_variant = "Nerd Font Mono" },
-      sources = {
-        default = { "lazydev", "lsp", "path", "snippets", "buffer" },
-        providers = {
-          lazydev = {
-            name = "LazyDev",
-            module = "lazydev.integrations.blink",
-            score_offset = 100,
-          },
-        },
-      },
-      fuzzy = { implementation = "prefer_rust_with_warning" },
-      signature = { enabled = true, trigger = { show_on_insert = false } },
-    },
-    opts_extend = { "sources.default" },
+    opts = {},
+    -- opts = {
+    --   keymap = { -- https://main.cmp.saghen.dev/recipes#emacs-behavior
+    --     preset = "super-tab",
+    --     ["<C-n>"] = { "show", "select_next", "fallback" },
+    --     ["<C-p>"] = { "select_prev", "fallback" },
+    --     ["<C-y>"] = { "accept", "fallback" },
+    --   },
+    --   completion = {
+    --     ghost_text = { enabled = true, show_with_menu = false },
+    --     menu = { auto_show = false },
+    --   },
+    --   appearance = { nerd_font_variant = "Nerd Font Mono" },
+    --   sources = {
+    --     default = { "lazydev", "lsp", "path", "snippets", "buffer" },
+    --     providers = {
+    --       lazydev = {
+    --         name = "LazyDev",
+    --         module = "lazydev.integrations.blink",
+    --         score_offset = 100,
+    --       },
+    --     },
+    --   },
+    --   fuzzy = { implementation = "prefer_rust_with_warning" },
+    --   signature = { enabled = true, trigger = { show_on_insert = false } },
+    -- },
+    -- opts_extend = { "sources.default" },
   },
   { --- https://github.com/folke/tokyonight.nvim
     "folke/tokyonight.nvim",
