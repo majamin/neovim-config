@@ -1,15 +1,5 @@
 local M = {}
 
--- Completion helpers
-M.has_words_before = function()
-  local col = vim.api.nvim_win_get_cursor(0)[2]
-  if col == 0 then
-    return false
-  end
-  local line = vim.api.nvim_get_current_line()
-  return line:sub(col, col):match("%s") == nil
-end
-
 -- Folding aesthetic
 function _G.myfolds()
   local line = vim.fn.getline(vim.v.foldstart)
