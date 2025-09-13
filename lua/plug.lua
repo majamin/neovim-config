@@ -8,13 +8,13 @@ return {
     dependencies = {
       "saghen/blink.cmp",
     },
-    config = function()
+    config = function ()
       local wk = require("which-key")
       vim.api.nvim_create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
-        callback = function(event)
+        callback = function (event)
           local Snacks = require("snacks")
-          local map = function(keys, func, desc, mode)
+          local map = function (keys, func, desc, mode)
             mode = mode or "n"
             vim.keymap.set(
               mode,
@@ -47,7 +47,7 @@ return {
               event.buf
             )
           then
-            map("<leader>lh", function()
+            map("<leader>lh", function ()
               vim.lsp.inlay_hint.enable(
                 not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf })
               )
@@ -124,7 +124,7 @@ return {
   },
   { --- https://github.com/folke/which-key.nvim
     "folke/which-key.nvim",
-    config = function()
+    config = function ()
       local wk = require("which-key")
       wk.setup({
         preset = "helix",
@@ -133,13 +133,13 @@ return {
       wk.add(non_plugin_maps)
     end,
   },
-  { --- https://github.com/folke/lazydev.nvim
+  {             --- https://github.com/folke/lazydev.nvim
     "folke/lazydev.nvim",
     ft = "lua", -- only load on lua files
     opts = {
       library = {
         { path = "${3rd}/luv/library", words = { "vim%.uv" } },
-        { path = "snacks.nvim", words = { "Snacks" } },
+        { path = "snacks.nvim",        words = { "Snacks" } },
       },
     },
   },
@@ -148,18 +148,32 @@ return {
     lazy = false,
     branch = "main",
     build = ":TSUpdate",
-    config = function()
+    config = function ()
       local ts = require("nvim-treesitter")
       local treesitter_ensure_installed =
         require("opts").treesitter_ensure_installed
       ts.install(treesitter_ensure_installed)
       vim.api.nvim_create_autocmd("FileType", {
         pattern = { "*" },
-        callback = function(ev)
-          local treesitter_was_started, _ = pcall(vim.treesitter.start) -- enable for all files, but quietly on error
-          if not treesitter_was_started then
-            pcall(ts.install, vim.bo[ev.buf].filetype)
+        callback = function (ev)
+          local ft = ev.match or vim.bo[ev.buf].filetype
+          local exclude_patterns = {
+            "snacks*",
+            "oil",
+          }
+          -- quit if buffer is one of the excluded patterns
+          for _, pat in ipairs(exclude_patterns) do
+            if ft:match(pat) then
+              return
+            end
           end
+          local ok, _ = pcall(vim.treesitter.start) -- enable for all files, but quietly on error
+          if ok then return end
+
+          local lang = (pcall(vim.treesitter.language.get_lang, ft) and vim.treesitter.language.get_lang(ft)) or ft
+
+          pcall(ts.install, lang)
+          pcall(vim.treesitter.start, ev.buf)
         end,
       })
     end,
@@ -189,7 +203,7 @@ return {
     keys = {
       {
         "<leader><leader>",
-        function()
+        function ()
           require("conform").format({ async = true, lsp_format = "fallback" })
         end,
         mode = "",
@@ -198,7 +212,7 @@ return {
     },
     opts = {
       notify_on_error = false,
-      format_on_save = function(bufnr)
+      format_on_save = function (bufnr)
         if disable_formatter_filetypes[vim.bo[bufnr].filetype] then
           return nil
         else
@@ -211,10 +225,10 @@ return {
       formatters_by_ft = formatters_by_ft,
     },
   },
-  { --- https://github.com/stevearc/oil.nvim
+  {                      --- https://github.com/stevearc/oil.nvim
     "stevearc/oil.nvim", -- https://github.com/stevearc/oil.nvim/releases
     cmd = { "Oil" },
-    config = function()
+    config = function ()
       -- https://github.com/stevearc/oil.nvim/pull/240
       local permission_hlgroups = {
         ["-"] = "NonText",
@@ -226,7 +240,7 @@ return {
         columns = {
           {
             "permissions",
-            highlight = function(permission_str)
+            highlight = function (permission_str)
               local hls = {}
               for i = 1, #permission_str do
                 local char = permission_str:sub(i, i)
@@ -235,7 +249,7 @@ return {
               return hls
             end,
           },
-          { "size", highlight = "Special" },
+          { "size",  highlight = "Special" },
           { "mtime", highlight = "Number" },
           {
             "icon",
@@ -274,7 +288,7 @@ return {
   },
   { --- https://github.com/jpalardy/vim-slime
     "jpalardy/vim-slime",
-    config = function()
+    config = function ()
       vim.cmd("let g:slime_target = 'tmux'")
     end,
   },
@@ -306,12 +320,12 @@ return {
       -- stylua: ignore end
     },
   },
-  "tpope/vim-sleuth", --- https://github.com/tpope/vim-sleuth
+  "tpope/vim-sleuth",   --- https://github.com/tpope/vim-sleuth
   "tpope/vim-fugitive", --- https://github.com/tpope/vim-fugitive
   "tpope/vim-surround", --- https://github.com/tpope/vim-surround
-  { --- https://github.com/bngarren/checkmate.nvim
+  {                     --- https://github.com/bngarren/checkmate.nvim
     "bngarren/checkmate.nvim",
-    ft = "markdown", -- Lazy loads for Markdown files matching patterns in 'files'
+    ft = "markdown",    -- Lazy loads for Markdown files matching patterns in 'files'
     opts = {},
   },
   { "lervag/vimtex", ft = { "tex", "sty" } },
