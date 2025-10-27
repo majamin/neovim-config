@@ -25,17 +25,17 @@ return {
           end
 
           -- stylua: ignore start
-          wk.add({ "gr", group = "LSP references" })
+          wk.add({ "gl", group = "LSP" })
           map("gD", function () Snacks.picker.lsp_declarations() end, "Goto Declaration")
           map("gI", function () Snacks.picker.lsp_implementations() end, "Goto Implementation")
           map("gS", function () Snacks.picker.lsp_workspace_symbols() end, "Workspace Symbols")
           map("gd", function () Snacks.picker.lsp_definitions() end, "Goto Definition")
           map("gs", function () Snacks.picker.lsp_symbols() end, "Symbols")
           map("gt", function () Snacks.picker.lsp_type_definitions() end, "Goto Type Definition")
-          map("gra", function () vim.lsp.buf.code_action() end, "Code actions")
-          map("gri", function () vim.lsp.buf.implementation() end, "Implementations")
-          map("grn", function () vim.lsp.buf.rename() end, "Rename")
-          map("grr", function () Snacks.picker.lsp_references() end, "References")
+          map("gla", function () vim.lsp.buf.code_action() end, "Code actions")
+          map("gli", function () vim.lsp.buf.implementation() end, "Implementations")
+          map("gln", function () vim.lsp.buf.rename() end, "Rename")
+          map("glr", function () Snacks.picker.lsp_references() end, "References")
           -- stylua: ignore end
 
           -- Toggle inlay hints
@@ -47,13 +47,41 @@ return {
               event.buf
             )
           then
-            map("<leader>lh", function()
+            map("glh", function()
               vim.lsp.inlay_hint.enable(
                 not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf })
               )
-            end, "Toggle Inlay Hints")
+            end, "Toggle Inlay [H]ints")
           end
         end,
+      })
+
+      -- shamelessly taken from kickstart
+      vim.diagnostic.config({
+        severity_sort = true,
+        float = { border = "rounded", source = "if_many" },
+        underline = { severity = vim.diagnostic.severity.ERROR },
+        signs = vim.g.have_nerd_font and {
+          text = {
+            [vim.diagnostic.severity.ERROR] = "● ",
+            [vim.diagnostic.severity.WARN] = "● ",
+            [vim.diagnostic.severity.INFO] = "● ",
+            [vim.diagnostic.severity.HINT] = "󰌶 ",
+          },
+        } or {},
+        virtual_text = {
+          source = "if_many",
+          spacing = 2,
+          format = function(diagnostic)
+            local diagnostic_message = {
+              [vim.diagnostic.severity.ERROR] = diagnostic.message,
+              [vim.diagnostic.severity.WARN] = diagnostic.message,
+              [vim.diagnostic.severity.INFO] = diagnostic.message,
+              [vim.diagnostic.severity.HINT] = diagnostic.message,
+            }
+            return diagnostic_message[diagnostic.severity]
+          end,
+        },
       })
 
       local capabilities = require("blink.cmp").get_lsp_capabilities()
