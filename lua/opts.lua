@@ -59,6 +59,7 @@ o.undofile = true                 -- <boolean> enable/disable undo file creation
 o.updatetime = 1000               -- <number> if nothing is typed after this many milliseconds the swap file will be written to disk
 o.wildignorecase = true           -- <boolean> ignore setcase when completing file names and directories?
 o.wildmode = "full"               -- <string> how to complete file names and directories
+o.winborder = "single"
 o.wrap = false                    -- <boolean> wrap lines at the screen edge?
 wo.foldexpr =
 "v:lua.vim.treesitter.foldexpr()" -- foldexpr for treesitter. See `:h fold-expr` and `:h vim.treesitter.foldexpr()`
