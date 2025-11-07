@@ -103,6 +103,7 @@ M.formatters_by_ft = {
   json = prettier,
   typescript = prettier,
   typescriptreact = prettier,
+  rust = { "rustfmt" },
   svelte = prettier,
   python = { "black" },
   vue = prettier,
