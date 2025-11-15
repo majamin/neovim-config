@@ -372,7 +372,7 @@ return {
       -- stylua: ignore end
     },
   },
-  { "NMAC427/guess-indent.nvim" },
+  { "NMAC427/guess-indent.nvim", opts = {} },
   -- "tpope/vim-sleuth",   --- https://github.com/tpope/vim-sleuth
   "tpope/vim-fugitive", --- https://github.com/tpope/vim-fugitive
   "tpope/vim-surround", --- https://github.com/tpope/vim-surround
