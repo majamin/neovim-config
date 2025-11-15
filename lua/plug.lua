@@ -116,18 +116,6 @@ return {
           "select_next",
           "fallback",
         },
-        -- ["<TAB>"] = {
-        --   function(cmp)
-        --     if cmp.is_visible() then
-        --       cmp.accept()
-        --     end -- runs the next command
-        --   end,
-        --   "fallback",
-        -- },
-        -- ["<ESC>"] = {
-        --   "cancel",
-        --   "fallback",
-        -- },
       },
       completion = {
         menu = { enabled = true },
@@ -183,6 +171,7 @@ return {
   { --- https://github.com/folke/lazydev.nvim
     "folke/lazydev.nvim",
     ft = "lua", -- only load on lua files
+    cmd = "LazyDev",
     opts = {
       library = {
         { path = "${3rd}/luv/library", words = { "vim%.uv" } },
@@ -229,24 +218,6 @@ return {
         end,
       })
     end,
-    -- REINTRODUCE INTO CONFIG WHEN BRANCH MAIN CATHES UP:
-    -- opts = {
-    --   auto_install = true, -- TODO: done (above)
-    --   highlight = {
-    --     enable = true,
-    --     additional_vim_regex_highlighting = { "ruby" }, -- depends on vim's regex
-    --   },
-    --   indent = { enable = true, disable = { "ruby" } },
-    --   incremental_selection = {
-    --     enable = true,
-    --     keymaps = {
-    --       init_selection = " ",
-    --       node_incremental = " ",
-    --       scope_incremental = "gi",
-    --       node_decremental = "g ",
-    --     },
-    --   },
-    -- },
   },
   { --- https://github.com/stevearc/conform.nvim
     "stevearc/conform.nvim",
@@ -372,8 +343,10 @@ return {
       -- stylua: ignore end
     },
   },
-  { "NMAC427/guess-indent.nvim", opts = {} },
-  -- "tpope/vim-sleuth",   --- https://github.com/tpope/vim-sleuth
+  { --- https://github.com/NMAC427/guess-indent.nvim
+    "NMAC427/guess-indent.nvim",
+    opts = {},
+  },
   "tpope/vim-fugitive", --- https://github.com/tpope/vim-fugitive
   "tpope/vim-surround", --- https://github.com/tpope/vim-surround
   { --- https://github.com/bngarren/checkmate.nvim
@@ -381,5 +354,37 @@ return {
     ft = "markdown", -- Lazy loads for Markdown files matching patterns in 'files'
     opts = {},
   },
-  { "lervag/vimtex", ft = { "tex", "sty" } },
+  { --- https://github.com/lervag/vimtex
+    "lervag/vimtex",
+    ft = { "tex", "sty" },
+  },
+  { --- https://github.com/folke/zen-mode.nvim
+    "folke/zen-mode.nvim",
+    dependencies = {
+      {
+        "folke/twilight.nvim",
+        opts = {},
+      },
+    },
+    opts = {
+      window = {
+        width = 80,
+        options = {
+          number = false,
+          relativenumber = false,
+          signcolumn = "no",
+        },
+      },
+      plugins = {
+        options = {
+          enabled = true,
+          showcmd = false,
+          laststatus = 0,
+          ruler = false,
+        },
+        tmux = { enabled = true },
+        todo = { enabled = true },
+      },
+    },
+  },
 }
