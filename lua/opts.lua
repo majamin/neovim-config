@@ -66,25 +66,25 @@ wo.foldexpr =
 wo.foldmethod = "expr"            -- <string> foldmethod to use. See `:h foldmethod`
 -- stylua: ignore end
 
--- LaTeX customization
-g.vimtex_view_method = "zathura"
-g.vimtex_mappings_enabled = 0
-g.vimtex_log_ignore = { "Underfull", "Overfull", "specifier changed to" }
--- g.vimtex_quickfix_mode = 0 -- only open quickfix on errors
-g.vimtex_compiler_method = "latexmk"
-g.vimtex_compiler_latexmk = {
-  aux_dir = "build",
-  out_dir = "build",
-  callback = 1,
-  continuous = 1,
-  executable = "latexmk",
-  options = {
-    "-verbose",
-    "-file-line-error",
-    "-synctex=1",
-    "-interaction=nonstopmode",
-  },
-}
+-- -- LaTeX customization
+-- g.vimtex_view_method = "zathura"
+-- g.vimtex_mappings_enabled = 0
+-- g.vimtex_log_ignore = { "Underfull", "Overfull", "specifier changed to" }
+-- -- g.vimtex_quickfix_mode = 0 -- only open quickfix on errors
+-- g.vimtex_compiler_method = "latexmk"
+-- g.vimtex_compiler_latexmk = {
+--   aux_dir = "build",
+--   out_dir = "build",
+--   callback = 1,
+--   continuous = 1,
+--   executable = "latexmk",
+--   options = {
+--     "-verbose",
+--     "-file-line-error",
+--     "-synctex=1",
+--     "-interaction=nonstopmode",
+--   },
+-- }
 
 local prettier = { "prettierd", "prettier", stop_after_first = true }
 
@@ -103,6 +103,7 @@ M.formatters_by_ft = {
   json = prettier,
   typescript = prettier,
   typescriptreact = prettier,
+  r = { "air" },
   rust = { "rustfmt" },
   svelte = prettier,
   python = { "black" },
