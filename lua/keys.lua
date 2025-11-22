@@ -18,17 +18,12 @@ M.non_plugin_maps = {
       end
     end
     , desc = "Toggle diagnostics", icon = "", },
-  { "<leader>e", "<cmd>!dolphin . &>/dev/null &<CR><CR>", desc = "Open file explorer", icon = "󱢴" },
+  { "<leader>e", "<cmd>!xdg-open $(pwd) &>/dev/null &<CR><CR>", desc = "Open file explorer", icon = "󱢴" },
   { "<leader>i", icon = "", group = "Paste images" },
   { "<leader>ii", ':r!imaging.sh . <CR><CR>', desc = "Find and paste image paths", },
   { "<leader>is", ':r!imaging.sh "${SCREENSHOT_DIR:-$HOME/Pictures}" <CR><CR>', desc = "Screenshot images", },
   { "<leader>ip", ':r!imaging.sh "${HOME}/Pictures/SM-S921W/DCIM"   <CR><CR>', desc = "Phone photos", },
-  { "<leader>t", icon = "", group = "LaTeX" },
-  { "<leader>tb", function() vim.cmd("VimtexCompile") end, desc = "LaTeX build (latexmk)" },
-  { "<leader>tv", function() vim.cmd("VimtexView") end,    desc = "LaTeX view (Okular)" },
-  { "<leader>tk", function() vim.cmd("VimtexStop") end,    desc = "LaTeX stop" },
-  { "<leader>tc", function() vim.cmd("VimtexClean") end,   desc = "LaTeX clean" },
-	-- stylua: ignore end
+  -- stylua: ignore end
 }
 
 return M
