@@ -354,10 +354,10 @@ return {
     ft = "markdown", -- Lazy loads for Markdown files matching patterns in 'files'
     opts = {},
   },
-  { --- https://github.com/lervag/vimtex
-    "lervag/vimtex",
-    ft = { "tex", "sty" },
-  },
+  -- { --- https://github.com/lervag/vimtex
+  --   "lervag/vimtex",
+  --   ft = { "tex", "sty" },
+  -- },
   { --- https://github.com/folke/zen-mode.nvim
     "folke/zen-mode.nvim",
     dependencies = {
