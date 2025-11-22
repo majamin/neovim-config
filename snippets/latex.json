@@ -1,0 +1,324 @@
+{
+	"Skeleton": {
+		"prefix": "skel",
+		"body": [
+			"\\documentclass{article}",
+			"",
+			"\\usepackage[utf8]{inputenc}",
+			"\\usepackage{amsmath, amssymb}",
+			"\\usepackage{graphicx}",
+			"",
+			"\\title{${0:Document Title}}",
+			"\\author{${1:Author Name}}",
+			"\\date{\\today}",
+			"",
+			"\\begin{document}",
+			"",
+			"\\maketitle",
+			"",
+			"\\section{Introduction}",
+			"${2:Your introduction here.}",
+			"",
+			"\\section{Main Section}",
+			"${3:Main content here.}",
+			"",
+			"\\section{Conclusion}",
+			"${4:Conclusion here.}",
+			"",
+			"\\end{document}"
+		]
+  },
+  "Teacher Document Skeleton": {
+    "prefix": "skel-teacher",
+    "body": [
+      "\\\\documentclass{teacher}",
+      "",
+      "\\\\begin{document}",
+      "\\\\setcounter{qn}{0}",
+      "",
+      "\\\\worksheetheader{${1:Course Title – Topic}}{${2:Subtitle or Key Concepts}}{}",
+      "",
+      "% ---------- Learning Outcome Rubric ----------",
+      "\\\\begin{rubric}",
+      "  \\\\rubricrow{${3:Criteria}}{",
+      "    ${4:Emerging description}",
+      "  }{",
+      "    ${5:Developing description}",
+      "  }{",
+      "    ${6:Proficient description}",
+      "  }{",
+      "    ${7:Extending description}",
+      "  }",
+      "\\\\end{rubric}",
+      "",
+      "% ---------- Single Q&A Box ----------",
+      "\\\\begin{qanda}{${8:Question or Instructions}}",
+      "  ${9:Content, workspace, or problem}",
+      "\\\\end{qanda}",
+      "",
+      "% ---------- Two-Column Layout ----------",
+      "\\\\qandapair",
+      "  {${10:Question 1}}",
+      "  {${11:\\\\wsfour}}",
+      "  {${12:Question 2}}",
+      "  {${13:\\\\wsfour}}",
+      "",
+      "% ---------- Three-Column Layout ----------",
+      "\\\\qandatriple",
+      "  {${14:Q1}}",
+      "  {${15:\\\\wsthree}}",
+      "  {${16:Q2}}",
+      "  {${17:\\\\wsthree}}",
+      "  {${18:Q3}}",
+      "  {${19:\\\\wsthree}}",
+      "",
+      "% ---------- List of Problems ----------",
+      "\\\\begin{qanda}{${20:Practice Problems}}",
+      "\\\\begin{enumerate}[leftmargin=*]",
+      "  \\\\item Problem 1 \\\\wstwo",
+      "  \\\\item Problem 2 \\\\wstwo",
+      "  \\\\item Problem 3 \\\\wstwo",
+      "\\\\end{enumerate}",
+      "\\\\end{qanda}",
+      "",
+      "% ---------- Coordinate Grid ----------",
+      "% \\\\coordgrid[0.8]{-5}{5}{-5}{5}",
+      "",
+      "% ---------- Plot Function ----------",
+      "% \\\\plotfunction[0.8]{-5}{5}{-5}{5}{\\\\x*\\\\x}{blue}",
+      "",
+      "% ---------- Multi-Column Content ----------",
+      "% \\\\begin{multicols}{2}",
+      "%   Content here",
+      "% \\\\end{multicols}",
+      "",
+      "% ---------- Rubric (Optional) ----------",
+      "% \\\\begin{rubric}",
+      "%   \\\\rubricrow{Additional Criteria}{",
+      "%     Emerging",
+      "%   }{",
+      "%     Developing",
+      "%   }{",
+      "%     Proficient",
+      "%   }{",
+      "%     Extending",
+      "%   }",
+      "% \\\\end{rubric}",
+      "",
+      "\\\\end{document}"
+    ],
+    "description": "Generic teacher document skeleton for any subject"
+  },
+    "Align*": {
+		"prefix": "al",
+		"body": [
+			"\\begin{align*}",
+			"\t$0",
+			"\\end{align*}"
+		]
+	},
+	"fraction": {
+		"prefix": "f",
+		"body": [
+			"\\frac{$1}{$2} $0"
+		]
+	},
+	"bold": {
+		"prefix": "bold",
+		"body": [
+			"\\textbf{${1:${TM_SELECTED_TEXT}}} $0"
+		]
+	},
+	"italic": {
+		"prefix": "italic",
+		"body": [
+			"\\textit{${1:${TM_SELECTED_TEXT}}} $0"
+		]
+	},
+	"underbrace": {
+		"prefix": "underbrace",
+		"body": [
+			"\\underbrace{${1:${TM_SELECTED_TEXT}}}_{$2} $0"
+		]
+	},
+	"overbrace": {
+		"prefix": "overbrace",
+		"body": [
+			"\\overbrace{${1:${TM_SELECTED_TEXT}}}_{$2} $0"
+		]
+	},
+	"underset": {
+		"prefix": "underset",
+		"body": [
+			"\\underset{$1}{${2:${TM_SELECTED_TEXT}}} $0"
+		]
+	},
+	"overset": {
+		"prefix": "overset",
+		"body": [
+			"\\overset{$1}{${2:${TM_SELECTED_TEXT}}} $0"
+		]
+	},
+	"thm": {
+		"prefix": "thm",
+		"body": [
+			"\\begin{thm} $1 \\end{thm} $0"
+		]
+	},
+	"itemize": {
+		"prefix": "itemize",
+		"body": [
+			"\\begin{itemize}",
+			"\t\\item $1",
+			"\\end{itemize}",
+			"$0"
+		]
+	},
+	"enumerate": {
+		"prefix": "enum",
+		"body": [
+			"\\begin{enumerate}",
+			"\t\\item $1",
+			"\\end{enumerate}",
+			"$0"
+		]
+	},
+	"Environment": {
+		"prefix": "beg",
+		"body": [
+			"\\begin{${1:name}}",
+			"\t$0",
+			"\\end{${1:name}}"
+		]
+	},
+	"Text": {
+		"prefix": "txt",
+		"body": [
+			"\\text{$0}"
+		]
+	},
+	"Image": {
+		"prefix": "img",
+		"body": [
+			"\\begin{figure}[H]",
+			"\t\\centering",
+			"\t\\includegraphics[width=0.5\\textwidth]{${1:${TM_SELECTED_TEXT}}}",
+			"\t\\caption{${2:caption}\\label{fig:${3:sample}}}",
+			"\\end{figure}",
+			"$0"
+		]
+	},
+	"Table": {
+		"prefix": "tab",
+		"body": [
+			"% Requires float, booktabs, and siunitx packages",
+			"\\begin{table}[htbp]",
+			"  \\centering",
+			"  \\caption{Comparison of Algorithm Performance on Sample Dataset}",
+			"  \\label{tab:algo-performance}",
+			"  \\vspace{5pt}",
+			"  \\begin{tabular}{@{} l S[table-format=2.1] S[table-format=1.2] @{}}",
+			"    \\toprule",
+			"    Algorithm & {Accuracy (\\\\%)} & {Runtime (s)} \\\\\\",
+			"    \\midrule",
+			"    Decision Tree   & 85.3 & 0.12 \\\\\\",
+			"    Random Forest   & 92.1 & 0.45 \\\\\\",
+			"    SVM             & 89.7 & 0.78 \\\\\\",
+			"    Neural Network  & 94.5 & 1.34 \\\\\\",
+			"    k-NN            & 88.2 & 0.59 \\\\\\",
+			"    \\bottomrule",
+			"  \\end{tabular}",
+			"\\end{table}"
+		]
+	},
+	"pmatrix": {
+		"prefix": "pm",
+		"body": [
+			"\\begin{pmatrix}",
+			"$1",
+			"\\end{pmatrix}",
+			"$0"
+		]
+	},
+	"Integral": {
+		"prefix": "int",
+		"body": [
+			"\\int_{${1:0}}^{${2:\\infty}} $0"
+		]
+	},
+	"Sum Full": {
+		"prefix": "sumi",
+		"body": [
+			"\\sum_{${1:i}=${2:0}}^{${3:\\infty}} $0"
+		]
+	},
+	"undersetinline": {
+		"prefix": "_",
+		"body": [
+			"_{$1}$0"
+		]
+	},
+	"parenthesis1": {
+		"prefix": "(",
+		"body": [
+			"\\left($1\\right"
+		]
+	},
+	"parenthesis2": {
+		"prefix": "[",
+		"body": [
+			"\\left[$1\\right"
+		]
+	},
+	"parenthesis3": {
+		"prefix": "{",
+		"body": [
+			"\\left{$1\\right"
+		]
+	},
+	"average": {
+		"prefix": "avg",
+		"body": [
+			"\\langle $1 \\rangle$0"
+		]
+	},
+	"Sum": {
+		"prefix": "sum",
+		"body": [
+			"\\sum_{${1:i=0}}^{${2:\\infty}} $0"
+		]
+	},
+	"hbar": {
+		"prefix": "hb",
+		"body": [
+			"\\hbar"
+		]
+	},
+	"section": {
+		"prefix": "sec",
+		"body": [
+			"\\section{$1}",
+			"$0"
+		]
+	},
+	"subsection": {
+		"prefix": "ssec",
+		"body": [
+			"\\subsection{$1}",
+			"$0"
+		]
+	},
+	"operatorname": {
+		"prefix": "op",
+		"body": [
+			"\\operatorname{$1} $0"
+		]
+	},
+	"mathrm": {
+		"prefix": "rm",
+		"body": [
+			"\\mathrm{$1} $0"
+		]
+	}
+}
+
