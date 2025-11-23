@@ -89,14 +89,30 @@ return {
       })
 
       -- scan lsp/ and enable servers by named configs
-      local contents = vim.uv.fs_scandir(vim.fn.stdpath("config") .. "/lsp")
-      while contents do
-        local file = select(1, vim.uv.fs_scandir_next(contents))
+      local lsp_dir = vim.fn.stdpath("config") .. "/lsp"
+      local contents, err = vim.uv.fs_scandir(lsp_dir)
+      if not contents then
+        if err ~= "ENOENT" then -- ignore if directory doesn't exist
+          vim.notify(
+            "Failed to scan LSP directory: " .. (err or "unknown error"),
+            vim.log.levels.WARN
+          )
+        end
+        return
+      end
+      while true do
+        local file = vim.uv.fs_scandir_next(contents)
         if not file then
           break
         end
         if file:sub(-4) == ".lua" then
-          vim.lsp.enable(file:sub(1, -5))
+          local ok, result = pcall(vim.lsp.enable, file:sub(1, -5))
+          if not ok then
+            vim.notify(
+              "Failed to enable LSP server from " .. file .. ": " .. result,
+              vim.log.levels.ERROR
+            )
+          end
         end
       end
     end,
