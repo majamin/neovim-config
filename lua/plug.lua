@@ -70,16 +70,15 @@ return {
           },
         } or {},
         virtual_text = {
-          source = "if_many",
-          spacing = 2,
-          format = function(diagnostic)
-            local diagnostic_message = {
-              [vim.diagnostic.severity.ERROR] = diagnostic.message,
-              [vim.diagnostic.severity.WARN] = diagnostic.message,
-              [vim.diagnostic.severity.INFO] = diagnostic.message,
-              [vim.diagnostic.severity.HINT] = diagnostic.message,
+          spacing = 4,
+          prefix = function(diagnostic)
+            local icons = {
+              [vim.diagnostic.severity.ERROR] = "✘",
+              [vim.diagnostic.severity.WARN] = "▲",
+              [vim.diagnostic.severity.INFO] = "●",
+              [vim.diagnostic.severity.HINT] = "◆",
             }
-            return diagnostic_message[diagnostic.severity]
+            return icons[diagnostic.severity] or "●"
           end,
         },
       })
