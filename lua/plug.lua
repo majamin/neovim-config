@@ -383,6 +383,7 @@ return {
     },
     opts = {
       window = {
+        backdrop = 1,
         width = 80,
         options = {
           number = false,
@@ -400,6 +401,10 @@ return {
         tmux = { enabled = true },
         todo = { enabled = true },
       },
+      on_open = function()
+        -- Make backdrop transparent to match theme
+        vim.cmd("highlight ZenBg ctermbg=NONE guibg=NONE")
+      end,
     },
   },
 }
