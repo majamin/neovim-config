@@ -9,13 +9,13 @@ M.non_plugin_maps = {
   { "-", "<cmd>Oil<CR>", desc = "Browse files with Oil" },
   { "<C-w>b", "<cmd>bdelete<CR>", desc = "Close buffer" },
   { "<leader>q", function() require("snacks").picker.diagnostics() end, desc = "Show diagnostics", icon = "", },
-  { "]d", vim.diagnostic.goto_next, desc = "Next diagnostic" },
-  { "[d", vim.diagnostic.goto_prev, desc = "Previous diagnostic" },
+  { "]d", vim.diagnostic.get_next, desc = "Next diagnostic" },
+  { "[d", vim.diagnostic.get_prev, desc = "Previous diagnostic" },
   { "<leader>e", "<cmd>!xdg-open $(pwd) &>/dev/null &<CR><CR>", desc = "Open file explorer", icon = "󱢴" },
   { "<leader>i", icon = "", group = "Paste images" },
-  { "<leader>ii", ':r!imaging.sh . <CR><CR>', desc = "Find and paste image paths", },
-  { "<leader>is", ':r!imaging.sh "${SCREENSHOT_DIR:-$HOME/Pictures}" <CR><CR>', desc = "Screenshot images", },
-  { "<leader>ip", ':r!imaging.sh "${HOME}/Pictures/SM-S921W/DCIM"   <CR><CR>', desc = "Phone photos", },
+  { "<leader>ii", ':r!imaging.sh . <CR><CR>', desc = "Images in current project", },
+  { "<leader>is", ':r!imaging.sh "${SCREENSHOT_DIR:-$HOME/Pictures}" <CR><CR>', desc = "Screenshots", },
+  { "<leader>ip", ':r!imaging.sh "${HOME}/Pictures"   <CR><CR>', desc = "Pictures", },
   -- stylua: ignore end
 }
 
