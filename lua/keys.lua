@@ -1,5 +1,7 @@
 local M = {}
 
+local have_window_by_filetype = require("funs").have_window_by_filetype
+
 M.non_plugin_maps = {
   -- stylua: ignore start
   { "<Esc>", "<cmd>nohlsearch<CR>" },
@@ -8,7 +10,14 @@ M.non_plugin_maps = {
   { "<F4>", ":setlocal spell!<CR>", desc = "Toggle spellcheck" },
   { "-", "<cmd>Oil<CR>", desc = "Browse files with Oil" },
   { "<C-w>b", "<cmd>bdelete<CR>", desc = "Close buffer" },
-  { "<leader>q", function() require("snacks").picker.diagnostics() end, desc = "Show diagnostics", icon = "", },
+ { "<leader>q", function()
+     if have_window_by_filetype("qf") then
+       vim.cmd("lclose")
+     else
+       vim.diagnostic.setloclist({ open = true })
+     end
+   end
+   , desc = "Toggle diagnostics", icon = "", },
   { "]d", vim.diagnostic.get_next, desc = "Next diagnostic" },
   { "[d", vim.diagnostic.get_prev, desc = "Previous diagnostic" },
   { "<leader>e", "<cmd>!xdg-open $(pwd) &>/dev/null &<CR><CR>", desc = "Open file explorer", icon = "󱢴" },
