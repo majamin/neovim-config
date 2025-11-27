@@ -156,7 +156,10 @@ return {
     },
     opts_extend = { "sources.default" },
   },
-  { "j-hui/fidget.nvim", opts = {} },
+  {
+    "j-hui/fidget.nvim",
+    opts = { notification = { override_vim_notify = true } },
+  },
   { --- https://github.com/folke/tokyonight.nvim
     "folke/tokyonight.nvim",
     lazy = false,
