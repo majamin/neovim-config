@@ -5,8 +5,10 @@ local disable_formatter_filetypes = require("opts").disable_formatter_filetypes
 return {
   { --- https://github.com/neovim/nvim-lspconfig
     "neovim/nvim-lspconfig",
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "saghen/blink.cmp",
+      event = "InsertEnter",
     },
     config = function()
       local wk = require("which-key")
@@ -89,31 +91,19 @@ return {
       })
 
       -- scan lsp/ and enable servers by named configs
+      local lsp_configs = {}
       local lsp_dir = vim.fn.stdpath("config") .. "/lsp"
-      local contents, err = vim.uv.fs_scandir(lsp_dir)
-      if not contents then
-        if err ~= "ENOENT" then -- ignore if directory doesn't exist
-          vim.notify(
-            "Failed to scan LSP directory: " .. (err or "unknown error"),
-            vim.log.levels.WARN
-          )
+
+      for name, type in vim.fs.dir(lsp_dir) do
+        if type == "file" and name:match("%.lua$") then
+          local server_name = name:sub(1, -5)
+          lsp_configs[server_name] = true
         end
-        return
       end
-      while true do
-        local file = vim.uv.fs_scandir_next(contents)
-        if not file then
-          break
-        end
-        if file:sub(-4) == ".lua" then
-          local ok, result = pcall(vim.lsp.enable, file:sub(1, -5))
-          if not ok then
-            vim.notify(
-              "Failed to enable LSP server from " .. file .. ": " .. result,
-              vim.log.levels.ERROR
-            )
-          end
-        end
+
+      -- Enable all found servers
+      for server in pairs(lsp_configs) do
+        pcall(vim.lsp.enable, server)
       end
     end,
   },
@@ -158,13 +148,14 @@ return {
   },
   {
     "j-hui/fidget.nvim",
+    event = "LspAttach",
     opts = { notification = { override_vim_notify = true } },
   },
   { --- https://github.com/folke/tokyonight.nvim
     "folke/tokyonight.nvim",
     lazy = false,
     priority = 1000,
-    opts = { transparent = true },
+    opts = { transparent = false },
   },
   { --- https://github.com/projekt0n/github-nvim-theme
     "projekt0n/github-nvim-theme",
@@ -177,6 +168,7 @@ return {
   },
   { --- https://github.com/folke/which-key.nvim
     "folke/which-key.nvim",
+    event = "VeryLazy",
     config = function()
       local wk = require("which-key")
       wk.setup({
@@ -199,6 +191,7 @@ return {
   },
   { --- https://github.com/nvim-treesitter/nvim-treesitter
     "nvim-treesitter/nvim-treesitter",
+    event = { "BufReadPost", "BufNewFile" },
     lazy = false,
     branch = "main",
     build = ":TSUpdate",
@@ -329,6 +322,9 @@ return {
   },
   { --- https://github.com/jpalardy/vim-slime
     "jpalardy/vim-slime",
+    keys = {
+      { "<C-c><C-c>", desc = "Slime send" },
+    },
     config = function()
       vim.cmd("let g:slime_target = 'tmux'")
     end,
@@ -342,8 +338,8 @@ return {
   },
   { --- https://github.com/folke/snacks.nvim
     "folke/snacks.nvim",
-    lazy = false,
     priority = 1000,
+    keys = { "<leader>f", "<leader>g" },
     ---@type snacks.Config
     opts = {
       picker = {},
@@ -361,17 +357,9 @@ return {
       -- stylua: ignore end
     },
   },
-  {
-    "rachartier/tiny-inline-diagnostic.nvim",
-    event = "VeryLazy",
-    priority = 1000,
-    config = function()
-      require("tiny-inline-diagnostic").setup()
-      vim.diagnostic.config({ virtual_text = false }) -- Disable Neovim's default virtual text diagnostics
-    end,
-  },
   { --- https://github.com/NMAC427/guess-indent.nvim
     "NMAC427/guess-indent.nvim",
+    event = "BufReadPre",
     opts = {},
   },
   "tpope/vim-fugitive", --- https://github.com/tpope/vim-fugitive
@@ -387,6 +375,7 @@ return {
   -- },
   { --- https://github.com/folke/zen-mode.nvim
     "folke/zen-mode.nvim",
+    cmd = "ZenMode",
     dependencies = {
       {
         "folke/twilight.nvim",

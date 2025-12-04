@@ -66,25 +66,43 @@ wo.foldexpr =
 wo.foldmethod = "expr"            -- <string> foldmethod to use. See `:h foldmethod`
 -- stylua: ignore end
 
--- -- LaTeX customization
--- g.vimtex_view_method = "zathura"
--- g.vimtex_mappings_enabled = 0
--- g.vimtex_log_ignore = { "Underfull", "Overfull", "specifier changed to" }
--- -- g.vimtex_quickfix_mode = 0 -- only open quickfix on errors
--- g.vimtex_compiler_method = "latexmk"
--- g.vimtex_compiler_latexmk = {
---   aux_dir = "build",
---   out_dir = "build",
---   callback = 1,
---   continuous = 1,
---   executable = "latexmk",
---   options = {
---     "-verbose",
---     "-file-line-error",
---     "-synctex=1",
---     "-interaction=nonstopmode",
---   },
--- }
+vim.diagnostic.config({
+  -- Core behavior
+  severity_sort = true,
+  update_in_insert = false,
+
+  -- Signs in gutter
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = "󰅚",
+      [vim.diagnostic.severity.WARN] = "󰀪",
+      [vim.diagnostic.severity.INFO] = "󰋽",
+      [vim.diagnostic.severity.HINT] = "󰌶",
+    },
+    numhl = {
+      [vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
+      [vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
+    },
+  },
+
+  -- Underline all diagnostics
+  underline = true,
+
+  -- Virtual text OFF by default (toggle with keymap)
+  virtual_text = false,
+
+  -- Rich floating windows
+  float = {
+    border = "rounded",
+    source = "if_many",
+    header = "",
+    prefix = "",
+    suffix = "",
+    format = function(diagnostic)
+      return string.format("%s", diagnostic.message)
+    end,
+  },
+})
 
 local prettier = { "prettierd", "prettier", stop_after_first = true }
 

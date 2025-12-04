@@ -19,4 +19,4 @@ require("lazy").setup({
 })
 
 vim.cmd("colorscheme github_light")
--- vim.cmd("colorscheme tokyonight-moon")
+-- vim.cmd("colorscheme tokyonight")
