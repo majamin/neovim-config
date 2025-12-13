@@ -108,38 +108,95 @@ return {
     event = "BufRead",
     build = "cargo build --release",
     -- version = "*",
-    opts = {
-      keymap = {
-        preset = "super-tab",
-        ["<C-n>"] = {
-          "show",
-          "select_next",
-          "fallback",
+    config = function()
+      require("blink.cmp").setup({
+        keymap = {
+          preset = "super-tab",
+          ["<C-n>"] = {
+            "show",
+            "select_next",
+            "fallback",
+          },
+          ["<Tab>"] = {
+            function(cmp)
+              if cmp.snippet_active() then
+                return cmp.accept()
+              else
+                return cmp.select_and_accept()
+              end
+            end,
+            "fallback",
+          },
+          ["<C-h>"] = { "snippet_backward", "fallback" },
+          ["<C-l>"] = { "snippet_forward", "fallback" },
         },
-      },
-      completion = {
-        menu = { enabled = true },
-        list = {
-          selection = { preselect = false },
-          cycle = { from_top = false },
+        completion = {
+          menu = { enabled = true },
+          list = {
+            selection = { preselect = false },
+            cycle = { from_top = false },
+          },
+          documentation = { auto_show = true },
         },
-        documentation = { auto_show = true },
-      },
-      appearance = { nerd_font_variant = "Nerd Font Mono" },
-      sources = {
-        default = { "lazydev", "lsp", "path", "snippets", "buffer" },
-        providers = {
-          lazydev = {
-            name = "LazyDev",
-            module = "lazydev.integrations.blink",
-            score_offset = 100,
+        appearance = { nerd_font_variant = "Nerd Font Mono" },
+        sources = {
+          default = { "lazydev", "lsp", "path", "snippets", "buffer" },
+          providers = {
+            lazydev = {
+              name = "LazyDev",
+              module = "lazydev.integrations.blink",
+              score_offset = 100,
+            },
           },
         },
-      },
-      fuzzy = { implementation = "prefer_rust_with_warning" },
-      signature = { enabled = true, trigger = { show_on_insert = true } },
-    },
-    opts_extend = { "sources.default" },
+        fuzzy = { implementation = "prefer_rust_with_warning" },
+        signature = { enabled = true, trigger = { show_on_insert = true } },
+      })
+
+      -- Workaround: Disable Neovim's intrusive default Tab/S-Tab snippet navigation
+      --
+      -- CONTEXT: Since Neovim 0.10, vim.snippet.expand() automatically creates
+      -- buffer-local Tab/S-Tab mappings for snippet navigation. This overrides
+      -- user configurations and breaks custom Tab workflows (like completion menu
+      -- navigation). There is NO built-in way to disable this behavior.
+      --
+      -- ISSUE HISTORY:
+      -- - https://github.com/neovim/neovim/issues/30198
+      --   Issue requesting configurability - closed as "wontfix"
+      -- - https://github.com/neovim/neovim/pull/30430
+      --   PR attempting to fix the issue - closed without merging
+      --
+      -- MAINTAINER POSITION: Neovim maintainers acknowledge this is problematic
+      -- but refuse to implement a configuration option, citing architectural
+      -- limitations and concerns about breaking other plugins.
+      --
+      -- THIS WORKAROUND: Aggressively override Tab/S-Tab on every buffer and
+      -- every InsertEnter to prevent vim.snippet from hijacking these keys.
+      -- We use <C-h>/<C-l> for snippet navigation instead (configured above).
+
+      local function disable_snippet_tab_mappings()
+        -- Only override in select mode (snippet placeholders), not insert mode
+        -- This allows blink.cmp to handle Tab for completion in insert mode
+        vim.keymap.set("s", "<Tab>", "<Tab>", {
+          buffer = 0,
+          noremap = true,
+          silent = true,
+        })
+        vim.keymap.set("s", "<S-Tab>", "<S-Tab>", {
+          buffer = 0,
+          noremap = true,
+          silent = true,
+        })
+      end
+
+      vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
+        callback = disable_snippet_tab_mappings,
+      })
+
+      vim.api.nvim_create_autocmd("InsertEnter", {
+        callback = disable_snippet_tab_mappings,
+      })
+    end,
   },
   {
     "j-hui/fidget.nvim",
@@ -311,8 +368,8 @@ return {
     },
   },
   { --- https://github.com/majamin/buffy.nvim
-    -- dir = "~/.local/src/buffy.nvim",
-    "majamin/buffy.nvim",
+    dir = "~/.local/src/buffy.nvim",
+    -- "majamin/buffy.nvim",
     opts = {},
   },
   { --- https://github.com/jpalardy/vim-slime

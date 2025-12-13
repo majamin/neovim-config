@@ -29,4 +29,8 @@ M.non_plugin_maps = {
   -- stylua: ignore end
 }
 
+-- Do not remove - it ensures custom snippet jump binds hold
+vim.keymap.del({ "i", "s" }, "<Tab>")
+vim.keymap.del({ "i", "s" }, "<S-Tab>")
+
 return M
