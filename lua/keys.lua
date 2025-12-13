@@ -19,8 +19,8 @@ M.non_plugin_maps = {
    end
   , desc = "Toggle diagnostics", icon = "", },
   { "gl", vim.diagnostic.open_float, desc = "Line Diagnostics" },
-  { "]d", function() vim.diagnostic.jump({count = 1}) end, desc = "Next diagnostic" },
-  { "[d", function() vim.diagnostic.jump({count = -1}) end, desc = "Previous diagnostic" },
+  { "]d", function() vim.diagnostic.jump({count = 1, float = true}) end, desc = "Next diagnostic" },
+  { "[d", function() vim.diagnostic.jump({count = -1, float = true}) end, desc = "Previous diagnostic" },
   { "<leader>e", "<cmd>!xdg-open $(pwd) &>/dev/null &<CR><CR>", desc = "Open file explorer", icon = "󱢴" },
   { "<leader>i", icon = "", group = "Paste images" },
   { "<leader>ii", ':r!imaging.sh . <CR><CR>', desc = "Images in current project", },
