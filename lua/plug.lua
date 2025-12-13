@@ -58,28 +58,23 @@ return {
         end,
       })
 
+      local icons = {
+        [vim.diagnostic.severity.ERROR] = "● ",
+        [vim.diagnostic.severity.WARN] = "● ",
+        [vim.diagnostic.severity.INFO] = "● ",
+        [vim.diagnostic.severity.HINT] = "󰌶 ",
+      }
       -- shamelessly taken from kickstart
       vim.diagnostic.config({
         severity_sort = true,
         float = { border = "rounded", source = "if_many" },
         underline = { severity = vim.diagnostic.severity.ERROR },
         signs = vim.g.have_nerd_font and {
-          text = {
-            [vim.diagnostic.severity.ERROR] = "● ",
-            [vim.diagnostic.severity.WARN] = "● ",
-            [vim.diagnostic.severity.INFO] = "● ",
-            [vim.diagnostic.severity.HINT] = "󰌶 ",
-          },
+          text = icons,
         } or {},
         virtual_text = {
           spacing = 4,
           prefix = function(diagnostic)
-            local icons = {
-              [vim.diagnostic.severity.ERROR] = "● ",
-              [vim.diagnostic.severity.WARN] = "● ",
-              [vim.diagnostic.severity.INFO] = "● ",
-              [vim.diagnostic.severity.HINT] = "󰌶 ",
-            }
             return icons[diagnostic.severity] or "●"
           end,
         },
