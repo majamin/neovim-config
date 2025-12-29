@@ -1,6 +1,5 @@
 local non_plugin_maps = require("keys").non_plugin_maps
 local formatters_by_ft = require("opts").formatters_by_ft
-local disable_formatter_filetypes = require("opts").disable_formatter_filetypes
 
 return {
   { --- https://github.com/neovim/nvim-lspconfig
@@ -244,7 +243,7 @@ return {
   { --- https://github.com/nvim-treesitter/nvim-treesitter
     "nvim-treesitter/nvim-treesitter",
     event = { "BufReadPost", "BufNewFile" },
-    lazy = false,
+    -- lazy = false,
     branch = "main",
     build = ":TSUpdate",
     config = function()
@@ -298,16 +297,7 @@ return {
     },
     opts = {
       notify_on_error = false,
-      format_on_save = function(bufnr)
-        if disable_formatter_filetypes[vim.bo[bufnr].filetype] then
-          return nil
-        else
-          return {
-            timeout_ms = 8500,
-            lsp_format = "fallback",
-          }
-        end
-      end,
+      format_on_save = false,
       formatters_by_ft = formatters_by_ft,
     },
   },
@@ -421,10 +411,10 @@ return {
     ft = "markdown", -- Lazy loads for Markdown files matching patterns in 'files'
     opts = {},
   },
-  -- { --- https://github.com/lervag/vimtex
-  --   "lervag/vimtex",
-  --   ft = { "tex", "sty" },
-  -- },
+  { --- https://github.com/folke/todo-comments.nvim
+    "folke/todo-comments.nvim",
+    opts = {},
+  },
   { --- https://github.com/folke/zen-mode.nvim
     "folke/zen-mode.nvim",
     cmd = "ZenMode",
@@ -459,5 +449,17 @@ return {
         vim.cmd("highlight ZenBg ctermbg=NONE guibg=NONE")
       end,
     },
+  },
+  { --- https://github.com/nvim-mini/mini.nvim
+    "echasnovski/mini.nvim",
+    dependencies = { "lewis6991/gitsigns.nvim" },
+    config = function()
+      local statusline = require("mini.statusline")
+      statusline.setup({ use_icons = vim.g.have_nerd_font })
+      ---@diagnostic disable-next-line: duplicate-set-field
+      statusline.section_location = function()
+        return "%2l:%-2v"
+      end
+    end,
   },
 }

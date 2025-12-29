@@ -34,7 +34,6 @@ o.ignorecase = false              -- <boolean> ignore case in search patterns
 o.laststatus = 3                  -- {0,1,2,3} should the last window will have a status line? See `:h laststatus`
 o.lazyredraw = true               -- <boolean> redraw screen while running macros? (true = faster)
 o.list = true                     -- <boolean> show some invisible characters (tabs, eol, etc.)
-o.mouse = ""                      -- <string> enable mouse support in which situations? See `:h 'mouse'`
 o.number = true                   -- <boolean> print the line number in front of each line?
 o.path = ".,**"                   -- <string> search paths. See `:h 'path'` and `:h starstar-wildcard`
 o.relativenumber = true           -- <boolean> show relative line numbers?
