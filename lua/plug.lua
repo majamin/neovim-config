@@ -358,9 +358,24 @@ return {
     },
   },
   { --- https://github.com/majamin/buffy.nvim
-    dir = "~/.local/src/buffy.nvim",
-    -- "majamin/buffy.nvim",
+    "majamin/buffy.nvim",
     opts = {},
+    keys = {
+      {
+        "<Tab>",
+        function()
+          require("buffy").next()
+        end,
+        desc = "Next buffer",
+      },
+      {
+        "<S-Tab>",
+        function()
+          require("buffy").prev()
+        end,
+        desc = "Previous buffer",
+      },
+    },
   },
   { --- https://github.com/jpalardy/vim-slime
     "jpalardy/vim-slime",
