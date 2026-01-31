@@ -1,6 +1,7 @@
 local M = {}
 local o = vim.opt
 local wo = vim.wo
+local bo = vim.bo
 local g = vim.g
 
 g.mapleader = ";"
@@ -63,34 +64,25 @@ o.wrap = false                    -- <boolean> wrap lines at the screen edge?
 wo.foldexpr =
 "v:lua.vim.treesitter.foldexpr()" -- foldexpr for treesitter. See `:h fold-expr` and `:h vim.treesitter.foldexpr()`
 wo.foldmethod = "expr"            -- <string> foldmethod to use. See `:h foldmethod`
--- stylua: ignore end
+bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 
 vim.diagnostic.config({
-  -- Core behavior
   severity_sort = true,
   update_in_insert = false,
-
-  -- Signs in gutter
   signs = {
     text = {
-      [vim.diagnostic.severity.ERROR] = "󰅚",
-      [vim.diagnostic.severity.WARN] = "󰀪",
-      [vim.diagnostic.severity.INFO] = "󰋽",
-      [vim.diagnostic.severity.HINT] = "󰌶",
+      [vim.diagnostic.severity.ERROR] = "● ",
+      [vim.diagnostic.severity.WARN] = "● ",
+      [vim.diagnostic.severity.INFO] = "● ",
+      [vim.diagnostic.severity.HINT] = "󰌶 ",
     },
     numhl = {
       [vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
       [vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
     },
   },
-
-  -- Underline all diagnostics
-  underline = true,
-
-  -- Virtual text OFF by default (toggle with keymap)
+  underline = false,
   virtual_text = false,
-
-  -- Rich floating windows
   float = {
     border = "rounded",
     source = "if_many",

@@ -57,27 +57,27 @@ return {
         end,
       })
 
-      local icons = {
-        [vim.diagnostic.severity.ERROR] = "● ",
-        [vim.diagnostic.severity.WARN] = "● ",
-        [vim.diagnostic.severity.INFO] = "● ",
-        [vim.diagnostic.severity.HINT] = "󰌶 ",
-      }
+      -- local icons = {
+      --   [vim.diagnostic.severity.ERROR] = "● ",
+      --   [vim.diagnostic.severity.WARN] = "● ",
+      --   [vim.diagnostic.severity.INFO] = "● ",
+      --   [vim.diagnostic.severity.HINT] = "󰌶 ",
+      -- }
       -- shamelessly taken from kickstart
-      vim.diagnostic.config({
-        severity_sort = true,
-        float = { border = "rounded", source = "if_many" },
-        underline = { severity = vim.diagnostic.severity.ERROR },
-        signs = vim.g.have_nerd_font and {
-          text = icons,
-        } or {},
-        virtual_text = {
-          spacing = 4,
-          prefix = function(diagnostic)
-            return icons[diagnostic.severity] or "●"
-          end,
-        },
-      })
+      -- vim.diagnostic.config({
+      --   severity_sort = true,
+      --   float = { border = "rounded", source = "if_many" },
+      --   underline = { severity = vim.diagnostic.severity.ERROR },
+      --   signs = vim.g.have_nerd_font and {
+      --     text = icons,
+      --   } or {},
+      --   virtual_text = {
+      --     spacing = 4,
+      --     prefix = function(diagnostic)
+      --       return icons[diagnostic.severity] or "●"
+      --     end,
+      --   },
+      -- })
 
       local capabilities = require("blink.cmp").get_lsp_capabilities()
       vim.lsp.config("*", {
@@ -116,16 +116,7 @@ return {
             "select_next",
             "fallback",
           },
-          ["<Tab>"] = {
-            function(cmp)
-              if cmp.snippet_active() then
-                return cmp.accept()
-              else
-                return cmp.select_and_accept()
-              end
-            end,
-            "fallback",
-          },
+          ["<Tab>"] = { "select_and_accept" },
           ["<C-h>"] = { "snippet_backward", "fallback" },
           ["<C-l>"] = { "snippet_forward", "fallback" },
         },
@@ -204,7 +195,6 @@ return {
   },
   { --- https://github.com/folke/tokyonight.nvim
     "folke/tokyonight.nvim",
-    lazy = false,
     priority = 1000,
     opts = { transparent = false },
   },
@@ -248,34 +238,21 @@ return {
     build = ":TSUpdate",
     config = function()
       local ts = require("nvim-treesitter")
-      local treesitter_ensure_installed =
-        require("opts").treesitter_ensure_installed
-      ts.install(treesitter_ensure_installed)
+      local available = ts.get_available()
+
+      ts.install(require("opts").treesitter_ensure_installed)
+
       vim.api.nvim_create_autocmd("FileType", {
         pattern = { "*" },
         callback = function(ev)
-          local ft = ev.match or vim.bo[ev.buf].filetype
-          local exclude_patterns = {
-            "snacks*",
-            "oil",
-          }
-          -- quit if buffer is one of the excluded patterns
-          for _, pat in ipairs(exclude_patterns) do
-            if ft:match(pat) then
+          local filetype = ev.match or vim.bo[ev.buf].filetype
+          for _, parser in ipairs(available) do
+            if filetype:match(parser) then
+              pcall(ts.install, parser)
+            else
               return
             end
           end
-          local ok, _ = pcall(vim.treesitter.start) -- enable for all files, but quietly on error
-          if ok then
-            return
-          end
-
-          local lang = (
-            pcall(vim.treesitter.language.get_lang, ft)
-            and vim.treesitter.language.get_lang(ft)
-          ) or ft
-
-          pcall(ts.install, lang)
           pcall(vim.treesitter.start, ev.buf)
         end,
       })
@@ -356,6 +333,11 @@ return {
         { desc = "Open parent directory" },
       },
     },
+  },
+  { --- https://github.com/majamin/litmus.nvim
+    "majamin/litmus.nvim",
+    dependencies = { "tjdevries/colorbuddy.nvim" },
+    opts = {},
   },
   { --- https://github.com/majamin/buffy.nvim
     "majamin/buffy.nvim",
@@ -467,7 +449,10 @@ return {
   },
   { --- https://github.com/nvim-mini/mini.nvim
     "echasnovski/mini.nvim",
-    dependencies = { "lewis6991/gitsigns.nvim" },
+    event = "VeryLazy",
+    dependencies = {
+      { "lewis6991/gitsigns.nvim", event = "VeryLazy" },
+    },
     config = function()
       local statusline = require("mini.statusline")
       statusline.setup({ use_icons = vim.g.have_nerd_font })
@@ -476,5 +461,17 @@ return {
         return "%2l:%-2v"
       end
     end,
+  },
+  {
+    "norcalli/nvim-colorizer.lua",
+    opts = {},
+    keys = {
+      {
+        "<leader>c",
+        ":ColorizerToggle<CR>",
+        mode = "",
+        desc = "Colorize hex colors",
+      },
+    },
   },
 }

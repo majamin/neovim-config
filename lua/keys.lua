@@ -10,17 +10,20 @@ M.non_plugin_maps = {
   { "<F4>", ":setlocal spell!<CR>", desc = "Toggle spellcheck" },
   { "-", "<cmd>Oil<CR>", desc = "Browse files with Oil" },
   { "<C-w>b", "<cmd>bdelete<CR>", desc = "Close buffer" },
+  { "gG", function()
+    vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+  end, desc = "Toggle diagnostics" },
   { "<leader>q", function()
-     if have_window_by_filetype("qf") then
-       vim.cmd("lclose")
-     else
-       vim.diagnostic.setloclist({ open = true })
-     end
-   end
+    if have_window_by_filetype("qf") then
+      vim.cmd("lclose")
+    else
+      vim.diagnostic.setloclist({ open = true })
+    end
+  end
   , desc = "Toggle diagnostics", icon = "", },
   { "gl", vim.diagnostic.open_float, desc = "Line Diagnostics" },
-  { "]d", function() vim.diagnostic.jump({count = 1, float = true}) end, desc = "Next diagnostic" },
-  { "[d", function() vim.diagnostic.jump({count = -1, float = true}) end, desc = "Previous diagnostic" },
+  { "<Right>", function() vim.diagnostic.jump({count = 1, float = true}) end, desc = "Next diagnostic" },
+  { "<Left>", function() vim.diagnostic.jump({count = -1, float = true}) end, desc = "Previous diagnostic" },
   { "<leader>e", "<cmd>!xdg-open $(pwd) &>/dev/null &<CR><CR>", desc = "Open file explorer", icon = "󱢴" },
   { "<leader>i", icon = "", group = "Paste images" },
   { "<leader>ii", ':r!imaging.sh . <CR><CR>', desc = "Images in current project", },

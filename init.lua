@@ -18,8 +18,6 @@ require("lazy").setup({
   },
 })
 
-vim.cmd("colorscheme github_light")
-vim.api.nvim_set_hl(0, "DiagnosticHint", { fg = "#8799ab" })
-vim.api.nvim_set_hl(0, "DiagnosticVirtualTextHint", { fg = "#8799ab" })
 
+vim.cmd("colorscheme litmus")
 -- vim.cmd("colorscheme tokyonight")
