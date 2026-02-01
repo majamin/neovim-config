@@ -5,6 +5,8 @@ local have_window_by_filetype = require("funs").have_window_by_filetype
 M.non_plugin_maps = {
   -- stylua: ignore start
   { "<Esc>", "<cmd>nohlsearch<CR>" },
+  { "j", "gj" },
+  { "k", "gk" },
   { "<F2>", function () vim.cmd(":wa|mksession!") end, desc = "Save session and files", },
   { "<F3>", function () vim.cmd(":so Session.vim") end, desc = "Load session", },
   { "<F4>", ":setlocal spell!<CR>", desc = "Toggle spellcheck" },

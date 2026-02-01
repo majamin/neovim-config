@@ -14,3 +14,11 @@ vim.api.nvim_create_autocmd("FileType", {
     end)
   end,
 })
+
+-- wrap in prose filetypes
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "markdown", "typst", "asciidoc" },
+  callback = function(ev)
+    vim.api.nvim_set_option_value("wrap", true, { scope = "local" })
+  end,
+})
