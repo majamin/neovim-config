@@ -39,8 +39,47 @@ return {
           map("glr", function () Snacks.picker.lsp_references() end, "References")
           -- stylua: ignore end
 
-          -- Toggle inlay hints
+          -- Highlight word under cursor - adapted from kickstart
           local client = vim.lsp.get_client_by_id(event.data.client_id)
+          if
+            client
+            and client.supports_method(
+              vim.lsp.protocol.Methods.textDocument_documentHighlight,
+              { bufnr = event.buf }
+            )
+          then
+            local highlight_augroup = vim.api.nvim_create_augroup(
+              "user-lsp-highlight",
+              { clear = false }
+            )
+            vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+              buffer = event.buf,
+              group = highlight_augroup,
+              callback = vim.lsp.buf.document_highlight,
+            })
+
+            vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+              buffer = event.buf,
+              group = highlight_augroup,
+              callback = vim.lsp.buf.clear_references,
+            })
+
+            vim.api.nvim_create_autocmd("LspDetach", {
+              group = vim.api.nvim_create_augroup(
+                "user-lsp-detach",
+                { clear = true }
+              ),
+              callback = function(event2)
+                vim.lsp.buf.clear_references()
+                vim.api.nvim_clear_autocmds({
+                  group = "user-lsp-highlight",
+                  buffer = event2.buf,
+                })
+              end,
+            })
+          end
+
+          -- Toggle inlay hints
           if
             client
             and client:supports_method(
@@ -56,28 +95,6 @@ return {
           end
         end,
       })
-
-      -- local icons = {
-      --   [vim.diagnostic.severity.ERROR] = "● ",
-      --   [vim.diagnostic.severity.WARN] = "● ",
-      --   [vim.diagnostic.severity.INFO] = "● ",
-      --   [vim.diagnostic.severity.HINT] = "󰌶 ",
-      -- }
-      -- shamelessly taken from kickstart
-      -- vim.diagnostic.config({
-      --   severity_sort = true,
-      --   float = { border = "rounded", source = "if_many" },
-      --   underline = { severity = vim.diagnostic.severity.ERROR },
-      --   signs = vim.g.have_nerd_font and {
-      --     text = icons,
-      --   } or {},
-      --   virtual_text = {
-      --     spacing = 4,
-      --     prefix = function(diagnostic)
-      --       return icons[diagnostic.severity] or "●"
-      --     end,
-      --   },
-      -- })
 
       local capabilities = require("blink.cmp").get_lsp_capabilities()
       vim.lsp.config("*", {
@@ -116,7 +133,7 @@ return {
             "select_next",
             "fallback",
           },
-          ["<Tab>"] = { "select_and_accept" },
+          ["<Tab>"] = { "select_and_accept", "fallback" },
           ["<C-h>"] = { "snippet_backward", "fallback" },
           ["<C-l>"] = { "snippet_forward", "fallback" },
         },
@@ -193,20 +210,18 @@ return {
     event = "LspAttach",
     opts = { notification = { override_vim_notify = true } },
   },
-  { --- https://github.com/folke/tokyonight.nvim
-    "folke/tokyonight.nvim",
-    priority = 1000,
-    opts = { transparent = false },
-  },
-  { --- https://github.com/projekt0n/github-nvim-theme
-    "projekt0n/github-nvim-theme",
-    name = "github-theme",
-    opts = {
-      options = {
-        -- transparent = true,
-      },
-    },
-  },
+  -- { --- https://github.com/folke/tokyonight.nvim
+  --   "folke/tokyonight.nvim",
+  -- },
+  -- { --- https://github.com/projekt0n/github-nvim-theme
+  --   "projekt0n/github-nvim-theme",
+  --   name = "github-theme",
+  --   opts = {
+  --     options = {
+  --       -- transparent = true,
+  --     },
+  --   },
+  -- },
   { --- https://github.com/folke/which-key.nvim
     "folke/which-key.nvim",
     event = "VeryLazy",
@@ -403,11 +418,6 @@ return {
   },
   "tpope/vim-fugitive", --- https://github.com/tpope/vim-fugitive
   "tpope/vim-surround", --- https://github.com/tpope/vim-surround
-  { --- https://github.com/bngarren/checkmate.nvim
-    "bngarren/checkmate.nvim",
-    ft = "markdown", -- Lazy loads for Markdown files matching patterns in 'files'
-    opts = {},
-  },
   { --- https://github.com/folke/todo-comments.nvim
     "folke/todo-comments.nvim",
     opts = {},
