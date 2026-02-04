@@ -56,7 +56,7 @@ o.termguicolors = true            -- <boolean> enable 24-bit RGB color in the TU
 o.timeoutlen = 400                -- <number> time to wait for a mapped sequence to complete (in milliseconds)
 o.ttimeoutlen = 0                 -- <number> time in milliseconds to wait for a key code sequence to complete
 o.undofile = true                 -- <boolean> enable/disable undo file creation?
-o.updatetime = 1000               -- <number> if nothing is typed after this many milliseconds the swap file will be written to disk
+o.updatetime = 500                -- <number> if nothing is typed after this many milliseconds the swap file will be written to disk
 o.wildignorecase = true           -- <boolean> ignore setcase when completing file names and directories?
 o.wildmode = "full"               -- <string> how to complete file names and directories
 o.winborder = "single"
@@ -65,6 +65,7 @@ wo.foldexpr =
 "v:lua.vim.treesitter.foldexpr()" -- foldexpr for treesitter. See `:h fold-expr` and `:h vim.treesitter.foldexpr()`
 wo.foldmethod = "expr"            -- <string> foldmethod to use. See `:h foldmethod`
 bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+-- stylua: ignore end
 
 vim.diagnostic.config({
   severity_sort = true,
@@ -115,6 +116,7 @@ M.formatters_by_ft = {
   r = { "air" },
   rust = { "rustfmt" },
   svelte = prettier,
+  typst = { "typstyle" },
   python = { "black" },
   vue = prettier,
   -- ["*"] = { "codespell" }, -- always run
