@@ -261,14 +261,18 @@ return {
         pattern = { "*" },
         callback = function(ev)
           local filetype = ev.match or vim.bo[ev.buf].filetype
+          local found = false
           for _, parser in ipairs(available) do
-            if filetype:match(parser) then
+            if filetype == parser then
               pcall(ts.install, parser)
-            else
-              return
+              found = true
+              break
             end
           end
-          pcall(vim.treesitter.start, ev.buf)
+          if found then
+            pcall(vim.treesitter.start, ev.buf)
+            vim.bo[ev.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+          end
         end,
       })
     end,
@@ -470,6 +474,8 @@ return {
       statusline.section_location = function()
         return "%2l:%-2v"
       end
+      local indentscope = require("mini.indentscope")
+      indentscope.setup({ draw = { animation = function() return 0 end }, symbol = "░" })
     end,
   },
   {
@@ -484,4 +490,5 @@ return {
       },
     },
   },
+  "mechatroner/rainbow_csv",
 }

@@ -64,7 +64,6 @@ o.wrap = false                    -- <boolean> wrap lines at the screen edge?
 wo.foldexpr =
 "v:lua.vim.treesitter.foldexpr()" -- foldexpr for treesitter. See `:h fold-expr` and `:h vim.treesitter.foldexpr()`
 wo.foldmethod = "expr"            -- <string> foldmethod to use. See `:h foldmethod`
-bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 -- stylua: ignore end
 
 vim.diagnostic.config({
