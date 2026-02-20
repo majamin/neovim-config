@@ -24,13 +24,12 @@ M.non_plugin_maps = {
   end
   , desc = "Toggle diagnostics", icon = "", },
   { "gl", vim.diagnostic.open_float, desc = "Line Diagnostics" },
-  { "<Right>", function() vim.diagnostic.jump({count = 1, float = true}) end, desc = "Next diagnostic" },
-  { "<Left>", function() vim.diagnostic.jump({count = -1, float = true}) end, desc = "Previous diagnostic" },
+  { "<C-j>", function() vim.diagnostic.jump({count = 1, float = true}) end, desc = "Next diagnostic" },
+  { "<C-k>", function() vim.diagnostic.jump({count = -1, float = true}) end, desc = "Previous diagnostic" },
   { "<leader>e", "<cmd>!xdg-open $(pwd) &>/dev/null &<CR><CR>", desc = "Open file explorer", icon = "󱢴" },
   { "<leader>i", icon = "", group = "Paste images" },
   { "<leader>ii", ':r!imaging.sh . <CR><CR>', desc = "Images in current project", },
-  { "<leader>is", ':r!imaging.sh "${SCREENSHOT_DIR:-$HOME/Pictures}" <CR><CR>', desc = "Screenshots", },
-  { "<leader>ip", ':r!imaging.sh "${HOME}/Pictures"   <CR><CR>', desc = "Pictures", },
+  { "<leader>ip", ':r!imaging.sh ${SCREENSHOT_DIR} ${HOME}/Downloads ${HOME}/Pictures <CR><CR>', desc = "Screenshots", },
   -- stylua: ignore end
 }
 
