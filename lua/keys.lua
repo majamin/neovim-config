@@ -22,7 +22,7 @@ M.non_plugin_maps = {
       vim.diagnostic.setloclist({ open = true })
     end
   end
-  , desc = "Toggle diagnostics", icon = "", },
+    , desc = "Toggle diagnostics", icon = "", },
   { "gl", vim.diagnostic.open_float, desc = "Line Diagnostics" },
   { "<C-j>", function() vim.diagnostic.jump({count = 1, float = true}) end, desc = "Next diagnostic" },
   { "<C-k>", function() vim.diagnostic.jump({count = -1, float = true}) end, desc = "Previous diagnostic" },

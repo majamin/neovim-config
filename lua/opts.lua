@@ -95,7 +95,15 @@ vim.diagnostic.config({
   },
 })
 
-local prettier = { "prettierd", "prettier", stop_after_first = true }
+M.special_formatters = {
+  ["prettier-npx"] = {
+    command = "npx",
+    args = { "--yes", "prettier", "--stdin-filepath", "$FILENAME" },
+    stdin = true,
+  },
+}
+
+local prettier = { "prettierd", "prettier", "prettier-npx", stop_after_first = true }
 
 -- Disable "format_on_save lsp_fallback" for languages that don't
 -- have a well standardized coding style. You can add additional

@@ -1,4 +1,5 @@
 local non_plugin_maps = require("keys").non_plugin_maps
+local special_formatters = require("opts").special_formatters
 local formatters_by_ft = require("opts").formatters_by_ft
 
 return {
@@ -294,6 +295,7 @@ return {
     opts = {
       notify_on_error = false,
       format_on_save = false,
+      formatters = special_formatters,
       formatters_by_ft = formatters_by_ft,
     },
   },
