@@ -292,6 +292,16 @@ return {
         desc = "Format buffer",
       },
     },
+    config = function() 
+    local conform = require("conform")
+    local ft = vim.bo[vim.api.nvim_get_current_buf()].filetype
+    local has_ft_formatter = conform.formatters_by_ft[ft] ~= nil
+    conform.format({
+      async = false,
+      lsp_format = has_ft_formatter and "never" or "fallback",
+    })
+    conform.format({ async = true, formatters = { "trim_whitespace" } })
+    end,
     opts = {
       notify_on_error = false,
       format_on_save = false,

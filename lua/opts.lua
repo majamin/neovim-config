@@ -127,7 +127,6 @@ M.formatters_by_ft = {
   python = { "black" },
   vue = prettier,
   -- ["*"] = { "codespell" }, -- always run
-  ["_"] = { "trim_whitespace" },
 }
 
 M.treesitter_ensure_installed = {
