@@ -272,7 +272,8 @@ return {
           end
           if found then
             pcall(vim.treesitter.start, ev.buf)
-            vim.bo[ev.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+            vim.bo[ev.buf].indentexpr =
+              "v:lua.require'nvim-treesitter'.indentexpr()"
           end
         end,
       })
@@ -286,22 +287,21 @@ return {
       {
         "<leader><leader>",
         function()
-          require("conform").format({ async = true, lsp_format = "fallback" })
+          local conform = require("conform")
+          conform.format({
+            async = true,
+            lsp_format = "fallback",
+          }, function()
+            conform.format({
+              async = true,
+              formatters = { "trim_whitespace" },
+            })
+          end)
         end,
         mode = "",
         desc = "Format buffer",
       },
     },
-    config = function() 
-    local conform = require("conform")
-    local ft = vim.bo[vim.api.nvim_get_current_buf()].filetype
-    local has_ft_formatter = conform.formatters_by_ft[ft] ~= nil
-    conform.format({
-      async = false,
-      lsp_format = has_ft_formatter and "never" or "fallback",
-    })
-    conform.format({ async = true, formatters = { "trim_whitespace" } })
-    end,
     opts = {
       notify_on_error = false,
       format_on_save = false,
@@ -487,7 +487,14 @@ return {
         return "%2l:%-2v"
       end
       local indentscope = require("mini.indentscope")
-      indentscope.setup({ draw = { animation = function() return 0 end }, symbol = "░" })
+      indentscope.setup({
+        draw = {
+          animation = function()
+            return 0
+          end,
+        },
+        symbol = "░",
+      })
     end,
   },
   {
