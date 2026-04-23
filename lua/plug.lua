@@ -438,39 +438,20 @@ return {
     "folke/todo-comments.nvim",
     opts = {},
   },
-  { --- https://github.com/folke/zen-mode.nvim
-    "folke/zen-mode.nvim",
-    cmd = "ZenMode",
-    dependencies = {
+  {
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    ---@type Flash.Config
+    opts = {},
+    keys = {
       {
-        "folke/twilight.nvim",
-        opts = {},
+        "<CR>",
+        mode = { "n", "x", "o" },
+        function()
+          require("flash").jump()
+        end,
+        desc = "Flash",
       },
-    },
-    opts = {
-      window = {
-        backdrop = 1,
-        width = 80,
-        options = {
-          number = false,
-          relativenumber = false,
-          signcolumn = "no",
-        },
-      },
-      plugins = {
-        options = {
-          enabled = true,
-          showcmd = false,
-          laststatus = 0,
-          ruler = false,
-        },
-        tmux = { enabled = true },
-        todo = { enabled = true },
-      },
-      on_open = function()
-        -- Make backdrop transparent to match theme
-        vim.cmd("highlight ZenBg ctermbg=NONE guibg=NONE")
-      end,
     },
   },
   { --- https://github.com/nvim-mini/mini.nvim
