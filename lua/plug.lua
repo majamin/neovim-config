@@ -123,8 +123,8 @@ return {
     "saghen/blink.cmp",
     dependencies = { "rafamadriz/friendly-snippets" },
     event = "BufRead",
-    build = "cargo build --release",
-    -- version = "*",
+    -- build = "cargo build --release",
+    version = "*",
     config = function()
       require("blink.cmp").setup({
         keymap = {
