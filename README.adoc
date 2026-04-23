@@ -28,6 +28,10 @@ git clone https://github.com/majamin/neovim-config.git $env:LOCALAPPDATA/nvim
 . Add LSP specs to `lsp/name-of-your-lsp.lua`
 . Add formatters to `lua/opts.lua`
 
+== Screenshot
+
+image:screenshot.png[]
+
 == Notable key bindings
 
 [%autowidth,cols="2*a",options="header"]
@@ -82,15 +86,6 @@ git clone https://github.com/majamin/neovim-config.git $env:LOCALAPPDATA/nvim
 (Insert Mode) Manual LSP completion
 
 |===
-
-.What I use
-[sidebar]
---
-* https://github.com/majamin/dotfiles/tree/master/.config/wezterm[wezterm]
-  using _Fira Code Nerd Font_
-* https://github.com/majamin/dotfiles/tree/master/.config/tmux[tmux])
-* https://github.com/majamin/dotfiles/tree/master/.config/zsh[zsh])
---
 
 == Troubleshooting
 
