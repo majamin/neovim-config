@@ -44,9 +44,9 @@ return {
           local client = vim.lsp.get_client_by_id(event.data.client_id)
           if
             client
-            and client.supports_method(
+            and client:supports_method(
               vim.lsp.protocol.Methods.textDocument_documentHighlight,
-              { bufnr = event.buf }
+              event.buf
             )
           then
             local highlight_augroup = vim.api.nvim_create_augroup(
