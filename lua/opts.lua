@@ -58,11 +58,14 @@ o.termguicolors = true            -- <boolean> enable 24-bit RGB color in the TU
 o.timeoutlen = 400                -- <number> time to wait for a mapped sequence to complete (in milliseconds)
 o.ttimeoutlen = 0                 -- <number> time in milliseconds to wait for a key code sequence to complete
 o.undofile = true                 -- <boolean> enable/disable undo file creation?
-o.updatetime = 500                -- <number> if nothing is typed after this many milliseconds the swap file will be written to disk
+o.updatetime = 250                -- <number> if nothing is typed after this many milliseconds the swap file will be written to disk
 o.wildignorecase = true           -- <boolean> ignore setcase when completing file names and directories?
 o.wildmode = "full"               -- <string> how to complete file names and directories
 o.winborder = "single"
 o.wrap = false                    -- <boolean> wrap lines at the screen edge?
+o.confirm = true                  -- <boolean> dialog instead of error when quitting with unsaved changes
+o.inccommand = "split"            -- <string> preview substitutions live in a split
+vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 wo.foldexpr =
 "v:lua.vim.treesitter.foldexpr()" -- foldexpr for treesitter. See `:h fold-expr` and `:h vim.treesitter.foldexpr()`
 wo.foldmethod = "expr"            -- <string> foldmethod to use. See `:h foldmethod`
