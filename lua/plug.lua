@@ -236,32 +236,44 @@ return {
   },
   { --- https://github.com/nvim-treesitter/nvim-treesitter
     "nvim-treesitter/nvim-treesitter",
-    event = { "BufReadPost", "BufNewFile" },
-    -- lazy = false,
+    lazy = false,
     branch = "main",
     build = ":TSUpdate",
     config = function()
       local ts = require("nvim-treesitter")
-      local available = ts.get_available()
 
       ts.install(require("opts").treesitter_ensure_installed)
 
+      local available = ts.get_available()
+
+      local function treesitter_try_attach(buf, language)
+        if not vim.treesitter.language.add(language) then
+          return
+        end
+        vim.treesitter.start(buf, language)
+        if vim.treesitter.query.get(language, "indents") ~= nil then
+          vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        end
+      end
+
       vim.api.nvim_create_autocmd("FileType", {
-        pattern = { "*" },
-        callback = function(ev)
-          local filetype = ev.match or vim.bo[ev.buf].filetype
-          local found = false
-          for _, parser in ipairs(available) do
-            if filetype == parser then
-              pcall(ts.install, parser)
-              found = true
-              break
-            end
+        callback = function(args)
+          local buf, filetype = args.buf, args.match
+          local language = vim.treesitter.language.get_lang(filetype)
+          if not language then
+            return
           end
-          if found then
-            pcall(vim.treesitter.start, ev.buf)
-            vim.bo[ev.buf].indentexpr =
-              "v:lua.require'nvim-treesitter'.indentexpr()"
+
+          local installed = ts.get_installed("parsers")
+
+          if vim.tbl_contains(installed, language) then
+            treesitter_try_attach(buf, language)
+          elseif vim.tbl_contains(available, language) then
+            ts.install(language):await(function()
+              treesitter_try_attach(buf, language)
+            end)
+          else
+            treesitter_try_attach(buf, language)
           end
         end,
       })
