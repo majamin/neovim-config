@@ -5,14 +5,16 @@ local bo = vim.bo
 local g = vim.g
 
 g.mapleader = ";"
-g.maplocalleader = "\\"
+g.maplocalleader = ";"
 
 -- stylua: ignore start
 g.have_nerd_font = true     -- set to false if you don't have a nerd font
 o.backspace = ""            -- influences the working of <BS>, etc. see `:h 'backspace'`
 o.backup = false            -- <true|false> make a backup before overwriting a file?
 o.breakindent = true        -- <true|false> Will every wrapped line continue visually indented?
-o.clipboard = "unnamedplus" -- <string> set clipboard mode - see `:h 'clipboard'`
+vim.schedule(function()
+  o.clipboard = "unnamedplus" -- <string> set clipboard mode - see `:h 'clipboard'`
+end)
 o.cmdheight = 1             -- <int> space for displaying messages/commands?
 o.completeopt =
 {
