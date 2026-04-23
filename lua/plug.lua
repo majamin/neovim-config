@@ -409,7 +409,7 @@ return {
   { --- https://github.com/folke/snacks.nvim
     "folke/snacks.nvim",
     priority = 1000,
-    keys = { "<leader>f", "<leader>g" },
+    lazy = false,
     ---@type snacks.Config
     opts = {
       picker = {},
