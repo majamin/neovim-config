@@ -33,8 +33,20 @@ M.non_plugin_maps = {
   -- stylua: ignore end
 }
 
+local function feed(keys)
+  return function()
+    vim.api.nvim_feedkeys(
+      vim.api.nvim_replace_termcodes(keys, true, false, true),
+      "m", false
+    )
+  end
+end
+vim.keymap.set("n", "<Space>", feed("van"), { desc = "Start incremental selection" })
+vim.keymap.set("x", "<Space>", feed("an"),  { desc = "Expand selection" })
+vim.keymap.set("x", "<BS>",    feed("in"),  { desc = "Shrink selection" })
+
 -- Do not remove - it ensures custom snippet jump binds hold
-vim.keymap.del({ "i", "s" }, "<Tab>")
-vim.keymap.del({ "i", "s" }, "<S-Tab>")
+pcall(vim.keymap.del, { "i", "s" }, "<Tab>")
+pcall(vim.keymap.del, { "i", "s" }, "<S-Tab>")
 
 return M
