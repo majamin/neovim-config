@@ -206,23 +206,11 @@ return {
       })
     end,
   },
-  {
+  { --- https://github.com/j-hui/fidget.nvim
     "j-hui/fidget.nvim",
     event = "LspAttach",
     opts = { notification = { override_vim_notify = true } },
   },
-  -- { --- https://github.com/folke/tokyonight.nvim
-  --   "folke/tokyonight.nvim",
-  -- },
-  -- { --- https://github.com/projekt0n/github-nvim-theme
-  --   "projekt0n/github-nvim-theme",
-  --   name = "github-theme",
-  --   opts = {
-  --     options = {
-  --       -- transparent = true,
-  --     },
-  --   },
-  -- },
   { --- https://github.com/folke/which-key.nvim
     "folke/which-key.nvim",
     event = "VeryLazy",

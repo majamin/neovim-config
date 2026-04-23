@@ -20,4 +20,3 @@ require("lazy").setup({
 
 
 vim.cmd("colorscheme litmus")
--- vim.cmd("colorscheme tokyonight")
