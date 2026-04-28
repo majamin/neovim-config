@@ -18,4 +18,14 @@ function M.have_window_by_filetype(name)
   return false
 end
 
+function M.feed(keys)
+  return function()
+    vim.api.nvim_feedkeys(
+      vim.api.nvim_replace_termcodes(keys, true, false, true),
+      "m",
+      false
+    )
+  end
+end
+
 return M
