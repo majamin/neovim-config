@@ -18,12 +18,7 @@ return {
           local Snacks = require("snacks")
           local map = function(keys, func, desc, mode)
             mode = mode or "n"
-            vim.keymap.set(
-              mode,
-              keys,
-              func,
-              { buffer = event.buf, desc = "LSP: " .. desc }
-            )
+            vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
           end
 
           -- stylua: ignore start
@@ -42,17 +37,8 @@ return {
 
           -- Highlight word under cursor - adapted from kickstart
           local client = vim.lsp.get_client_by_id(event.data.client_id)
-          if
-            client
-            and client:supports_method(
-              vim.lsp.protocol.Methods.textDocument_documentHighlight,
-              event.buf
-            )
-          then
-            local highlight_augroup = vim.api.nvim_create_augroup(
-              "user-lsp-highlight",
-              { clear = false }
-            )
+          if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
+            local highlight_augroup = vim.api.nvim_create_augroup("user-lsp-highlight", { clear = false })
             vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
               buffer = event.buf,
               group = highlight_augroup,
@@ -66,10 +52,7 @@ return {
             })
 
             vim.api.nvim_create_autocmd("LspDetach", {
-              group = vim.api.nvim_create_augroup(
-                "user-lsp-detach",
-                { clear = true }
-              ),
+              group = vim.api.nvim_create_augroup("user-lsp-detach", { clear = true }),
               callback = function(event2)
                 vim.lsp.buf.clear_references()
                 vim.api.nvim_clear_autocmds({
@@ -81,17 +64,9 @@ return {
           end
 
           -- Toggle inlay hints
-          if
-            client
-            and client:supports_method(
-              vim.lsp.protocol.Methods.textDocument_inlayHint,
-              event.buf
-            )
-          then
+          if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
             map("glh", function()
-              vim.lsp.inlay_hint.enable(
-                not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf })
-              )
+              vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
             end, "Toggle Inlay [H]ints")
           end
         end,
@@ -285,7 +260,7 @@ return {
     cmd = { "ConformInfo" },
     keys = {
       {
-        "<leader><leader>",
+        "<leader>=",
         function()
           local conform = require("conform")
           conform.format({
@@ -366,8 +341,8 @@ return {
     },
   },
   { --- https://github.com/majamin/litmus.nvim
-    "majamin/litmus.nvim",
-    dependencies = { "tjdevries/colorbuddy.nvim" },
+    -- "majamin/litmus.nvim",
+    dir = "/home/marian/.local/src/litmus.nvim",
     opts = {},
   },
   { --- https://github.com/majamin/buffy.nvim
@@ -438,11 +413,15 @@ return {
     "folke/todo-comments.nvim",
     opts = {},
   },
-  {
+  { --- https://github.com/folke/flash.nvim
     "folke/flash.nvim",
     event = "VeryLazy",
     ---@type Flash.Config
-    opts = {},
+    opts = {
+      jump = {
+        nohlsearch = true,
+      },
+    },
     keys = {
       {
         "<CR>",

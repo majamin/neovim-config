@@ -4,9 +4,6 @@ local wo = vim.wo
 local bo = vim.bo
 local g = vim.g
 
-g.mapleader = ";"
-g.maplocalleader = ";"
-
 -- stylua: ignore start
 g.have_nerd_font = true     -- set to false if you don't have a nerd font
 o.backspace = ""            -- influences the working of <BS>, etc. see `:h 'backspace'`
@@ -32,7 +29,8 @@ o.foldcolumn = "0"                -- <string> 'auto' or number of columns to use
 o.foldenable = false              -- <true|false> all folds closed on buffer open? (zi to toggle)
 o.foldtext = "v:lua.myfolds()"    -- custom fold function (see _G.myfolds)
 o.history = 500                   -- <number> a history of ":" and search commands (max 10000)
-o.hlsearch = true                 -- <boolean> highlight all matches on previous search pattern
+o.hlsearch = false                -- <boolean> highlight all matches on previous search pattern? See `:h 'hlsearch'`
+o.incsearch = false               -- <boolean> jump to the first search pattern as it's typed?
 o.ignorecase = false              -- <boolean> ignore case in search patterns
 o.laststatus = 3                  -- {0,1,2,3} should the last window will have a status line? See `:h laststatus`
 o.lazyredraw = true               -- <boolean> redraw screen while running macros? (true = faster)
