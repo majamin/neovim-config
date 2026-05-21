@@ -381,6 +381,30 @@ return {
       enable_check_bracket_line = false, -- helps lisp-like langs
     },
   },
+  {
+    "folke/zen-mode.nvim",
+    opts = {
+      window = {
+        width = 90,
+        options = {
+          number = false,
+          relativenumber = false,
+          signcolumn = "no",
+          cursorline = false,
+          foldcolumn = "0",
+        },
+      },
+      plugins = {
+        options = {
+          laststatus = 0, -- hide statusline
+          ruler = false,
+          showcmd = false,
+        },
+        twilight = { enabled = false },
+        gitsigns = { enabled = false },
+      },
+    },
+  },
   { --- https://github.com/folke/snacks.nvim
     "folke/snacks.nvim",
     priority = 1000,
