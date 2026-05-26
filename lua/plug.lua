@@ -461,7 +461,7 @@ return {
     "echasnovski/mini.nvim",
     event = "VeryLazy",
     dependencies = {
-      { "lewis6991/gitsigns.nvim", event = "VeryLazy" },
+      { "lewis6991/gitsigns.nvim", opts = { numhl = true, signcolumn = false }, event = "VeryLazy" },
     },
     config = function()
       local statusline = require("mini.statusline")
