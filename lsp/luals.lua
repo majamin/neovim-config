@@ -15,6 +15,12 @@ return {
           "${3rd}/love2d/library",
         },
       },
+      hint = {
+        enable = true,
+        paramName = "all", -- "all", "literals", "callable", "none"
+        setType = true,    -- show inferred types
+        await = true,
+      },
     },
   },
 }
