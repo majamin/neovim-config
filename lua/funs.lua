@@ -18,6 +18,8 @@ function M.have_window_by_filetype(name)
   return false
 end
 
+-- HACK: is this a hack?
+-- used for incremental selection
 function M.feed(keys)
   return function()
     vim.api.nvim_feedkeys(
