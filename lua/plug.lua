@@ -16,48 +16,76 @@ return {
         group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
         callback = function(event)
           local Snacks = require("snacks")
-          local map = function(keys, func, desc, mode)
-            mode = mode or "n"
-            vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
-          end
 
           -- stylua: ignore start
-          wk.add({ "gl", group = "LSP" })
-          map("gD", function () Snacks.picker.lsp_declarations() end, "Goto Declaration")
-          map("gI", function () Snacks.picker.lsp_implementations() end, "Goto Implementation")
-          map("gS", function () Snacks.picker.lsp_workspace_symbols() end, "Workspace Symbols")
-          map("gd", function () Snacks.picker.lsp_definitions() end, "Goto Definition")
-          map("gs", function () Snacks.picker.lsp_symbols() end, "Symbols")
-          map("gt", function () Snacks.picker.lsp_type_definitions() end, "Goto Type Definition")
-          map("gla", function () vim.lsp.buf.code_action() end, "Code actions")
-          map("gli", function () vim.lsp.buf.implementation() end, "Implementations")
-          map("gln", function () vim.lsp.buf.rename() end, "Rename")
-          map("glr", function () Snacks.picker.lsp_references() end, "References")
+          wk.add({
+            { "gd",  Snacks.picker.lsp_definitions,       desc = "Goto Definition"      }, -- keeping to stay consistent with historical binds
+            { "gD",  Snacks.picker.lsp_declarations,      desc = "Goto Declaration"     }, -- keeping to stay consistent with historical binds
+            { "gla", vim.lsp.buf.code_action,             desc = "Code actions"         },
+            { "gli", Snacks.picker.lsp_implementations,   desc = "Goto Implementation"  },
+            { "gln", vim.lsp.buf.rename,                  desc = "Rename"               },
+            { "glr", Snacks.picker.lsp_references,        desc = "References"           },
+            { "gls", Snacks.picker.lsp_symbols,           desc = "Symbols"              },
+            { "glS", Snacks.picker.lsp_workspace_symbols, desc = "Workspace Symbols"    },
+            { "glt", Snacks.picker.lsp_type_definitions,  desc = "Goto Type Definition" },
+          })
           -- stylua: ignore end
 
-          -- Highlight word under cursor - adapted from kickstart
+          -- Highlight word under cursor
+          -- Adapted from kickstart.nvim
+          -- Improved with Claude Sonnet 4.6: highlighting _stays_ if you remain on the same object
           local client = vim.lsp.get_client_by_id(event.data.client_id)
           if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
-            local highlight_augroup = vim.api.nvim_create_augroup("user-lsp-highlight", { clear = false })
+            local highlight_augroup = vim.api.nvim_create_augroup("user-lsp-highlight", { clear = true })
+            local hl_tick = 0
+
+            local function cursor_in_refs()
+              local ns = vim.api.nvim_get_namespaces()["nvim.lsp.references"]
+              if not ns then return false end
+              local pos = vim.api.nvim_win_get_cursor(0)
+              local row, col = pos[1] - 1, pos[2]
+              for _, mark in ipairs(
+                vim.api.nvim_buf_get_extmarks(event.buf, ns, { row, 0 }, { row, -1 }, { details = true })
+              ) do
+                local sc, ec = mark[3], mark[4].end_col
+                if sc <= col and (ec == nil or col < ec) then return true end
+              end
+              return false
+            end
+
             vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
               buffer = event.buf,
               group = highlight_augroup,
-              callback = vim.lsp.buf.document_highlight,
+              callback = function()
+                hl_tick = hl_tick + 1
+                local tick = hl_tick
+                local params = vim.lsp.util.make_position_params()
+                vim.lsp.buf_request(event.buf, "textDocument/documentHighlight", params, function(err, result, ctx)
+                  if err or not result or hl_tick ~= tick then return end
+                  vim.lsp.buf.clear_references()
+                  local c = vim.lsp.get_client_by_id(ctx.client_id)
+                  if c then vim.lsp.util.buf_highlight_references(event.buf, result, c.offset_encoding) end
+                end)
+              end,
             })
 
             vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
               buffer = event.buf,
               group = highlight_augroup,
-              callback = vim.lsp.buf.clear_references,
+              callback = function()
+                if cursor_in_refs() then return end
+                hl_tick = hl_tick + 1
+                vim.lsp.buf.clear_references()
+              end,
             })
 
             vim.api.nvim_create_autocmd("LspDetach", {
               group = vim.api.nvim_create_augroup("user-lsp-detach", { clear = true }),
-              callback = function(event2)
+              callback = function(ev)
                 vim.lsp.buf.clear_references()
                 vim.api.nvim_clear_autocmds({
                   group = "user-lsp-highlight",
-                  buffer = event2.buf,
+                  buffer = ev.buf,
                 })
               end,
             })
@@ -65,9 +93,13 @@ return {
 
           -- Toggle inlay hints
           if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
-            map("glh", function()
-              vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
-            end, "Toggle Inlay [H]ints")
+            wk.add({
+              "glh",
+              function()
+                vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
+              end,
+              desc = "Toggle Inlay [H]ints",
+            })
           end
         end,
       })
@@ -433,6 +465,12 @@ return {
   },
   "tpope/vim-fugitive", --- https://github.com/tpope/vim-fugitive
   "tpope/vim-surround", --- https://github.com/tpope/vim-surround
+  {
+    "mbbill/undotree",
+    config = function()
+      require("which-key")
+    end,
+  }, --- https://github.com/mbbill/undotree
   { --- https://github.com/folke/todo-comments.nvim
     "folke/todo-comments.nvim",
     opts = {},
