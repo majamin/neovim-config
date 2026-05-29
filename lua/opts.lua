@@ -4,9 +4,6 @@ local wo = vim.wo
 local bo = vim.bo
 local g = vim.g
 
-vim.
-vim.
-
 -- stylua: ignore start
 g.have_nerd_font = true     -- set to false if you don't have a nerd font
 o.backspace = ""            -- influences the working of <BS>, etc. see `:h 'backspace'`
