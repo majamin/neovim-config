@@ -4,6 +4,9 @@ local wo = vim.wo
 local bo = vim.bo
 local g = vim.g
 
+vim.
+vim.
+
 -- stylua: ignore start
 g.have_nerd_font = true     -- set to false if you don't have a nerd font
 o.backspace = ""            -- influences the working of <BS>, etc. see `:h 'backspace'`
@@ -39,6 +42,8 @@ o.number = true                   -- <boolean> print the line number in front of
 o.path = ".,**"                   -- <string> search paths. See `:h 'path'` and `:h starstar-wildcard`
 o.relativenumber = true           -- <boolean> show relative line numbers?
 o.scrolloff = 3                   -- <number> minimum number of screen lines to keep above and below the cursor
+o.shell="/bin/zsh"                -- <string> path to shell command for !
+o.shellcmdflag="-ic"              -- <string> arguments to shell command (useful to load environments)
 o.shiftwidth = 2                  -- <number> the number of spaces inserted for each indentation
 o.shortmess = o.shortmess + "c"   -- prevent "pattern not found" messages
 o.showmode = false                -- <boolean> show the mode? (redundant if mode is built into the statusline)
