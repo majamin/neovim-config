@@ -41,14 +41,18 @@ return {
 
             local function cursor_in_refs()
               local ns = vim.api.nvim_get_namespaces()["nvim.lsp.references"]
-              if not ns then return false end
+              if not ns then
+                return false
+              end
               local pos = vim.api.nvim_win_get_cursor(0)
               local row, col = pos[1] - 1, pos[2]
-              for _, mark in ipairs(
-                vim.api.nvim_buf_get_extmarks(event.buf, ns, { row, 0 }, { row, -1 }, { details = true })
-              ) do
+              for _, mark in
+                ipairs(vim.api.nvim_buf_get_extmarks(event.buf, ns, { row, 0 }, { row, -1 }, { details = true }))
+              do
                 local sc, ec = mark[3], mark[4].end_col
-                if sc <= col and (ec == nil or col < ec) then return true end
+                if sc <= col and (ec == nil or col < ec) then
+                  return true
+                end
               end
               return false
             end
@@ -59,12 +63,16 @@ return {
               callback = function()
                 hl_tick = hl_tick + 1
                 local tick = hl_tick
-                local params = vim.lsp.util.make_position_params(0,'utf-16')
+                local params = vim.lsp.util.make_position_params(0, "utf-16")
                 vim.lsp.buf_request(event.buf, "textDocument/documentHighlight", params, function(err, result, ctx)
-                  if err or not result or hl_tick ~= tick then return end
+                  if err or not result or hl_tick ~= tick then
+                    return
+                  end
                   vim.lsp.buf.clear_references()
                   local c = vim.lsp.get_client_by_id(ctx.client_id)
-                  if c then vim.lsp.util.buf_highlight_references(event.buf, result, c.offset_encoding) end
+                  if c then
+                    vim.lsp.util.buf_highlight_references(event.buf, result, c.offset_encoding)
+                  end
                 end)
               end,
             })
@@ -73,7 +81,9 @@ return {
               buffer = event.buf,
               group = highlight_augroup,
               callback = function()
-                if cursor_in_refs() then return end
+                if cursor_in_refs() then
+                  return
+                end
                 hl_tick = hl_tick + 1
                 vim.lsp.buf.clear_references()
               end,
@@ -447,13 +457,13 @@ return {
     },
     keys = {
       -- stylua: ignore start
-      { "<leader>f", function () require("snacks.nvim").picker.smart() end,           desc = "Smart Find Files", },
-      { "<leader>g", function () require("snacks.nvim").picker.grep() end,            desc = "Grep Files", },
-      { "<leader>:", function () require("snacks.nvim").picker.command_history() end, desc = "Command History", },
-      { "<leader>o", function () require("snacks.nvim").picker.recent() end,          desc = "Recent", },
-      { "<leader>h", function () require("snacks.nvim").picker.help() end,            desc = "Help Pages", },
-      { "<leader>k", function () require("snacks.nvim").picker.keymaps() end,         desc = "Keymaps", },
-      { "<leader>l", function () require("snacks.nvim").picker.loclist() end,         desc = "Location List", },
+      { "<leader>f", function () require("snacks").picker.smart() end,           desc = "Smart Find Files", },
+      { "<leader>g", function () require("snacks").picker.grep() end,            desc = "Grep Files", },
+      { "<leader>:", function () require("snacks").picker.command_history() end, desc = "Command History", },
+      { "<leader>o", function () require("snacks").picker.recent() end,          desc = "Recent", },
+      { "<leader>h", function () require("snacks").picker.help() end,            desc = "Help Pages", },
+      { "<leader>k", function () require("snacks").picker.keymaps() end,         desc = "Keymaps", },
+      { "<leader>l", function () require("snacks").picker.loclist() end,         desc = "Location List", },
       -- stylua: ignore end
     },
   },
