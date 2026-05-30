@@ -59,7 +59,7 @@ return {
               callback = function()
                 hl_tick = hl_tick + 1
                 local tick = hl_tick
-                local params = vim.lsp.util.make_position_params()
+                local params = vim.lsp.util.make_position_params(0,'utf-16')
                 vim.lsp.buf_request(event.buf, "textDocument/documentHighlight", params, function(err, result, ctx)
                   if err or not result or hl_tick ~= tick then return end
                   vim.lsp.buf.clear_references()
@@ -441,20 +441,19 @@ return {
     "folke/snacks.nvim",
     priority = 1000,
     lazy = false,
-    ---@type snacks.Config
     opts = {
       picker = {},
       explorer = {},
     },
     keys = {
       -- stylua: ignore start
-      { "<leader>f", function () Snacks.picker.smart() end,           desc = "Smart Find Files", },
-      { "<leader>g", function () Snacks.picker.grep() end,            desc = "Grep Files", },
-      { "<leader>:", function () Snacks.picker.command_history() end, desc = "Command History", },
-      { "<leader>o", function () Snacks.picker.recent() end,          desc = "Recent", },
-      { "<leader>h", function () Snacks.picker.help() end,            desc = "Help Pages", },
-      { "<leader>k", function () Snacks.picker.keymaps() end,         desc = "Keymaps", },
-      { "<leader>l", function () Snacks.picker.loclist() end,         desc = "Location List", },
+      { "<leader>f", function () require("snacks.nvim").picker.smart() end,           desc = "Smart Find Files", },
+      { "<leader>g", function () require("snacks.nvim").picker.grep() end,            desc = "Grep Files", },
+      { "<leader>:", function () require("snacks.nvim").picker.command_history() end, desc = "Command History", },
+      { "<leader>o", function () require("snacks.nvim").picker.recent() end,          desc = "Recent", },
+      { "<leader>h", function () require("snacks.nvim").picker.help() end,            desc = "Help Pages", },
+      { "<leader>k", function () require("snacks.nvim").picker.keymaps() end,         desc = "Keymaps", },
+      { "<leader>l", function () require("snacks.nvim").picker.loclist() end,         desc = "Location List", },
       -- stylua: ignore end
     },
   },
@@ -478,7 +477,6 @@ return {
   { --- https://github.com/folke/flash.nvim
     "folke/flash.nvim",
     event = "VeryLazy",
-    ---@type Flash.Config
     opts = {
       jump = {
         nohlsearch = true,
