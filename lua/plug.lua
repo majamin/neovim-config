@@ -335,7 +335,7 @@ return {
         ["-"] = "NonText",
         ["r"] = "DiagnosticSignWarn",
         ["w"] = "DiagnosticSignError",
-        ["x"] = "DiagnosticSignOk",
+        ["x"] = "DiagnosticSignHint",
       }
       require("oil").setup({
         columns = {

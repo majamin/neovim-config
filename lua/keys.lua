@@ -32,6 +32,7 @@ M.non_plugin_maps = {
   end, desc = "Toggle diagnostics visibility" },
   { "]d", function() vim.diagnostic.jump({count = 1, float = true}) end, desc = "Next diagnostic" },
   { "[d", function() vim.diagnostic.jump({count = -1, float = true}) end, desc = "Previous diagnostic" },
+  { "U", "<cmd>UndotreeToggle<CR>", desc = "Open undo tree", icon = "⎌" },
   { "<leader>e", "<cmd>!xdg-open $(pwd) &>/dev/null &<CR><CR>", desc = "Open file explorer", icon = "󱢴" },
   { "<leader>i", icon = "", group = "Paste images" },
   { "<leader>ii", ':r!imaging.sh . <CR><CR>', desc = "Images in current project", },
