@@ -2,7 +2,7 @@
 :author: Marian Minar <majamin@gmail.com>
 :experimental:
 :icons: font
-:leader: ;
+:leader: \\
 :source-highlighter: rouge
 
 Hi. This is my config for http://neovim.io[Neovim].
