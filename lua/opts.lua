@@ -139,13 +139,20 @@ M.treesitter_ensure_installed = {
   "c",
   "diff",
   "html",
+  "javascript",
+  "latex",
   "lua",
   "luadoc",
   "markdown",
   "markdown_inline",
   "query",
+  "scss",
+  "svelte",
+  "tsx",
+  "typst",
   "vim",
   "vimdoc",
+  "vue",
 }
 
 return M
