@@ -2,7 +2,6 @@
 :author: Marian Minar <majamin@gmail.com>
 :experimental:
 :icons: font
-:leader: \\
 :source-highlighter: rouge
 
 Hi. This is my config for http://neovim.io[Neovim].
@@ -39,7 +38,7 @@ image:screenshot.png[]
 | Binding
 | Description
 
-| kbd:[{leader}]
+| kbd:[+\+]
 | Leader key
 
 | kbd:[-]
@@ -63,19 +62,19 @@ image:screenshot.png[]
 | kbd:[Shift + TAB]
 | Open previous buffer
 
-| kbd:[{leader} + f]
+| kbd:[\ + f]
 | Fuzzy find files
 
-| kbd:[{leader} + g]
+| kbd:[\ + g]
 | Fuzzy find text in files
 
-| kbd:[{leader}{leader}]
+| kbd:[+\+=]
 | Format buffer - uses LSP or `conform` see `lua/opts.lua` to define formatters
 
-| kbd:[{leader} + k]
+| kbd:[\ + k]
 | Browse known keymaps
 
-| kbd:[{leader} + q]
+| kbd:[\ + q]
 | Opens diagnostics for LSP-enabled buffers
 
 | kbd:[K]
