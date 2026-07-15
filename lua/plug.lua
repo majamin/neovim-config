@@ -383,9 +383,10 @@ return {
     },
   },
   { --- https://github.com/majamin/litmus.nvim
-    -- "majamin/litmus.nvim",
-    dir = "/home/marian/.local/src/litmus.nvim",
-    opts = {},
+    "majamin/litmus.nvim",
+    opts = {
+      transparent = true,
+    },
   },
   { --- https://github.com/majamin/buffy.nvim
     "majamin/buffy.nvim",
@@ -425,6 +426,9 @@ return {
   },
   {
     "folke/zen-mode.nvim",
+    dependencies = {
+      "folke/twilight.nvim",
+    },
     opts = {
       window = {
         backdrop = 1,
