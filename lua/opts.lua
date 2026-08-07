@@ -21,7 +21,7 @@ o.completeopt =
   "noinsert"
 }                                 -- insert mode
 o.conceallevel = 3                -- {0,1,2,3} Determine how text with "conceal" is shown
-o.cursorline = true               -- <true|false> highlight the current line?
+o.cursorline = false              -- <true|false> highlight the current line?
 o.expandtab = true                -- <true | false> convert tabs to spaces?
 o.fileencoding = "utf-8"          -- <fileencodings> file-content encoding for the current buffer
 o.fillchars = { fold = "·" }      -- see `:h 'fillchars'`
@@ -153,6 +153,11 @@ M.treesitter_ensure_installed = {
   "vim",
   "vimdoc",
   "vue",
+}
+
+-- Some languages/filetypes do not play well:
+M.treesitter_noinstall_noenable = {
+  "tmux"
 }
 
 return M

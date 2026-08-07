@@ -1,6 +1,7 @@
 local non_plugin_maps = require("keys").non_plugin_maps
 local special_formatters = require("opts").special_formatters
 local formatters_by_ft = require("opts").formatters_by_ft
+local treesitter_noinstall_noenable = require("opts").treesitter_noinstall_noenable
 
 return {
   { --- https://github.com/neovim/nvim-lspconfig
@@ -280,6 +281,11 @@ return {
           if not language then
             return
           end
+          for _, ft in ipairs(treesitter_noinstall_noenable) do
+            if filetype == ft then
+              return
+            end
+          end
 
           local installed = ts.get_installed("parsers")
 
@@ -497,16 +503,16 @@ return {
         nohlsearch = true,
       },
     },
-    keys = {
-      {
-        "<CR>",
-        mode = { "n", "x", "o" },
-        function()
-          require("flash").jump()
-        end,
-        desc = "Flash",
-      },
-    },
+    -- keys = {
+    --   {
+    --     "<CR>",
+    --     mode = { "n", "x", "o" },
+    --     function()
+    --       require("flash").jump()
+    --     end,
+    --     desc = "Flash",
+    --   },
+    -- },
   },
   { --- https://github.com/nvim-mini/mini.nvim
     "echasnovski/mini.nvim",
@@ -544,5 +550,6 @@ return {
       },
     },
   },
-  "mechatroner/rainbow_csv",
+  { "mechatroner/rainbow_csv" },
+  { "tjdevries/present.nvim", ft = { "markdown" } },
 }
