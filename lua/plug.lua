@@ -551,5 +551,4 @@ return {
     },
   },
   { "mechatroner/rainbow_csv" },
-  { "tjdevries/present.nvim", ft = { "markdown" } },
 }
