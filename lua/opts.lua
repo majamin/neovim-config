@@ -128,6 +128,7 @@ M.formatters_by_ft = {
   r = { "air" },
   rust = { "rustfmt" },
   svelte = prettier,
+  toml = { "taplo" },
   typst = { "typstyle" },
   python = { "black" },
   vue = prettier,
@@ -157,7 +158,7 @@ M.treesitter_ensure_installed = {
 
 -- Some languages/filetypes do not play well:
 M.treesitter_noinstall_noenable = {
-  "tmux"
+  "tmux",
 }
 
 return M
