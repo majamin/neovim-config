@@ -7,27 +7,9 @@ function _G.myfolds()
   return line .. " ·········· " .. line_count .. " lines "
 end
 
--- Do we have a filetype window open?
-function M.have_window_by_filetype(name)
-  for _, win in ipairs(vim.api.nvim_list_wins()) do
-    local bufnr = vim.api.nvim_win_get_buf(win)
-    if vim.bo[bufnr].filetype == name then
-      return true
-    end
-  end
-  return false
-end
-
--- HACK: is this a hack?
--- used for incremental selection
-function M.feed(keys)
-  return function()
-    vim.api.nvim_feedkeys(
-      vim.api.nvim_replace_termcodes(keys, true, false, true),
-      "m",
-      false
-    )
-  end
+-- Is the location list of the current window open?
+function M.loclist_is_open()
+  return vim.fn.getloclist(0, { winid = 0 }).winid ~= 0
 end
 
 return M

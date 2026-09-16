@@ -1,40 +1,42 @@
 local M = {}
 
-local have_window_by_filetype = require("funs").have_window_by_filetype
-local feed = require("funs").feed
+local loclist_is_open = require("funs").loclist_is_open
 
 M.non_plugin_maps = {
   -- stylua: ignore start
   { "j", "gj" },
   { "k", "gk" },
-  { "<Space>", feed("van"), desc = "Start incremental selection", mode = "n"},
-  { "<Space>", feed("an"),  desc = "Expand selection",            mode = "x"},
-  { "<BS>",    feed("in"),  desc = "Shrink selection",            mode = "x"},
-  { "<C-l>",   feed("v]n"), desc = "Select next node",            mode = "n"},
-  { "<C-l>",   feed("]n"),  desc = "Select next node",            mode = "x"},
-  { "<C-h>",   feed("v[n"), desc = "Select next node",            mode = "n"},
-  { "<C-h>",   feed("[n"),  desc = "Select previous node",        mode = "x"},
-  { "<Esc>", "<cmd>nohlsearch<CR>" },
+  -- incremental selection uses the builtin an/in (treesitter, with LSP fallback)
+  -- (]n and [n select the next and previous sibling node in visual mode)
+  { "<CR>", "van", desc = "Start incremental selection", mode = "n", remap = true },
+  { "<CR>", "an",  desc = "Expand selection",            mode = "x", remap = true },
+  { "<BS>", "in",  desc = "Shrink selection",            mode = "x", remap = true },
+  { "<Esc>", "<cmd>nohlsearch<CR>", desc = "Clear search highlight" },
   { "<F2>", function () vim.cmd(":wa|mksession!") end, desc = "Save session and files", },
   { "<F3>", function () vim.cmd(":so Session.vim") end, desc = "Load session", },
   { "<F4>", ":setlocal spell!<CR>", desc = "Toggle spellcheck" },
-  { "-", "<cmd>Oil<CR>", desc = "Browse files with Oil" },
   { "<C-w>b", "<cmd>bdelete<CR>", desc = "Close buffer" },
   { "<leader>d", function()
-    if have_window_by_filetype("qf") then
+    if loclist_is_open() then
       vim.cmd("lclose")
     else
       vim.diagnostic.setloclist({ open = true })
     end
-  end, desc = "Toggle quickfix diagnostics", icon = "", },
+  end, desc = "Toggle location list diagnostics", icon = "", },
   { "<leader>D", function()
     vim.diagnostic.enable(not vim.diagnostic.is_enabled())
   end, desc = "Toggle diagnostics visibility" },
-  { "]d", function() vim.diagnostic.jump({count = 1, float = true}) end, desc = "Next diagnostic" },
-  { "[d", function() vim.diagnostic.jump({count = -1, float = true}) end, desc = "Previous diagnostic" },
-  { "U", "<cmd>UndotreeToggle<CR>", desc = "Open undo tree", icon = "⎌" },
-  { "<leader>e", "<cmd>!xdg-open $(pwd) &>/dev/null &<CR><CR>", desc = "Open file explorer", icon = "󱢴" },
+  { "U", "<cmd>Undotree<CR>", desc = "Toggle undo tree", icon = "⎌" },
+  { "<leader>e", function() vim.ui.open(vim.fn.getcwd()) end, desc = "Open file explorer", icon = "󱢴" },
   { "<leader>i", icon = "", group = "Paste images" },
+  { "gl", group = "LSP", mode = { "n", "x" } },
+  { "gh", group = "Git", mode = { "n", "x" } },
+  -- fugitive, alongside the gitsigns hunk maps under gh (g? lists the keys in the status window)
+  { "ghg", "<cmd>Git<CR>",               desc = "Status (fugitive, g? for keys)" },
+  { "ghc", "<cmd>Git commit<CR>",        desc = "Commit" },
+  { "ghl", "<cmd>Git log --oneline<CR>", desc = "Log" },
+  { "gha", "<cmd>Git blame<CR>",         desc = "Blame file" },
+  { "ghP", "<cmd>Git push<CR>",          desc = "Push" },
   { "<leader>ii", ':r!imaging.sh . <CR><CR>', desc = "Images in current project", },
   { "<leader>ip", ':r!imaging.sh ${SCREENSHOT_DIR} ${HOME}/Downloads ${HOME}/Pictures <CR><CR>', desc = "Screenshots", },
   -- stylua: ignore end

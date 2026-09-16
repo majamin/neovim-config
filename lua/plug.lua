@@ -5,224 +5,51 @@ local treesitter_noinstall_noenable = require("opts").treesitter_noinstall_noena
 
 return {
   { --- https://github.com/neovim/nvim-lspconfig
+    -- provides the server defaults (cmd, filetypes, root) for the stub files in lsp/
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
-    dependencies = {
-      "saghen/blink.cmp",
-      event = "InsertEnter",
-    },
-    config = function()
-      local wk = require("which-key")
-      vim.api.nvim_create_autocmd("LspAttach", {
-        group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
-        callback = function(event)
-          local Snacks = require("snacks")
-
-          -- stylua: ignore start
-          wk.add({
-            { "gd",  Snacks.picker.lsp_definitions,       desc = "Goto Definition"      }, -- keeping to stay consistent with historical binds
-            { "gD",  Snacks.picker.lsp_declarations,      desc = "Goto Declaration"     }, -- keeping to stay consistent with historical binds
-            { "gla", vim.lsp.buf.code_action,             desc = "Code actions"         },
-            { "gli", Snacks.picker.lsp_implementations,   desc = "Goto Implementation"  },
-            { "gln", vim.lsp.buf.rename,                  desc = "Rename"               },
-            { "glr", Snacks.picker.lsp_references,        desc = "References"           },
-            { "gls", Snacks.picker.lsp_symbols,           desc = "Symbols"              },
-            { "glS", Snacks.picker.lsp_workspace_symbols, desc = "Workspace Symbols"    },
-            { "glt", Snacks.picker.lsp_type_definitions,  desc = "Goto Type Definition" },
-          })
-          -- stylua: ignore end
-
-          -- Highlight word under cursor
-          -- Adapted from kickstart.nvim
-          -- Improved with Claude Sonnet 4.6: highlighting _stays_ if you remain on the same object
-          local client = vim.lsp.get_client_by_id(event.data.client_id)
-          if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
-            local highlight_augroup = vim.api.nvim_create_augroup("user-lsp-highlight", { clear = true })
-            local hl_tick = 0
-
-            local function cursor_in_refs()
-              local ns = vim.api.nvim_get_namespaces()["nvim.lsp.references"]
-              if not ns then
-                return false
-              end
-              local pos = vim.api.nvim_win_get_cursor(0)
-              local row, col = pos[1] - 1, pos[2]
-              for _, mark in
-                ipairs(vim.api.nvim_buf_get_extmarks(event.buf, ns, { row, 0 }, { row, -1 }, { details = true }))
-              do
-                local sc, ec = mark[3], mark[4].end_col
-                if sc <= col and (ec == nil or col < ec) then
-                  return true
-                end
-              end
-              return false
-            end
-
-            vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-              buffer = event.buf,
-              group = highlight_augroup,
-              callback = function()
-                hl_tick = hl_tick + 1
-                local tick = hl_tick
-                local params = vim.lsp.util.make_position_params(0, "utf-16")
-                vim.lsp.buf_request(event.buf, "textDocument/documentHighlight", params, function(err, result, ctx)
-                  if err or not result or hl_tick ~= tick then
-                    return
-                  end
-                  vim.lsp.buf.clear_references()
-                  local c = vim.lsp.get_client_by_id(ctx.client_id)
-                  if c then
-                    vim.lsp.util.buf_highlight_references(event.buf, result, c.offset_encoding)
-                  end
-                end)
-              end,
-            })
-
-            vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-              buffer = event.buf,
-              group = highlight_augroup,
-              callback = function()
-                if cursor_in_refs() then
-                  return
-                end
-                hl_tick = hl_tick + 1
-                vim.lsp.buf.clear_references()
-              end,
-            })
-
-            vim.api.nvim_create_autocmd("LspDetach", {
-              group = vim.api.nvim_create_augroup("user-lsp-detach", { clear = true }),
-              callback = function(ev)
-                vim.lsp.buf.clear_references()
-                vim.api.nvim_clear_autocmds({
-                  group = "user-lsp-highlight",
-                  buffer = ev.buf,
-                })
-              end,
-            })
-          end
-
-          -- Toggle inlay hints
-          if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
-            wk.add({
-              "glh",
-              function()
-                vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
-              end,
-              desc = "Toggle Inlay [H]ints",
-            })
-          end
-        end,
-      })
-
-      local capabilities = require("blink.cmp").get_lsp_capabilities()
-      vim.lsp.config("*", {
-        capabilities = capabilities,
-      })
-
-      -- scan lsp/ and enable servers by named configs
-      local lsp_configs = {}
-      local lsp_dir = vim.fn.stdpath("config") .. "/lsp"
-
-      for name, type in vim.fs.dir(lsp_dir) do
-        if type == "file" and name:match("%.lua$") then
-          local server_name = name:sub(1, -5)
-          lsp_configs[server_name] = true
-        end
-      end
-
-      -- Enable all found servers
-      for server in pairs(lsp_configs) do
-        pcall(vim.lsp.enable, server)
-      end
-    end,
   },
   { --- https://cmp.saghen.dev
     "saghen/blink.cmp",
     dependencies = { "rafamadriz/friendly-snippets" },
-    event = "BufRead",
+    -- load before the first language server starts, so blink can add its capabilities
+    event = { "BufReadPre", "BufNewFile" },
     -- build = "cargo build --release",
     version = "*",
-    config = function()
-      require("blink.cmp").setup({
-        keymap = {
-          preset = "super-tab",
-          ["<C-n>"] = {
-            "show",
-            "select_next",
-            "fallback",
-          },
-          ["<Tab>"] = { "select_and_accept", "fallback" },
-          ["<C-h>"] = { "snippet_backward", "fallback" },
-          ["<C-l>"] = { "snippet_forward", "fallback" },
+    opts = {
+      keymap = {
+        preset = "super-tab",
+        ["<C-n>"] = {
+          "show",
+          "select_next",
+          "fallback",
         },
-        completion = {
-          menu = { enabled = true },
-          list = {
-            selection = { preselect = false },
-            cycle = { from_top = false },
-          },
-          documentation = { auto_show = true },
+        ["<Tab>"] = { "select_and_accept", "fallback" },
+        ["<C-h>"] = { "snippet_backward", "fallback" },
+        ["<C-l>"] = { "snippet_forward", "fallback" },
+      },
+      completion = {
+        menu = { enabled = true },
+        list = {
+          selection = { preselect = false },
+          cycle = { from_top = false },
         },
-        appearance = { nerd_font_variant = "Nerd Font Mono" },
-        sources = {
-          default = { "lazydev", "lsp", "path", "snippets", "buffer" },
-          providers = {
-            lazydev = {
-              name = "LazyDev",
-              module = "lazydev.integrations.blink",
-              score_offset = 100,
-            },
+        documentation = { auto_show = true },
+      },
+      appearance = { nerd_font_variant = "Nerd Font Mono" },
+      sources = {
+        default = { "lazydev", "lsp", "path", "snippets", "buffer" },
+        providers = {
+          lazydev = {
+            name = "LazyDev",
+            module = "lazydev.integrations.blink",
+            score_offset = 100,
           },
         },
-        fuzzy = { implementation = "prefer_rust_with_warning" },
-        signature = { enabled = true, trigger = { show_on_insert = true } },
-      })
-
-      -- Workaround: Disable Neovim's intrusive default Tab/S-Tab snippet navigation
-      --
-      -- CONTEXT: Since Neovim 0.10, vim.snippet.expand() automatically creates
-      -- buffer-local Tab/S-Tab mappings for snippet navigation. This overrides
-      -- user configurations and breaks custom Tab workflows (like completion menu
-      -- navigation). There is NO built-in way to disable this behavior.
-      --
-      -- ISSUE HISTORY:
-      -- - https://github.com/neovim/neovim/issues/30198
-      --   Issue requesting configurability - closed as "wontfix"
-      -- - https://github.com/neovim/neovim/pull/30430
-      --   PR attempting to fix the issue - closed without merging
-      --
-      -- MAINTAINER POSITION: Neovim maintainers acknowledge this is problematic
-      -- but refuse to implement a configuration option, citing architectural
-      -- limitations and concerns about breaking other plugins.
-      --
-      -- THIS WORKAROUND: Aggressively override Tab/S-Tab on every buffer and
-      -- every InsertEnter to prevent vim.snippet from hijacking these keys.
-      -- We use <C-h>/<C-l> for snippet navigation instead (configured above).
-
-      local function disable_snippet_tab_mappings()
-        -- Only override in select mode (snippet placeholders), not insert mode
-        -- This allows blink.cmp to handle Tab for completion in insert mode
-        vim.keymap.set("s", "<Tab>", "<Tab>", {
-          buffer = 0,
-          noremap = true,
-          silent = true,
-        })
-        vim.keymap.set("s", "<S-Tab>", "<S-Tab>", {
-          buffer = 0,
-          noremap = true,
-          silent = true,
-        })
-      end
-
-      vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
-        callback = disable_snippet_tab_mappings,
-      })
-
-      vim.api.nvim_create_autocmd("InsertEnter", {
-        callback = disable_snippet_tab_mappings,
-      })
-    end,
+      },
+      fuzzy = { implementation = "prefer_rust_with_warning" },
+      signature = { enabled = true, trigger = { show_on_insert = true } },
+    },
   },
   { --- https://github.com/j-hui/fidget.nvim
     "j-hui/fidget.nvim",
@@ -236,7 +63,10 @@ return {
       local wk = require("which-key")
       wk.setup({
         preset = "helix",
-        delay = 1400,
+        -- wait before showing the popup, except for the git maps under gh
+        delay = function(ctx)
+          return vim.startswith(ctx.keys, "gh") and 0 or 1400
+        end,
       })
       wk.add(non_plugin_maps)
     end,
@@ -262,41 +92,38 @@ return {
 
       ts.install(require("opts").treesitter_ensure_installed)
 
-      local available = ts.get_available()
+      local available = {}
+      for _, lang in ipairs(ts.get_available()) do
+        available[lang] = true
+      end
 
       local function treesitter_try_attach(buf, language)
-        if not vim.treesitter.language.add(language) then
-          return
+        if not vim.api.nvim_buf_is_valid(buf) or not vim.treesitter.language.add(language) then
+          return false
         end
         vim.treesitter.start(buf, language)
         if vim.treesitter.query.get(language, "indents") ~= nil then
           vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
         end
+        return true
       end
 
       vim.api.nvim_create_autocmd("FileType", {
         callback = function(args)
           local buf, filetype = args.buf, args.match
+          if treesitter_noinstall_noenable[filetype] then
+            return
+          end
           local language = vim.treesitter.language.get_lang(filetype)
           if not language then
             return
           end
-          for _, ft in ipairs(treesitter_noinstall_noenable) do
-            if filetype == ft then
-              return
-            end
-          end
 
-          local installed = ts.get_installed("parsers")
-
-          if vim.tbl_contains(installed, language) then
-            treesitter_try_attach(buf, language)
-          elseif vim.tbl_contains(available, language) then
+          -- attach if the parser is present, otherwise install it when nvim-treesitter knows it
+          if not treesitter_try_attach(buf, language) and available[language] then
             ts.install(language):await(function()
               treesitter_try_attach(buf, language)
             end)
-          else
-            treesitter_try_attach(buf, language)
           end
         end,
       })
@@ -360,8 +187,8 @@ return {
           { "mtime", highlight = "Number" },
           {
             "icon",
-            default_file = "",
-            directory = "",
+            default_file = "",
+            directory = "",
             add_padding = false,
           },
         },
@@ -380,19 +207,18 @@ return {
       })
     end,
     keys = {
-      {
-        "-",
-        "<cmd>:Oil<CR>",
-        { "n" },
-        { desc = "Open parent directory" },
-      },
+      { "-", "<cmd>Oil<CR>", desc = "Browse files with Oil" },
     },
   },
   { --- https://github.com/majamin/litmus.nvim
     "majamin/litmus.nvim",
-    opts = {
-      transparent = true,
-    },
+    lazy = false,
+    priority = 1000,
+    config = function()
+      -- colors/litmus.lua runs setup(), so only store the option here
+      require("litmus").config.transparent = true
+      vim.cmd.colorscheme("litmus")
+    end,
   },
   { --- https://github.com/majamin/buffy.nvim
     "majamin/buffy.nvim",
@@ -419,8 +245,8 @@ return {
     keys = {
       { "<C-c><C-c>", desc = "Slime send" },
     },
-    config = function()
-      vim.cmd("let g:slime_target = 'tmux'")
+    init = function()
+      vim.g.slime_target = "tmux"
     end,
   },
   { --- https://github.com/windwp/nvim-autopairs
@@ -430,11 +256,9 @@ return {
       enable_check_bracket_line = false, -- helps lisp-like langs
     },
   },
-  {
+  { --- https://github.com/folke/zen-mode.nvim
     "folke/zen-mode.nvim",
-    dependencies = {
-      "folke/twilight.nvim",
-    },
+    cmd = "ZenMode",
     opts = {
       window = {
         backdrop = 1,
@@ -464,7 +288,6 @@ return {
     lazy = false,
     opts = {
       picker = {},
-      explorer = {},
     },
     keys = {
       -- stylua: ignore start
@@ -483,16 +306,31 @@ return {
     event = "BufReadPre",
     opts = {},
   },
-  "tpope/vim-fugitive", --- https://github.com/tpope/vim-fugitive
-  "tpope/vim-surround", --- https://github.com/tpope/vim-surround
-  {
-    "mbbill/undotree",
-    config = function()
-      require("which-key")
-    end,
-  }, --- https://github.com/mbbill/undotree
+  { --- https://github.com/tpope/vim-fugitive
+    "tpope/vim-fugitive",
+    cmd = {
+      "G",
+      "Git",
+      "Gdiffsplit",
+      "Gvdiffsplit",
+      "Gedit",
+      "Gread",
+      "Gwrite",
+      "Ggrep",
+      "Glgrep",
+      "Gclog",
+      "Gllog",
+      "GMove",
+      "GRename",
+      "GDelete",
+      "GRemove",
+      "GBrowse",
+    },
+  },
   { --- https://github.com/folke/todo-comments.nvim
     "folke/todo-comments.nvim",
+    event = { "BufReadPost", "BufNewFile" },
+    cmd = { "TodoQuickFix", "TodoLocList", "TodoTelescope", "TodoTrouble" },
     opts = {},
   },
   { --- https://github.com/folke/flash.nvim
@@ -503,22 +341,79 @@ return {
         nohlsearch = true,
       },
     },
-    -- keys = {
-    --   {
-    --     "<CR>",
-    --     mode = { "n", "x", "o" },
-    --     function()
-    --       require("flash").jump()
-    --     end,
-    --     desc = "Flash",
-    --   },
-    -- },
+    keys = {
+      -- stylua: ignore start
+      { "s", function() require("flash").jump() end,       mode = { "n", "x", "o" }, desc = "Flash jump" },
+      -- visual S stays as mini.surround's "add surrounding"
+      { "S", function() require("flash").treesitter() end, mode = { "n", "o" },      desc = "Flash select node" },
+      { "r", function() require("flash").remote() end,     mode = "o",               desc = "Flash remote" },
+      -- stylua: ignore end
+    },
+  },
+  { --- https://github.com/lewis6991/gitsigns.nvim
+    "lewis6991/gitsigns.nvim",
+    event = "VeryLazy",
+    opts = {
+      numhl = true,
+      signcolumn = false,
+      -- Keymaps adapted from kickstart.nvim, under `gh` because <leader>h is the help picker
+      on_attach = function(buf)
+        local gitsigns = require("gitsigns")
+        local function map(mode, lhs, rhs, desc)
+          vim.keymap.set(mode, lhs, rhs, { buf = buf, desc = desc })
+        end
+        local function selected_lines()
+          return { vim.fn.line("."), vim.fn.line("v") }
+        end
+
+        -- ]c and [c keep their builtin meaning in diff mode
+        map("n", "]c", function()
+          if vim.wo.diff then
+            vim.cmd.normal({ "]c", bang = true })
+          else
+            gitsigns.nav_hunk("next")
+          end
+        end, "Next git hunk")
+        map("n", "[c", function()
+          if vim.wo.diff then
+            vim.cmd.normal({ "[c", bang = true })
+          else
+            gitsigns.nav_hunk("prev")
+          end
+        end, "Previous git hunk")
+
+        -- stylua: ignore start
+        map("x", "ghs", function() gitsigns.stage_hunk(selected_lines()) end, "Stage selected lines")
+        map("x", "ghr", function() gitsigns.reset_hunk(selected_lines()) end, "Reset selected lines")
+        map("n", "ghs", gitsigns.stage_hunk,                                  "Stage hunk")
+        map("n", "ghr", gitsigns.reset_hunk,                                  "Reset hunk")
+        map("n", "ghS", gitsigns.stage_buffer,                                "Stage buffer")
+        map("n", "ghR", gitsigns.reset_buffer,                                "Reset buffer")
+        map("n", "ghp", gitsigns.preview_hunk,                                "Preview hunk")
+        map("n", "ghi", gitsigns.preview_hunk_inline,                         "Preview hunk inline")
+        map("n", "ghb", function() gitsigns.blame_line({ full = true }) end,  "Blame line")
+        map("n", "ghB", gitsigns.toggle_current_line_blame,                   "Toggle line blame")
+        map("n", "ghw", gitsigns.toggle_word_diff,                            "Toggle word diff")
+        map("n", "ghd", gitsigns.diffthis,                                    "Diff against index")
+        map("n", "ghD", function() gitsigns.diffthis("~") end,                "Diff against last commit")
+        map("n", "ghq", gitsigns.setqflist,                                   "Hunks in this file to quickfix")
+        map("n", "ghQ", function() gitsigns.setqflist("all") end,             "Hunks in repo to quickfix")
+        map({ "o", "x" }, "ih", gitsigns.select_hunk,                         "Inside hunk")
+        -- stylua: ignore end
+      end,
+    },
   },
   { --- https://github.com/nvim-mini/mini.nvim
-    "echasnovski/mini.nvim",
+    "nvim-mini/mini.nvim",
     event = "VeryLazy",
-    dependencies = {
-      { "lewis6991/gitsigns.nvim", opts = { numhl = true, signcolumn = false }, event = "VeryLazy" },
+    keys = {
+      {
+        "<leader>c",
+        function()
+          require("mini.hipatterns").toggle()
+        end,
+        desc = "Toggle hex colour highlighting",
+      },
     },
     config = function()
       local statusline = require("mini.statusline")
@@ -527,28 +422,53 @@ return {
       statusline.section_location = function()
         return "%2l:%-2v"
       end
+
       local indentscope = require("mini.indentscope")
       indentscope.setup({
-        draw = {
-          animation = function()
-            return 0
-          end,
-        },
+        draw = { animation = indentscope.gen_animation.none() },
         symbol = "░",
       })
+
+      local hipatterns = require("mini.hipatterns")
+      hipatterns.setup({
+        highlighters = { hex_color = hipatterns.gen_highlighter.hex_color() },
+      })
+
+      -- Extra textobjects: a(rgument), f(unction call), q(uote), b(racket), t(ag), etc.
+      -- The next/last variants are moved to aN/iN/aL/iL so the builtin an/in
+      -- (incremental selection) and al/il (buffer and line) keep working (see :h MiniAi-default-an-in)
+      require("mini.ai").setup({
+        mappings = {
+          around_next = "aN",
+          inside_next = "iN",
+          around_last = "aL",
+          inside_last = "iL",
+        },
+        n_lines = 500,
+      })
+
+      -- Replaces tpope/vim-surround with the same keys: ys, ds, cs, yss and S in visual mode
+      -- (see :h MiniSurround-vim-surround-config)
+      require("mini.surround").setup({
+        mappings = {
+          add = "ys",
+          delete = "ds",
+          find = "",
+          find_left = "",
+          highlight = "",
+          replace = "cs",
+          suffix_last = "",
+          suffix_next = "",
+        },
+        search_method = "cover_or_next",
+      })
+      vim.keymap.del("x", "ys")
+      vim.keymap.set("x", "S", [[:<C-u>lua MiniSurround.add('visual')<CR>]], { silent = true, desc = "Add surrounding" })
+      vim.keymap.set("n", "yss", "ys_", { remap = true, desc = "Surround line" })
     end,
   },
-  {
-    "norcalli/nvim-colorizer.lua",
-    opts = {},
-    keys = {
-      {
-        "<leader>c",
-        ":ColorizerToggle<CR>",
-        mode = "",
-        desc = "Colorize hex colors",
-      },
-    },
+  { --- https://github.com/mechatroner/rainbow_csv
+    "mechatroner/rainbow_csv",
+    ft = { "csv", "tsv" },
   },
-  { "mechatroner/rainbow_csv" },
 }

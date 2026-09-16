@@ -1,6 +1,6 @@
 vim.api.nvim_create_autocmd("TextYankPost", {
   group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
-  callback = function() vim.hl.on_yank() end,
+  callback = function() vim.hl.hl_op() end,
 })
 
 vim.api.nvim_create_autocmd("FileType", {
@@ -13,9 +13,11 @@ vim.api.nvim_create_autocmd("FileType", {
 -- Set `>>` to `%>%` in R and Rmd files
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "r", "rmd" },
-  callback = function()
+  callback = function(args)
     vim.schedule(function()
-      vim.keymap.set("i", ">>", "%>%", { buffer = true })
+      if vim.api.nvim_buf_is_valid(args.buf) then
+        vim.keymap.set("i", ">>", "%>%", { buf = args.buf })
+      end
     end)
   end,
 })

@@ -1,6 +1,7 @@
 -- The Simpleman's Neovim Config --
 
 require("boot") -- bootstraps lazy
+require("funs") -- helper functions (fold text, etc.)
 require("auto") -- nice autocommands
 require("opts") -- loads options, colors, etc.
 
@@ -10,7 +11,6 @@ require("lazy").setup({
   },
   change_detection = {
     enabled = false,
-    notify = true,
   },
   install = {
     missing = true,
@@ -18,5 +18,7 @@ require("lazy").setup({
   },
 })
 
+-- Needs to load after lazy.setup(), which resets the runtimepath and would drop this package
+vim.cmd.packadd("nvim.undotree")
 
-vim.cmd("colorscheme litmus")
+require("lsps") -- LSP attach behaviour and servers from lsp/
