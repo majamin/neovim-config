@@ -347,7 +347,7 @@ return {
   { --- https://github.com/folke/todo-comments.nvim
     "folke/todo-comments.nvim",
     event = { "BufReadPost", "BufNewFile" },
-    cmd = { "TodoQuickFix", "TodoLocList", "TodoTelescope", "TodoTrouble" },
+    cmd = { "TodoQuickFix", "TodoLocList" },
     opts = {},
   },
   { --- https://github.com/folke/flash.nvim
@@ -480,7 +480,12 @@ return {
         search_method = "cover_or_next",
       })
       vim.keymap.del("x", "ys")
-      vim.keymap.set("x", "S", [[:<C-u>lua MiniSurround.add('visual')<CR>]], { silent = true, desc = "Add surrounding" })
+      vim.keymap.set(
+        "x",
+        "S",
+        [[:<C-u>lua MiniSurround.add('visual')<CR>]],
+        { silent = true, desc = "Add surrounding" }
+      )
       vim.keymap.set("n", "yss", "ys_", { remap = true, desc = "Surround line" })
     end,
   },

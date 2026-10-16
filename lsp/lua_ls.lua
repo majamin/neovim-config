@@ -1,68 +1,10 @@
--- return {
---   cmd = { "lua-language-server" },
---   filetypes = { "lua" },
---   root_markers = { ".editorconfig", ".luarc.json", ".luarc.jsonc" },
---   settings = {
---     Lua = {
---       runtime = {
---         version = "LuaJIT",
---       },
---       -- lazydev adds the Neovim runtime and luv types in Neovim config files.
---       -- Other projects (e.g. love2d) can add libraries in their own .luarc.json
---       workspace = {
---         checkThirdParty = false,
---       },
---       hint = {
---         enable = true,
---         paramName = "all", -- "all", "literals", "callable", "none"
---         setType = true,    -- show inferred types
---         await = true,
---       },
---     },
---   },
--- }
-
+-- lazydev adds the Neovim runtime and plugin types in Neovim config files.
+-- Other projects (e.g. love2d) can add libraries in their own .luarc.json
 return {
-  on_init = function(client)
-    if client.workspace_folders then
-      local path = client.workspace_folders[1].name
-      if
-        path ~= vim.fn.stdpath("config")
-        and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
-      then
-        return
-      end
-    end
-
-    client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
-      runtime = {
-        -- Tell the language server which version of Lua you're using (most
-        -- likely LuaJIT in the case of Neovim)
-        version = "LuaJIT",
-        -- Tell the language server how to find Lua modules same way as Neovim
-        -- (see `:h lua-module-load`)
-        path = {
-          "lua/?.lua",
-          "lua/?/init.lua",
-        },
-      },
-      -- Make the server aware of Neovim runtime files
-      workspace = {
-        checkThirdParty = false,
-        library = {
-          vim.env.VIMRUNTIME,
-          -- For LSP Settings Type Annotations: https://github.com/neovim/nvim-lspconfig#lsp-settings-type-annotations
-          vim.api.nvim_get_runtime_file("lua/lspconfig", false)[1],
-        },
-        -- Or pull in all of 'runtimepath'.
-        -- NOTE: this is a lot slower and will cause issues when working on
-        -- your own configuration.
-        -- See https://github.com/neovim/nvim-lspconfig/issues/3189
-        -- library = vim.api.nvim_get_runtime_file('', true),
-      },
-    })
-  end,
   settings = {
-    Lua = {},
+    Lua = {
+      runtime = { version = "LuaJIT" },
+      workspace = { checkThirdParty = false },
+    },
   },
 }

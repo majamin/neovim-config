@@ -1,3 +1,9 @@
+-- Remove Neovim's default LSP maps that the gl maps below replace (grx, codelens run, stays)
+for _, lhs in ipairs({ "grn", "grr", "gri", "grt", "gO" }) do
+  pcall(vim.keymap.del, "n", lhs)
+end
+pcall(vim.keymap.del, { "n", "x" }, "gra")
+
 local highlight_augroup = vim.api.nvim_create_augroup("user-lsp-highlight", { clear = true })
 local highlight_method = vim.lsp.protocol.Methods.textDocument_documentHighlight
 
