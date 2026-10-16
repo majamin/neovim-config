@@ -28,6 +28,12 @@ M.non_plugin_maps = {
   end, desc = "Toggle diagnostics visibility" },
   { "U", "<cmd>Undotree<CR>", desc = "Toggle undo tree", icon = "⎌" },
   { "<leader>e", function() vim.ui.open(vim.fn.getcwd()) end, desc = "Open file explorer", icon = "󱢴" },
+  { "<leader>c", group = "Compile", icon = "" },
+  { "<leader>cc", function() require("funs").compile() end, desc = "Compile document" },
+  { "<leader>cw", function() require("funs").compile_watch() end, desc = "Toggle compile on change (entr)" },
+  { "<leader>co", function()
+    vim.system({ "compiler", "-o", vim.api.nvim_buf_get_name(0) })
+  end, desc = "Open compiled document" },
   { "<leader>i", icon = "", group = "Paste images" },
   { "gl", group = "LSP", mode = { "n", "x" } },
   { "gh", group = "Git", mode = { "n", "x" } },

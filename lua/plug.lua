@@ -408,7 +408,7 @@ return {
     event = "VeryLazy",
     keys = {
       {
-        "<leader>c",
+        "<leader>C",
         function()
           require("mini.hipatterns").toggle()
         end,
