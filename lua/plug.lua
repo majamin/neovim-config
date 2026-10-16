@@ -56,6 +56,23 @@ return {
     event = "LspAttach",
     opts = { notification = { override_vim_notify = true } },
   },
+  { --- https://github.com/rachartier/tiny-inline-diagnostic.nvim
+    -- draws the inline diagnostic messages (virtual_text is off in opts.lua)
+    "rachartier/tiny-inline-diagnostic.nvim",
+    event = "LspAttach",
+    priority = 1000,
+    opts = {
+      preset = "modern",
+      -- keep messages on the error's own line, never drawn over the code below
+      -- (softwrap = 0 stops long code lines pushing the message underneath; <C-w>d shows the full text)
+      options = {
+        overflow = { mode = "oneline" },
+        show_diags_only_under_cursor = true,
+        -- softwrap = 0,
+        -- show_related = { enabled = false },
+      },
+    },
+  },
   { --- https://github.com/folke/which-key.nvim
     "folke/which-key.nvim",
     event = "VeryLazy",

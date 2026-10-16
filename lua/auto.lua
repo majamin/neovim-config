@@ -5,8 +5,10 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "qf" },
-  callback = function()
+  callback = function(args)
     vim.opt_local.wrap = true
+    -- the global <CR> starts incremental selection, so restore the builtin jump to the entry
+    vim.keymap.set("n", "<CR>", "<CR>", { buf = args.buf })
   end,
 })
 

@@ -72,27 +72,18 @@ vim.diagnostic.config({
       [vim.diagnostic.severity.INFO] = "● ",
       [vim.diagnostic.severity.HINT] = "󰌶 ",
     },
-    numhl = {
-      [vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
-      [vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
-    },
   },
-  underline = false,
-  virtual_text = false,
+  underline = true,
+  virtual_text = false, -- tiny-inline-diagnostic.nvim draws the messages
   float = {
-    border = "rounded",
     source = "if_many",
     header = "",
     prefix = "",
     suffix = "",
   },
   jump = {
-    -- open a float on the diagnostic after ]d and [d
-    on_jump = function(diagnostic, bufnr)
-      if diagnostic then
-        vim.diagnostic.open_float({ bufnr = bufnr, scope = "cursor", focus = false })
-      end
-    end,
+    -- ]d and [d skip warnings, info and hints
+    severity = vim.diagnostic.severity.ERROR,
   },
 })
 
