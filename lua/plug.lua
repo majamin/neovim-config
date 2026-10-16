@@ -471,4 +471,28 @@ return {
     "mechatroner/rainbow_csv",
     ft = { "csv", "tsv" },
   },
+  { --- https://github.com/ggml-org/llama.vim
+    -- NOTE: requires you to run something like the following, prior to usage:
+    -- llama-server -hf ggml-org/Qwen2.5-Coder-3B-Q8_0-GGUF port 8012 -ub 1024 -b 1024 --ctx-size 0 --cache-reuse 256 -ngl 99
+    "ggml-org/llama.vim",
+    event = "InsertEnter",
+    init = function()
+      vim.g.llama_config = {
+        show_info = 2,
+        auto_fim = false, -- do not open FIM automatically
+        keymap_fim_trigger = "<A-f>",
+        keymap_fim_accept_full = "<A-y>",
+        keymap_fim_accept_line = "<A-l>",
+        keymap_fim_accept_word = "<A-w>",
+        keymap_fim_next = "<A-]>",
+        keymap_fim_prev = "<A-[>",
+        keymap_inst_accept = "<leader>aa",
+        keymap_inst_trigger = "<leader>ai",
+        keymap_inst_rerun = "<leader>ar",
+        keymap_inst_continue = "<leader>ac",
+        keymap_inst_cancel = "<Esc>",
+        keymap_debug_toggle = "<leader>ad",
+      }
+    end,
+  },
 }
