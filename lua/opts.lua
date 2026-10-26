@@ -4,16 +4,12 @@ local wo = vim.wo
 local g = vim.g
 
 -- stylua: ignore start
-g.mapleader = " "           -- <leader> is Space (set before lazy.nvim and any keymaps load)
-g.have_nerd_font = true     -- set to false if you don't have a nerd font
-g.loaded_node_provider = 0    -- no remote plugins use these providers (see `:h provider`)
-g.loaded_perl_provider = 0
-g.loaded_python3_provider = 0
-g.loaded_ruby_provider = 0
-o.backspace = ""            -- influences the working of <BS>, etc. see `:h 'backspace'`
-o.breakindent = true        -- <true|false> Will every wrapped line continue visually indented?
+g.mapleader = " "                 -- <leader> is Space (set before lazy.nvim and any keymaps load)
+g.have_nerd_font = true           -- set to false if you don't have a nerd font
+o.backspace = ""                  -- influences the working of <BS>, etc. see `:h 'backspace'`
+o.breakindent = true              -- <true|false> Will every wrapped line continue visually indented?
 vim.schedule(function()
-  o.clipboard = "unnamedplus" -- <string> set clipboard mode - see `:h 'clipboard'`
+  o.clipboard = "unnamedplus"     -- <string> set clipboard mode - see `:h 'clipboard'`
 end)
 o.completeopt =
 {
@@ -27,7 +23,7 @@ o.fillchars = { fold = "·" }      -- see `:h 'fillchars'`
 o.foldenable = false              -- <true|false> all folds closed on buffer open? (zi to toggle)
 o.foldtext = "v:lua.myfolds()"    -- custom fold function (see _G.myfolds)
 o.history = 500                   -- <number> a history of ":" and search commands (max 10000)
-o.incsearch = false               -- <boolean> jump to the first search pattern as it's typed?
+o.incsearch = true                -- <boolean> jump to the first search pattern as it's typed?
 o.laststatus = 3                  -- {0,1,2,3} should the last window will have a status line? See `:h laststatus`
 o.lazyredraw = true               -- <boolean> redraw screen while running macros? (true = faster)
 o.list = true                     -- <boolean> show some invisible characters (tabs, eol, etc.)
@@ -41,8 +37,7 @@ o.shiftwidth = 2                  -- <number> the number of spaces inserted for 
 o.shortmess = o.shortmess + "c"   -- hide completion menu messages ("match 1 of 2", "Pattern not found")
 o.showmode = false                -- <boolean> show the mode? (redundant if mode is built into the statusline)
 o.sidescrolloff = 5               -- <number> the minimal number of columns to scroll horizontally
-o.signcolumn =
-"yes"                             -- <string> in {auto, no, yes, 1-9} - "yes" prevents gutter opening and closing spastically
+o.signcolumn = "yes"              -- <string> in {auto, no, yes, 1-9} - "yes" prevents gutter opening and closing spastically
 o.smartindent = true              -- <boolean> make indenting smarter again?
 o.spelllang = "en_ca"             -- <string> language(s) to use for spell checking
 o.splitbelow = true               -- <boolean> force all horizontal splits to go below current window?
@@ -57,7 +52,12 @@ o.winborder = "single"
 o.wrap = false                    -- <boolean> wrap lines at the screen edge?
 o.confirm = true                  -- <boolean> dialog instead of error when quitting with unsaved changes
 o.inccommand = "split"            -- <string> preview substitutions live in a split
-o.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+o.listchars =
+{
+  tab = "» ",
+  trail = "·",
+  nbsp = "␣",
+}
 wo.foldexpr =
 "v:lua.vim.treesitter.foldexpr()" -- foldexpr for treesitter. See `:h fold-expr` and `:h vim.treesitter.foldexpr()`
 wo.foldmethod = "expr"            -- <string> foldmethod to use. See `:h foldmethod`
@@ -81,10 +81,10 @@ vim.diagnostic.config({
     prefix = "",
     suffix = "",
   },
-  jump = {
-    -- ]d and [d skip warnings, info and hints
-    severity = vim.diagnostic.severity.ERROR,
-  },
+  -- jump = {
+  --   -- ]d and [d skip warnings, info and hints
+  --   severity = vim.diagnostic.severity.ERROR,
+  -- },
 })
 
 M.special_formatters = {

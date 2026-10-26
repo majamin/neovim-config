@@ -13,6 +13,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
     local Snacks = require("snacks")
     local buf = event.buf
 
+    -- Neovim points gq at the server's range formatting, which leaves comments unwrapped
+    -- (rustfmt, for one). Keep the builtin gq; <leader>= formats code
+    if vim.bo[buf].formatexpr == "v:lua.vim.lsp.formatexpr()" then
+      vim.bo[buf].formatexpr = ""
+    end
+
     -- Plain buffer-local keymaps (which-key still shows their desc).
     -- A server's on_attach runs after this, so it can replace any of them (see lsp/omnisharp.lua)
     local function map(lhs, rhs, desc, mode)

@@ -15,7 +15,12 @@ M.non_plugin_maps = {
   { "<F2>", function () vim.cmd(":wa|mksession!") end, desc = "Save session and files", },
   { "<F3>", function () vim.cmd(":so Session.vim") end, desc = "Load session", },
   { "<F4>", ":setlocal spell!<CR>", desc = "Toggle spellcheck" },
+  { "<", "<gv", desc = "Outdent with reselection", mode = "x" },
+  { ">", ">gv", desc = "Indent with reselection",  mode = "x" },
   { "<C-w>b", "<cmd>bdelete<CR>", desc = "Close buffer" },
+  -- buffy maps <Tab>, which alone also captures <C-i>, so map <C-i> to itself to keep jumping forward.
+  -- This needs a terminal that sends Ctrl+I separately (Ghostty, foot, tmux 3.5+ with extended-keys)
+  { "<C-i>", "<C-i>", desc = "Jump forward" },
   { "<leader>d", function()
     if loclist_is_open() then
       vim.cmd("lclose")
